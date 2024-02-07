@@ -238,7 +238,7 @@ const VerticalLayout = (props) => {
 
             {isroless ? (
               <li className="nav-item">
-                <Link to="/roles-responsibility" className="nav-link">
+                <Link to="/roles-responsibilty" className="nav-link">
                   Roles
                 </Link>
               </li>

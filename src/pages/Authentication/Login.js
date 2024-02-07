@@ -54,7 +54,7 @@ let departmentgroup = ""
 const Login = () => {
   const [others , setothers] = useState(null)
 
-  const [selectedRole, setSelectedRole] = useState("Admin");
+ 
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
   const { loginAdmin } = useContext(SignContext);
@@ -68,13 +68,8 @@ const Login = () => {
     setAdminInfo({ ...AdminInfo, [e.target.name]: e.target.value });
   };
 
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
-  };
-  
-  useEffect(() => {
-    console.log("Role after update:", selectedRole);
-  }, [selectedRole]); // This effect will run whenever selectedRole changes
+ 
+  // This effect will run whenever selectedRole changes
   
   
   const [Error, setError] = useState("");
@@ -154,20 +149,11 @@ const Login = () => {
   
     try {
       let apiEndpoint = '';
-       console.log("ssssss",selectedRole);
-      // Determine the API endpoint based on the selected role
-      if (selectedRole === "Admin" ) {
-        // If the selected role is Admin or Superadmin, hit the /auth/authentication endpoint
-        apiEndpoint = `${url}/auth/authentication`;
-      } else if (selectedRole === "User") {
+       
+       const response = await axios.get('http://localhost:5002/rolesresponsibilities/getRolesResponsibilityById/65c0c2e30df9f12a73ebf511')
         // If the selected role is User, hit the /user/authentication endpoint
         apiEndpoint = `${url}/user/authentication`;
-      } else {
-        // Handle the case if no role is selected
-        setError("Please select a role.");
-        setButtnLoading(false);
-        return;
-      }
+      
   
       // Perform login based on the determined API endpoint
       const res = await axios.post(apiEndpoint, AdminInfo);
@@ -334,16 +320,7 @@ const Login = () => {
                             Remember me
                           </Label>
                         </div> */}
-                        <div className="mb-3">
-                          <div className="form-check">
-                            <Input className="form-check-input" type="radio" name="role" id="adminRadio" value="Admin" onChange={(e) => handleRoleChange(e)} checked={selectedRole === "Admin"} />
-                            <Label className="form-check-label" htmlFor="adminRadio">Admin</Label>
-                          </div>
-                          <div className="form-check">
-                            <Input className="form-check-input" type="radio" name="role" id="userRadio" value="User" onChange={(e) => handleRoleChange(e)} checked={selectedRole === "User"} />
-                            <Label className="form-check-label" htmlFor="userRadio">User</Label>
-                          </div>
-                        </div>
+                        
                         {!buttnLoading ? (
                           <div className="mt-4">
                             <Button
