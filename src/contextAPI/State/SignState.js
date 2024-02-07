@@ -393,6 +393,31 @@ export const SignState = (props) => {
       console.error("Error during API call:", error);
     }
   };
+
+  const getSpecificDepartmentGroup = async (id) => {
+    try {
+      const response = await axios.post(
+        `${url}/departmentgroup/getdepartmentbyid/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
+  const getSpecificLocation = async (id) => {
+    try {
+      const response = await axios.get(
+        `${url}/location/getlocationbyid/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
+  
+  
   const GetEmployeeRoleByIdForEditing = async (id) => {
     try {
       const response = await axios.get(
@@ -858,6 +883,8 @@ export const SignState = (props) => {
         GetRoleSpecificPermission,
         addDepGroup,
         GetallDepartmentGroup,
+        getSpecificDepartmentGroup,
+        getSpecificLocation,
         addDepType,
         GetDepTypeById,
         addEmployeeRole,
