@@ -106,14 +106,7 @@ const Login = () => {
         // window.localStorage.setItem("Google Location", JSON.stringify(location));
         // window.localStorage.setItem("email", JSON.stringify(serverResponse.profileObj.email));
 
-        if (roles === "Admin" || roles === "Superadmin") {
-          // Roles=roles;
-          setSuccess(serverResponse.msg);
-
-          navigate("/dashboard");
-          // localStorage.removeItem("Rights");
-        }
-        else if (roles === "User") {
+       if (roles === "User") {
           // Roles=roles;
 
           setSuccess(serverResponse.msg);
@@ -192,7 +185,7 @@ const Login = () => {
         console.log('This is...', res.roles);
         // window.localStorage.setItem("Login Location", JSON.stringify(res.location));
         console.log('This is...', res.roles);
-        if (res.roles === "Admin" || res.roles === "Superadmin") {
+        if (res.roles === "User") {
           setSuccess(res.msg);
           navigate("/dashboard");
         } else {

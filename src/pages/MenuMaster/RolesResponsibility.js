@@ -562,26 +562,6 @@ const AddRoles = () => {
 
                                         <tr>
                                           <td>
-                                            <div className="form-check">
-                                              <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                value=""
-                                                id="cardtableCheck01"
-                                                style={{ marginRight: "10px" }}
-                                              />
-                                              <label
-                                                className="form-check-label"
-                                                htmlFor="cardtableCheck01"
-                                              >
-                                                Admin User
-                                              </label>
-                                            </div>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>
                                             <div
                                               className="form-check"
                                               style={{ display: "flex" }}
