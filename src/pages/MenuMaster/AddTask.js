@@ -28,7 +28,7 @@ const AddTask = () => {
       const response = await GetDepTypeByIdForEditing(departmentId);
       console.log("Dtype", response);
       console.log("Department",response.data.name);
-      setDepartmentName(response.data.name);
+      setdepartmentype(response.data.name);
   
       // Set the department type in state
       // setdepartmentype(response.data);
@@ -51,7 +51,7 @@ const AddTask = () => {
     getalldtype();
   }, []);
   useEffect(() => {
-    console.log(departmenttype);
+    console.log("shdbhsdbhsdb",departmenttype);
   }, [departmenttype]);
   return (
     <>
@@ -123,12 +123,12 @@ const AddTask = () => {
         className="form-select"
         name="departmentType"
         onBlur={handleBlur}
-        value={values.departmentType}
+        value={values.departmenttype}
         onChange={handleChange}
       >
         <option value="">-- Select Department --</option>
-        {departmentName ? (
-          <option value={departmentName}>{departmentName}</option>
+        {departmenttype ? (
+          <option value={departmenttype}>{departmenttype}</option>
         ) : (
           <option value="" disabled>
             No department available
