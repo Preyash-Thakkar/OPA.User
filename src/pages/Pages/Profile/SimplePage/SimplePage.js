@@ -39,7 +39,7 @@ import SignContext from "../../../../contextAPI/Context/SignContext";
 
 const SimplePage = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
-  const {    getLoggedInAdmin } = useContext(SignContext);
+  const {  getLoggedInAdmin } = useContext(SignContext);
   const navigate = useNavigate();
   const [UserInfo, setUserInfo] = useState({});
 

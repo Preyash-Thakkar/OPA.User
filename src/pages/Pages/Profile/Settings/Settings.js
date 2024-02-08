@@ -78,7 +78,7 @@ const Settings = () => {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    const token = window.localStorage.getItem("authToken");
+    const token = localStorage.getItem("authToken");
     const res = await changeadminPassword(AdminInfo, token);
     // console.log(res);
     if (res.success) {

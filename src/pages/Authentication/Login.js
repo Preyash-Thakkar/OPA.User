@@ -96,13 +96,13 @@ const Login = () => {
         // console.log("This is the Type",typeof(JSON.stringify(roles)));
 
         // console.log('Roles:', roles);
-        localStorage.setItem("loggedIn", true);
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("user", JSON.stringify(serverResponse));
-        localStorage.setItem("Rights", JSON.stringify(roles));
-        Roles = roles;
+        // localStorage.setItem("loggedIn", true);
+        // localStorage.setItem("authToken", token);
+        // localStorage.setItem("user", JSON.stringify(serverResponse));
+        // localStorage.setItem("Rights", JSON.stringify(roles));
+        // Roles = roles;
 
-        localStorage.setItem("OPA ID", JSON.stringify(id));
+        // localStorage.setItem("OPA ID", JSON.stringify(id));
         // window.localStorage.setItem("Google Location", JSON.stringify(location));
         // window.localStorage.setItem("email", JSON.stringify(serverResponse.profileObj.email));
 
@@ -150,7 +150,7 @@ const Login = () => {
     try {
       let apiEndpoint = '';
        
-       const response = await axios.get('http://localhost:5002/rolesresponsibilities/getRolesResponsibilityById/65c0c2e30df9f12a73ebf511')
+      //  const response = await axios.get('')
         // If the selected role is User, hit the /user/authentication endpoint
         apiEndpoint = `${url}/user/authentication`;
       
@@ -159,48 +159,74 @@ const Login = () => {
       const res = await axios.post(apiEndpoint, AdminInfo);
         if (res.success) {
         localStorage.setItem("loggedIn", true);
+        // localStorage.setItem("Nice", );
         localStorage.setItem("authToken", res.token);
-        localStorage.setItem("user", JSON.stringify(res));
-        localStorage.setItem("Rights", JSON.stringify(res.roles));
-        localStorage.setItem("OPA ID", JSON.stringify(res.id));
-        localStorage.setItem("MenuMaster",JSON.stringify(response.rolesResponsibility.MenuMaster));
-        localStorage.setItem("AddTask",JSON.stringify(response.rolesResponsibility.AddTask));
-        localStorage.setItem("AdminUser",JSON.stringify(response.rolesResponsibility.AdminUser));
-        localStorage.setItem("AssignMaster",JSON.stringify(response.rolesResponsibility.AssignMaster));
-        localStorage.setItem("CMS",JSON.stringify(response.rolesResponsibility.CMS));
-        localStorage.setItem("CommunityUpdateMaster",JSON.stringify(response.rolesResponsibility.CommunityUpdateMaster));
-        localStorage.setItem("Dashboard",JSON.stringify(response.rolesResponsibility.Dashboard));
-        localStorage.setItem("DepartmentGroup",JSON.stringify(response.rolesResponsibility.DepartmentGroup));
-        localStorage.setItem("DepartmentType",JSON.stringify(response.rolesResponsibility.DepartmentType));
-        localStorage.setItem("EmployeeRole",JSON.stringify(response.rolesResponsibility.EmployeeRole));
-        localStorage.setItem("Employeemaster",JSON.stringify(response.rolesResponsibility.Employeemaster));
-        localStorage.setItem("LocationMaster",JSON.stringify(response.rolesResponsibility.LocationMaster));
-        localStorage.setItem("Roles",JSON.stringify(response.rolesResponsibility.Roles));
-          // window.localStorage.setItem("Login Location", JSON.stringify(res.location));
-        cms = localStorage.getItem('CMS');
-        departmenttype = localStorage.getItem('DepartmentType');
-        menumaster = localStorage.getItem('MenuMaster');
-        addtask = localStorage.getItem('AddTask');
-        dashboard = localStorage.getItem('Dashboard');
-        communityupdatemaster = localStorage.getItem('CommunityUpdateMaster');
-        employeemaster = localStorage.getItem('Employeemaster');
-        roless = localStorage.getItem('Roles');
-        assignmaster = localStorage.getItem('AssignMaster');
-        locationmaster = localStorage.getItem('LocationMaster');
-        employeerole = localStorage.getItem('EmployeeRole');
-        departmentgroup = localStorage.getItem('DepartmentGroup');
-        console.log('This is...', res.roles);
+        // localStorage.setItem("authTokeasdan", res._id);
+        // localStorage.setItem("user", JSON.stringify(res));
+        // localStorage.setItem("Rights", JSON.stringify(res.roles));
+        localStorage.setItem("ID", res._id);
+        localStorage.setItem("Location ID", res.locationSchema);
+        localStorage.setItem("Department Group ID", res.departmentGroup);
+        localStorage.setItem("Department Type ID", res.departmentType);
+        localStorage.setItem("Employee Role ID", res.employeeRole);
+        localStorage.setItem("Employee Name ID", res.employeeName);
+        localStorage.setItem("CommunityUpdateMaster", res.CommunityUpdateMaster);
+        localStorage.setItem("AdminUser", res.AdminUser);
+        localStorage.setItem("Roles", res.Roles);
+        localStorage.setItem("MenuMaster", res.MenuMaster);
+        localStorage.setItem("Dashboard", res. Dashboard);
+        localStorage.setItem("isActive", res.isActive);
+        localStorage.setItem("DepartmentGroup", res.DepartmentGroup);
+        localStorage.setItem("DepartmentType", res.DepartmentType);
+        localStorage.setItem("EmployeeRole", res.EmployeeRole);
+        localStorage.setItem("Employeemaster", res.Employeemaster);
+        localStorage.setItem("AddTask", res.AddTask);
+        localStorage.setItem("AssignMaster", res.AssignMaster);
+        localStorage.setItem("CMS", res.CMS);
+       
+        // localStorage.setItem("ID", res._id);
+        // localStorage.setItem("ID", res._id);
+        // localStorage.setItem("ID", res._id);
+        // localStorage.setItem("ID", res._id);
+        // localStorage.setItem("MenuMaster",JSON.stringify(res.rolesResponsibility.MenuMaster));
+        // localStorage.setItem("AddTask",JSON.stringify(res.rolesResponsibility.AddTask));
+        // localStorage.setItem("AdminUser",JSON.stringify(res.rolesResponsibility.AdminUser));
+        // localStorage.setItem("AssignMaster",JSON.stringify(res.rolesResponsibility.AssignMaster));
+        // localStorage.setItem("CMS",JSON.stringify(res.rolesResponsibility.CMS));
+        // localStorage.setItem("CommunityUpdateMaster",JSON.stringify(res.rolesResponsibility.CommunityUpdateMaster));
+        // localStorage.setItem("Dashboard",JSON.stringify(res.rolesResponsibility.Dashboard));
+        // localStorage.setItem("DepartmentGroup",JSON.stringify(res.rolesResponsibility.DepartmentGroup));
+        // localStorage.setItem("DepartmentType",JSON.stringify(res.rolesResponsibility.DepartmentType));
+        // localStorage.setItem("EmployeeRole",JSON.stringify(res.rolesResponsibility.EmployeeRole));
+        // localStorage.setItem("Employeemaster",JSON.stringify(res.rolesResponsibility.Employeemaster));
+        // localStorage.setItem("LocationMaster",JSON.stringify(res.rolesResponsibility.LocationMaster));
+        // localStorage.setItem("Roles",JSON.stringify(res.rolesResponsibility.Roles));
+        //   // window.localStorage.setItem("Login Location", JSON.stringify(res.location));
+        // cms = localStorage.getItem('CMS');
+        // departmenttype = localStorage.getItem('DepartmentType');
+        // menumaster = localStorage.getItem('MenuMaster');
+        // addtask = localStorage.getItem('AddTask');
+        // dashboard = localStorage.getItem('Dashboard');
+        // communityupdatemaster = localStorage.getItem('CommunityUpdateMaster');
+        // employeemaster = localStorage.getItem('Employeemaster');
+        // roless = localStorage.getItem('Roles');
+        // assignmaster = localStorage.getItem('AssignMaster');
+        // locationmaster = localStorage.getItem('LocationMaster');
+        // employeerole = localStorage.getItem('EmployeeRole');
+        // departmentgroup = localStorage.getItem('DepartmentGroup');
+        // console.log('This is...', res.roles);
         // window.localStorage.setItem("Login Location", JSON.stringify(res.location));
-        console.log('This is...', res.roles);
-        if (res.roles === "Admin" || res.roles === "Superadmin") {
-          setSuccess(res.msg);
-          navigate("/dashboard");
-        } else {
-          setSuccess(res.msg);
-          setTimeout(() => {
-            navigate("/dashboard");
-          }, 3000);
-        }
+        // console.log('This is...', res.roles);
+        // if (res.roles === "Admin" || res.roles === "Superadmin") {
+        //   setSuccess(res.msg);
+        //   navigate("/dashboard");
+        // } else {
+        //   setSuccess(res.msg);
+        //   setTimeout(() => {
+        //     navigate("/dashboard");
+        //   }, 3000);
+        // }
+        navigate("/dashboard")
       } else {
         setError(res.msg);
       }
