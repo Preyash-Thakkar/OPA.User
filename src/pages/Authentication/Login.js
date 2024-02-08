@@ -159,11 +159,8 @@ const Login = () => {
       const res = await axios.post(apiEndpoint, AdminInfo);
         if (res.success) {
         localStorage.setItem("loggedIn", true);
-        // localStorage.setItem("Nice", );
         localStorage.setItem("authToken", res.token);
-        // localStorage.setItem("authTokeasdan", res._id);
-        // localStorage.setItem("user", JSON.stringify(res));
-        // localStorage.setItem("Rights", JSON.stringify(res.roles));
+
         localStorage.setItem("ID", res._id);
         localStorage.setItem("Location ID", res.locationSchema);
         localStorage.setItem("Department Group ID", res.departmentGroup);
@@ -183,49 +180,6 @@ const Login = () => {
         localStorage.setItem("AddTask", res.AddTask);
         localStorage.setItem("AssignMaster", res.AssignMaster);
         localStorage.setItem("CMS", res.CMS);
-       
-        // localStorage.setItem("ID", res._id);
-        // localStorage.setItem("ID", res._id);
-        // localStorage.setItem("ID", res._id);
-        // localStorage.setItem("ID", res._id);
-        // localStorage.setItem("MenuMaster",JSON.stringify(res.rolesResponsibility.MenuMaster));
-        // localStorage.setItem("AddTask",JSON.stringify(res.rolesResponsibility.AddTask));
-        // localStorage.setItem("AdminUser",JSON.stringify(res.rolesResponsibility.AdminUser));
-        // localStorage.setItem("AssignMaster",JSON.stringify(res.rolesResponsibility.AssignMaster));
-        // localStorage.setItem("CMS",JSON.stringify(res.rolesResponsibility.CMS));
-        // localStorage.setItem("CommunityUpdateMaster",JSON.stringify(res.rolesResponsibility.CommunityUpdateMaster));
-        // localStorage.setItem("Dashboard",JSON.stringify(res.rolesResponsibility.Dashboard));
-        // localStorage.setItem("DepartmentGroup",JSON.stringify(res.rolesResponsibility.DepartmentGroup));
-        // localStorage.setItem("DepartmentType",JSON.stringify(res.rolesResponsibility.DepartmentType));
-        // localStorage.setItem("EmployeeRole",JSON.stringify(res.rolesResponsibility.EmployeeRole));
-        // localStorage.setItem("Employeemaster",JSON.stringify(res.rolesResponsibility.Employeemaster));
-        // localStorage.setItem("LocationMaster",JSON.stringify(res.rolesResponsibility.LocationMaster));
-        // localStorage.setItem("Roles",JSON.stringify(res.rolesResponsibility.Roles));
-        //   // window.localStorage.setItem("Login Location", JSON.stringify(res.location));
-        // cms = localStorage.getItem('CMS');
-        // departmenttype = localStorage.getItem('DepartmentType');
-        // menumaster = localStorage.getItem('MenuMaster');
-        // addtask = localStorage.getItem('AddTask');
-        // dashboard = localStorage.getItem('Dashboard');
-        // communityupdatemaster = localStorage.getItem('CommunityUpdateMaster');
-        // employeemaster = localStorage.getItem('Employeemaster');
-        // roless = localStorage.getItem('Roles');
-        // assignmaster = localStorage.getItem('AssignMaster');
-        // locationmaster = localStorage.getItem('LocationMaster');
-        // employeerole = localStorage.getItem('EmployeeRole');
-        // departmentgroup = localStorage.getItem('DepartmentGroup');
-        // console.log('This is...', res.roles);
-        // window.localStorage.setItem("Login Location", JSON.stringify(res.location));
-        // console.log('This is...', res.roles);
-        // if (res.roles === "Admin" || res.roles === "Superadmin") {
-        //   setSuccess(res.msg);
-        //   navigate("/dashboard");
-        // } else {
-        //   setSuccess(res.msg);
-        //   setTimeout(() => {
-        //     navigate("/dashboard");
-        //   }, 3000);
-        // }
         navigate("/dashboard")
       } else {
         setError(res.msg);
