@@ -33,7 +33,7 @@ import {
   EffectCoverflow,
   Autoplay,
 } from "swiper";
-const url = "http://localhost:5002";
+// const id = localStorage.getItem("")
 const NewDashboard = () => {
   document.title = "Dashboard";
   //const getReqCommDetails = useContext(SignContext)
@@ -42,7 +42,7 @@ const NewDashboard = () => {
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
   const getreqcommdetails = async () => {
-    const res = await axios.get(`${url}/communitymaster/getrequiredcommunitymessage`);
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/65aa575711ad6209925b990b`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
@@ -190,7 +190,7 @@ const NewDashboard = () => {
             <Link className="image-popup" title={detail.name}>
               <img
                 className="gallery-img img-fluid mx-auto"
-                src={`${url}/${detail.uploadimage}`} // Adjust accordingly if using base64 strings
+                src={`${process.env.REACT_APP_BASE_URL}/${detail.uploadimage}`} // Adjust accordingly if using base64 strings
                 alt={detail.name}
               />
               <div className="gallery-overlay">
