@@ -369,6 +369,18 @@ export const SignState = (props) => {
       console.error("Error during API call:", error);
     }
   };
+  const getAllSpecificTaskByDepartmentTypeId = async (id) => {
+    try {
+      const response = await axios.get(
+        `${url}/addtask/getallspecifictaskbydtype/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
+  
   const GetEmployeeRoleById = async (id, id1) => {
     try {
       const response = await axios.get(
@@ -924,6 +936,7 @@ export const SignState = (props) => {
         GetSpecificMenuMaster,
         setEditMenuMastervalues,
         GetSpecificTaskByDepartmentGroup,
+        getAllSpecificTaskByDepartmentTypeId,
         addAssignTaskmaster,
         GetallAssignTask,
         GetEmployeeNameIdForEditing,

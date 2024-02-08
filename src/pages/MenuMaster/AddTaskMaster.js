@@ -4,6 +4,7 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -23,13 +24,14 @@ import {
   Row,
 } from "reactstrap";
 import SignContext from "../../contextAPI/Context/SignContext";
+//const id = localStorage.getItem("")
 import { useNavigate } from "react-router-dom";
 const AddTaskMaster = () => {
   const navigate=useNavigate();
   const { GetallAddTask,DeleteAddTask } = useContext(SignContext);
   const [task, setTask] = useState(null);
   const gettask = async () => {
-    const response = await GetallAddTask();
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/65b0f0b79d84e445fc900f31`);
     console.log(">>>");
     console.log(response.data);
     setTask(response.data);

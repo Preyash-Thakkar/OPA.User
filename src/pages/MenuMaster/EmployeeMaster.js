@@ -3,7 +3,7 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 
 
 import logo from "../../assets/images/brands/slack.png";
@@ -36,7 +36,7 @@ const EmployeeMaster = () => {
 
  
   const getemployeename=async()=>{
-     const res=await GetallEmployeeName(); 
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/employeename/getemployeebyrole/65b22b237bdbe67e3abbb8a2`); 
      console.log("This is it",res); 
      setemployeename(res.data);    
   }
@@ -57,6 +57,7 @@ const EmployeeMaster = () => {
 
   
   useEffect(()=>{
+    console.log("hjfjehf",employeename);
     getemployeename()
 },[])
   return (

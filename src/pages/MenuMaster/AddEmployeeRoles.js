@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import UiContent from "../../Components/Common/UiContent";
+import axios from "axios";
 import {
   Card,
   CardHeader,
@@ -15,6 +16,7 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import { TagsInput } from "react-tag-input-component";
 import SignContext from "../../contextAPI/Context/SignContext";
+//const id = localStorage.getItem("")
 import { useNavigate } from "react-router-dom";
 const AddEmployeeRoles = () => {
   const navigate=useNavigate();
@@ -22,7 +24,7 @@ const AddEmployeeRoles = () => {
   const[deptypebygroup,setDepTypeByGroup]=useState(null);
   const { GetallDepartmentGroup, GetDepTypeById,addEmployeeRole } = useContext(SignContext);
   const getdepgroup = async () => {
-    const response = await GetallDepartmentGroup();
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}employeename/getemployeebyrole/65b22b237bdbe67e3abbb8a2`);
 
     console.log(response.data);
     setDepgroup(response.data);
