@@ -930,6 +930,18 @@ const getUsers = async () => {
   //   }
   // }
 
+  const getAllSpecificTaskByDepartmentTypeId = async (id) => {
+    try {
+      const response = await axios.get(
+        `${url}/addtask/getallspecifictaskbydtype/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
+
 
   return (
     <SignContext.Provider
@@ -997,7 +1009,8 @@ const getUsers = async () => {
         getAdmins,
         // UpdateUser
         resetUserPassword,changeUserPassword,forgotUserPassword,
-        loginUser,getLoggedInUser,getUsers 
+        loginUser,getLoggedInUser,getUsers ,
+        getAllSpecificTaskByDepartmentTypeId
         
       }}
     >

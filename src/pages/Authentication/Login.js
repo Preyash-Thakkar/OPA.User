@@ -28,7 +28,7 @@ let arr = []
 
 let Roles = "";
 let cms = ""
-let departmenttype = ""
+let idArray = []
 let menumaster = ""
 let addtask = ""
 let dashboard = ""
@@ -364,4 +364,4 @@ const Login = () => {
 };
 export { Roles };
 export default withRouter(Login);
-export {cms , departmenttype , menumaster , addtask , dashboard , communityupdatemaster , employeemaster , roless , assignmaster , locationmaster , employeerole , departmentgroup}
+export {cms , idArray , menumaster , addtask , dashboard , communityupdatemaster , employeemaster , roless , assignmaster , locationmaster , employeerole , departmentgroup}
