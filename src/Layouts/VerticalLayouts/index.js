@@ -11,8 +11,9 @@ import navdata from "../LayoutMenuData";
 import { withTranslation } from "react-i18next";
 import withRouter from "../../Components/Common/withRouter";
 // const userRole = localStorage.getItem('Rights');
-console.log(typeof (Roles));
+// console.log(typeof (Roles));
 // console.log("<<<<<<<<<<<<<<<<<<<<<<<", dashboard)
+let user=""
 let cms = "";
 let departmenttype = "";
 let menumaster = "";
@@ -28,10 +29,10 @@ let departmentgroup = "";
 
 
 const VerticalLayout = (props) => {
-  console.log("This Is Roles", Roles);
-  console.log("niceee", Roles);
-  console.log("1. " , roless)
-  console.log("2. " , menumaster)
+  // console.log("This Is Roles", Roles);
+  // console.log("niceee", Roles);
+  // console.log("1. " , roless)
+  // console.log("2. " , menumaster)
   
   // console.log(isAdmin)
   const [locationSetup, setLocationSetup] = useState(false);
@@ -43,9 +44,10 @@ const VerticalLayout = (props) => {
   const [reports, setreports] = useState(false);
   const [mediaManage, setMediaManage] = useState(false);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [isUser,setIsUser]=useState(true);
   const [ismenumaster, setIsMenuMaster] = useState(true);
-  const[iscms , setiscms] = useState(true);
+  const[iscms , setiscms] = useState(false);
   const[isdepartmenttype , setisdepartmenttype] = useState(true);
   const[isaddtask , setisaddtask] = useState(true);
   const[isdashboard , setisdashboard] = useState(true);
@@ -83,9 +85,13 @@ const VerticalLayout = (props) => {
   }, [path, props.layoutType]);
 
   useEffect(() => {
+    user = localStorage.getItem('AdminUser');
+    if (user === "true") {
+      setIsUser(true);
+    }
     cms = localStorage.getItem('CMS');
-    if (cms === 'false') {
-      setiscms(false);
+    if (cms === "true") {
+      setiscms(true);
     }
     departmenttype = localStorage.getItem('DepartmentType');
     if (departmenttype === 'false') {
@@ -119,7 +125,7 @@ const VerticalLayout = (props) => {
     if (assignmaster === 'false') {
       setisassignmaster(false);
     }
-    locationmaster = localStorage.getItem('LocationMaster');
+    locationmaster = localStorage.getItem('LocationSchema');
     if (locationmaster === 'false') {
       setislocationmaster(false);
     }
@@ -203,7 +209,7 @@ const VerticalLayout = (props) => {
 
   return (
     <React.Fragment>
-      {/* menu Items */}
+    
 
       {isdashboard ? (
         <li className="nav-item">
@@ -247,7 +253,7 @@ const VerticalLayout = (props) => {
 
 
 
-            {!isAdmin ? (
+            {!isUser ? (
               <li className="nav-item">
                 <Link to="/admin-user" className="nav-link">
                   Admin User

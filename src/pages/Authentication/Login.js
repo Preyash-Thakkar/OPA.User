@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-// import User from "../"
+
 import { gapi } from 'gapi-script';
-
-
 import {
   Card,
   CardBody,
@@ -21,18 +19,11 @@ import {
 import ParticlesAuth from "../AuthenticationInner/ParticlesAuth";
 import logo from "../../assets/images/logo-white.png";
 import { GoogleLogin } from "react-google-login";
-
-
-// import { googleLogin } from "../../../../OPA_backend/middlewares/authMiddleware";
-// const clientId="1005087809695-bm5o5takeq3sug0au1n0hab4ge5ug7e2.apps.googleusercontent.com
-// "
-
 //redux
 import { Link, useNavigate } from "react-router-dom";
-
 import withRouter from "../../Components/Common/withRouter";
 import SignContext from "../../contextAPI/Context/SignContext";
-const url = `${process.env.REACT_APP_BASE_URL}`;
+// const url = `${process.env.REACT_APP_BASE_URL}`;
 let arr = []
 
 let Roles = "";
@@ -79,49 +70,38 @@ const Login = () => {
 
   const handleGoogleSuccess = async (response) => {
     console.log("Nenenen", response);
-    // console.log("neww",response.profileObj.email);
+   
     try {
-      const serverResponse = await axios.post(`${url}/auth/google-login-authentication`, {
+      const serverResponse = await axios.post(`${url}/user/google-login-authentication`, {
         email: response.profileObj.email,
-
       });
       console.log("Hii", serverResponse.success);
-      // console.log("Hii",serverResponse.location);
+      console.log(serverResponse);
 
       if (serverResponse.success === true) {
-        const { token, roles, id, location } = serverResponse;
-
-        console.log("My default ID", id);
-        console.log(serverResponse);
-        // console.log("This is the Type",typeof(JSON.stringify(roles)));
-
-        // console.log('Roles:', roles);
-        // localStorage.setItem("loggedIn", true);
-        // localStorage.setItem("authToken", token);
-        // localStorage.setItem("user", JSON.stringify(serverResponse));
-        // localStorage.setItem("Rights", JSON.stringify(roles));
-        // Roles = roles;
-
-        // localStorage.setItem("OPA ID", JSON.stringify(id));
-        // window.localStorage.setItem("Google Location", JSON.stringify(location));
-        // window.localStorage.setItem("email", JSON.stringify(serverResponse.profileObj.email));
-
-        if (roles === "Admin" || roles === "Superadmin") {
-          // Roles=roles;
-          setSuccess(serverResponse.msg);
-
-          navigate("/dashboard");
-          // localStorage.removeItem("Rights");
-        }
-        else if (roles === "User") {
-          // Roles=roles;
-
-          setSuccess(serverResponse.msg);
-          setTimeout(() => {
-            navigate("/dashboard");
-            // localStorage.removeItem("Rights");
-          }, 3000);
-        }
+        localStorage.setItem("loggedIn", true);
+        localStorage.setItem("authToken", serverResponse.token);
+        localStorage.setItem("ID", serverResponse._id);
+        localStorage.setItem("LocationID", serverResponse.locationSchema);
+        localStorage.setItem("DepartmentGroupID", serverResponse.departmentGroup);
+        localStorage.setItem("DepartmentTypeID", serverResponse.departmentType);
+        localStorage.setItem("EmployeeRoleID", serverResponse.employeeRole);
+        localStorage.setItem("EmployeeNameID", serverResponse.employeeName);
+        localStorage.setItem("LocationSchema", serverResponse.LocationMaster);
+        localStorage.setItem("CommunityUpdateMaster", serverResponse.CommunityUpdateMaster);
+        localStorage.setItem("AdminUser", serverResponse.AdminUser);
+        localStorage.setItem("Roles", serverResponse.Roles);
+        localStorage.setItem("MenuMaster", serverResponse.MenuMaster);
+        localStorage.setItem("Dashboard", serverResponse. Dashboard);
+        localStorage.setItem("isActive", serverResponse.isActive);
+        localStorage.setItem("DepartmentGroup", serverResponse.DepartmentGroup);
+        localStorage.setItem("DepartmentType", serverResponse.DepartmentType);
+        localStorage.setItem("EmployeeRole", serverResponse.EmployeeRole);
+        localStorage.setItem("Employeemaster", serverResponse.Employeemaster);
+        localStorage.setItem("AddTask", serverResponse.AddTask);
+        localStorage.setItem("AssignMaster", serverResponse.AssignMaster);
+        localStorage.setItem("CMS",serverResponse.CMS);
+        navigate("/dashboard");
       } else {
         // Handle the case where the server response indicates failure
         console.error('Error during Google login:', serverResponse.data.message);
@@ -130,7 +110,6 @@ const Login = () => {
     } catch (error) {
       console.error('Error during Google login:', error);
       alert("Please Enter a Valid Email Id");
-      // Handle the error as needed
     }
 
   };
@@ -162,11 +141,12 @@ const Login = () => {
         localStorage.setItem("authToken", res.token);
 
         localStorage.setItem("ID", res._id);
-        localStorage.setItem("Location ID", res.locationSchema);
-        localStorage.setItem("Department Group ID", res.departmentGroup);
-        localStorage.setItem("Department Type ID", res.departmentType);
-        localStorage.setItem("Employee Role ID", res.employeeRole);
-        localStorage.setItem("Employee Name ID", res.employeeName);
+        localStorage.setItem("LocationID", res.locationSchema);
+        localStorage.setItem("DepartmentGroupID", res.departmentGroup);
+        localStorage.setItem("DepartmentTypeID", res.departmentType);
+        localStorage.setItem("EmployeeRoleID", res.employeeRole);
+        localStorage.setItem("EmployeeNameID", res.employeeName);
+        localStorage.setItem("LocationSchema", res.LocationMaster);
         localStorage.setItem("CommunityUpdateMaster", res.CommunityUpdateMaster);
         localStorage.setItem("AdminUser", res.AdminUser);
         localStorage.setItem("Roles", res.Roles);
