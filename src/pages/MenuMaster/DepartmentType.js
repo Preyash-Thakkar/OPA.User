@@ -54,8 +54,10 @@ const DepartmentType = () => {
 
   useEffect(() => {
     getalldeptype();
-
-  }, []);
+   }, []);
+   useEffect(() => {
+    getalldeptype();
+   }, []);
   return (
     <>
       <UiContent />

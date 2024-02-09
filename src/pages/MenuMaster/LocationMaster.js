@@ -50,7 +50,7 @@ const LocationMaster = () => {
 
   useEffect(()=>{
          getlocation();
-  },[])
+  },[]);
   return (
     <>
       <UiContent />
