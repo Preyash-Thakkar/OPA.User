@@ -37,6 +37,15 @@ export const SignState = (props) => {
       console.log(error);
       return error;
     }
+  }; 
+  const loginUser = async (UserInfo) => {
+    try {
+      const response = await axios.post(`${url}/user/authentication`, UserInfo);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   };
 
   const forgotPersonPassword = async (UserInfo) => {
@@ -48,11 +57,33 @@ export const SignState = (props) => {
       return { success: false, msg: "server Error" };
     }
   };
+
+  const forgotUserPassword = async (UserInfo) => {
+    try {
+      const response = await axios.post(`${url}/user/forgotpassword`, UserInfo);
+
+      return response;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
   //Reset Password
   const resetPersonPassword = async (resetToken, password) => {
     try {
       const response = await axios.put(
         `${url}/auth/users/resetpassword/${resetToken}`,
+        { password: password }
+      );
+      return response.data;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  }; 
+   const resetUserPassword = async (resetToken, password) => {
+    try {
+      const response = await axios.put(
+        `${url}/user/users/resetpassword/${resetToken}`,
         { password: password }
       );
       return response.data;
@@ -73,9 +104,31 @@ export const SignState = (props) => {
     }
   };
 
+  const changeUserPassword = async (AdminInfo, Token) => {
+    try {
+      const response = await axios.put(`${url}/user/updatepassword`, {
+        ...AdminInfo,
+        token: Token,
+      });
+      return response;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
   const getLoggedInAdmin = async (Token) => {
     try {
       const response = await axios.post(`${url}/auth/getloggedinadmin`, {
+        token: Token,
+      });
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
+  const getLoggedInUser = async (Token) => {
+    try {
+      const response = await axios.post(`${url}/user/getloggedinuser`, {
         token: Token,
       });
       return response;
@@ -96,9 +149,19 @@ export const SignState = (props) => {
     }
   };
 
+
   const getAdmins = async () => {
     try {
       const response = await axios.post(`${url}/auth/getadmins`);
+      return response;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+
+const getUsers = async () => {
+    try {
+      const response = await axios.post(`${url}/user/getusers`);
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -127,6 +190,17 @@ export const SignState = (props) => {
       console.error("Error during API call:", error);
     }
   };
+
+//   const UpdateUser=async(id,name)=>{
+//     try{
+// const response=await axios.put(`${url}/user/updateuser`)
+//     }
+//     catch(erorr){
+//       console.error("Error during API call:", error);
+//     }
+    
+
+//   }
 
   const setEditUserRoleValues = async (id, name, email, password, image, location, departmentGroup, departmentType, Role, status) => {
     const formData = new FormData()
@@ -920,7 +994,11 @@ export const SignState = (props) => {
         resetPersonPassword,
         getSpecificAdmin,
         updateAdmin,
-        getAdmins
+        getAdmins,
+        // UpdateUser
+        resetUserPassword,changeUserPassword,forgotUserPassword,
+        loginUser,getLoggedInUser,getUsers 
+        
       }}
     >
       {props.children}

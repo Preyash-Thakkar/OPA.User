@@ -39,7 +39,7 @@ import SignContext from "../../../../contextAPI/Context/SignContext";
 
 const SimplePage = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
-  const {  getLoggedInAdmin } = useContext(SignContext);
+  const {  getLoggedInUser } = useContext(SignContext);
   const navigate = useNavigate();
   const [UserInfo, setUserInfo] = useState({});
 
@@ -60,9 +60,9 @@ const SimplePage = () => {
     }
   };
 
-  const getloggedinAdmin = async (token) => {
-    const res = await getLoggedInAdmin(token);
-    console.log(res)
+  const getloggedinuser = async (token) => {
+    const res = await getLoggedInUser(token);
+    console.log("THis is the responseeee",res)
     if (res.success) {
       setUserInfo(res);
     } else {
@@ -72,7 +72,7 @@ const SimplePage = () => {
 
   useEffect(() => {
     const authToken = window.localStorage.getItem("authToken");
-    getloggedinAdmin(authToken);
+    getloggedinuser(authToken);
   }, []);
 
   document.title = "Profile |  OPA";
@@ -83,7 +83,7 @@ const SimplePage = () => {
         <Container fluid>
           <div className="profile-foreground position-relative mx-n4 mt-n4">
             <div className="profile-wid-bg">
-              <img src={`${url}/${UserInfo.image}`} alt="hii" className="profile-wid-img" />
+              <img src={`${url}/${UserInfo.image}`} alt="Image will be Shown here" className="profile-wid-img" />
             </div>
           </div>
           <div className="pt-4 mb-4 mb-lg-3 pb-lg-4">
@@ -91,7 +91,7 @@ const SimplePage = () => {
               <div className="col-auto">
                 <div className="avatar-lg">
                   <img
-                    src={`${url}/${UserInfo.image}`}
+                    // src={`${url}/${UserInfo.image}`}
                     alt="user-img"
                     className="rounded-circle avatar-xl img-thumbnail user-profile-image"
                     style={{height : "100%" , width : "100%"}}
@@ -102,7 +102,7 @@ const SimplePage = () => {
               <Col>
                 <div className="p-2">
                   <h3 className="text-white mb-1">{UserInfo.name}</h3>
-                  <p className="text-white-75">{UserInfo.roles}</p>
+                  <h5><p className="text-white-75">User</p></h5>
                   <div className="hstack text-white-50 gap-1">
                     {/* <div className="me-2">
                       <i className="ri-map-pin-user-line me-1 text-white-75 fs-16 align-middle"></i>

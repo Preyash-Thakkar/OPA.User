@@ -48,7 +48,7 @@ const Login = () => {
  
   const url = `${process.env.REACT_APP_BASE_URL}`;
 
-  const { loginAdmin } = useContext(SignContext);
+  const { loginUser } = useContext(SignContext);
   const navigate = useNavigate();
   const [AdminInfo, setAdminInfo] = useState({
     email: "",
