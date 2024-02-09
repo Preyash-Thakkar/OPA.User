@@ -239,7 +239,7 @@ const VerticalLayout = (props) => {
             {isroless ? (
               <li className="nav-item">
                 <Link to="/roles-responsibilty" className="nav-link">
-                  Roles
+                  Roles & Responsibility
                 </Link>
               </li>
             ) : (null)

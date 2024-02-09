@@ -94,6 +94,7 @@ import AddUser from "../pages/Pages/Team/AddUser";
 // import BlogMaster from "../pages/BlogMaster/BlogsMaster";
 
 import NewDashboard from "../Dashboard/NewDashboard";
+import SubDashboard from "../Dashboard/DepartmentDetails";
 import MenuMater from "../pages/MenuMaster/MenuMater";
 import AddMenu from "../pages/MenuMaster/AddMenu";
 import RolesResponsibility from "../pages/MenuMaster/RolesResponsibility";
@@ -142,6 +143,8 @@ const authProtectedRoutes = [
       </SignState>
     ),
   },
+  { path: "/subdashboard", component: <SubDashboard /> },
+  
   {
     path: "/add-menu",
     component: (

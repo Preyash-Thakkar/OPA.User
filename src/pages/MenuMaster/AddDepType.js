@@ -19,14 +19,24 @@ import { useNavigate } from "react-router-dom";
 const AddDepType = () => {
   const [depgroup, setDepgroup] = useState(null);
 
-  const { GetallDepartmentGroup, addDepType } = useContext(SignContext);
+  const { getSpecificDepartmentGroup, addDepType } = useContext(SignContext);
   const navigate=useNavigate();
   const getdepgroup = async () => {
-    const response = await GetallDepartmentGroup();
-
-    console.log(response.data);
-    setDepgroup(response.data);
+    try {
+      // Retrieve department group ID from local storage
+      // const departmentGroupId = localStorage.getItem('your_department_group_id_key'); // Replace 'your_department_group_id_key' with the actual key
+      const departmentGroupId = "65b0ea599d84e445fc900f09";
+      // Fetch the specific department group using the ID
+      const response = await getSpecificDepartmentGroup(departmentGroupId);
+  
+      console.log(response.data);
+      // setDepgroup(response.data);
+    } catch (error) {
+      console.error("Error fetching department group:", error);
+      // Handle error as needed
+    }
   };
+  
   const adddeptype = async (values) => {
     console.log(">>>>>> dep type")
     console.log(values);
@@ -94,36 +104,33 @@ const AddDepType = () => {
                             <div className="live-preview">
                               <Row className="align-items-center g-3">
                                 <Col sm={4}>
-                                  <div className="mb-3">
-                                    <label
-                                      className="form-label"
-                                      htmlFor="product-orders-input"
-                                    >
-                                      Department Group
-                                    </label>
-                                    <div className="">
-                                      <select
-                                        className="form-select"
-                                        name="departmentGroup"
-                                        onBlur={handleBlur}
-                                        value={values.departmentGroup}
-                                        onChange={handleChange}
-                                      >
-                                        <option value="">--select--</option>
-                                        {depgroup && depgroup.length > 0 ? (
-                                          depgroup.map((type) => (
-                                            <option key={type} value={type._id}>
-                                              {type.name}
-                                            </option>
-                                          ))
-                                        ) : (
-                                          <option value="" disabled>
-                                            No locations available
-                                          </option>
-                                        )}
-                                      </select>
-                                    </div>
-                                  </div>
+                                <div className="mb-3">
+  <label className="form-label" htmlFor="product-orders-input">
+    Department Group
+  </label>
+  <div className="">
+    <select
+      className="form-select"
+      name="departmentGroup"
+      onBlur={handleBlur}
+      value={values.departmentGroup}
+      onChange={handleChange}
+    >
+      <option value="">-- Select --</option>
+      {depgroup ? (
+        <option key={depgroup._id} value={depgroup._id}>
+          {depgroup.name}
+        </option>
+      ) : (
+        <option value="" disabled>
+          No department group available
+        </option>
+      )}
+    </select>
+  </div>
+</div>
+
+
                                 </Col>
                                 <Col sm={4}>
                                   <div className="mb-3">

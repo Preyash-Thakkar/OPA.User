@@ -33,7 +33,7 @@ import {
   EffectCoverflow,
   Autoplay,
 } from "swiper";
-const url = "http://localhost:5002";
+// const id = localStorage.getItem("")
 const NewDashboard = () => {
   document.title = "Dashboard";
   //const getReqCommDetails = useContext(SignContext)
@@ -42,7 +42,7 @@ const NewDashboard = () => {
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
   const getreqcommdetails = async () => {
-    const res = await axios.get(`${url}/communitymaster/getrequiredcommunitymessage`);
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/65aa575711ad6209925b990b`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
@@ -181,41 +181,41 @@ const NewDashboard = () => {
                   className="mySwiper swiper responsive-swiper rounded gallery-light pb-5"
                 >
                   <div className="swiper-wrapper">
-                  <div className="swiper-wrapper">
-  {communityrequireddetails && communityrequireddetails.length > 0 ? (
-    communityrequireddetails.map((detail, index) => (
-      <SwiperSlide key={index}>
-        <div className="gallery-box card">
-          <div className="gallery-container">
-            <Link className="image-popup" title={detail.name}>
-              <img
-                className="gallery-img img-fluid mx-auto"
-                src={`${url}/${detail.uploadimage}`} // Adjust accordingly if using base64 strings
-                alt={detail.name}
-              />
-              <div className="gallery-overlay">
-                <h5 className="overlay-caption">
-                  {/* Assuming you want to display all locations for this detail */}
-                  {detail.locationSchema.map(location => location.name).join(', ')}
-                  <br />
-                  10:00 - 6:00 {/* Static time, replace if dynamic */}
-                </h5>
-              </div>
-            </Link>
-          </div>
-          <div className="box-content">
-            <div className="d-flex align-items-center mt-1">
-              <h5 className="m-1">{detail.name}</h5>
-            </div>
-            <p className="m-1">{detail.message}</p>
-          </div>
-        </div>
-      </SwiperSlide>
-    ))
-  ) : (
-    <p>No community updates to display</p>
-  )}
-</div>
+                    <div className="swiper-wrapper">
+                      {communityrequireddetails && communityrequireddetails.length > 0 ? (
+                        communityrequireddetails.map((detail, index) => (
+                          <SwiperSlide key={index}>
+                            <div className="gallery-box card">
+                              <div className="gallery-container">
+                                <Link className="image-popup" title={detail.name}>
+                                  <img
+                                    className="gallery-img img-fluid mx-auto"
+                                    src={`${process.env.REACT_APP_BASE_URL}/${detail.uploadimage}`} // Adjust accordingly if using base64 strings
+                                    alt={detail.name}
+                                  />
+                                  <div className="gallery-overlay">
+                                    <h5 className="overlay-caption">
+                                      {/* Assuming you want to display all locations for this detail */}
+                                      {detail.locationSchema.map(location => location.name).join(', ')}
+                                      <br />
+                                      10:00 - 6:00 {/* Static time, replace if dynamic */}
+                                    </h5>
+                                  </div>
+                                </Link>
+                              </div>
+                              <div className="box-content">
+                                <div className="d-flex align-items-center mt-1">
+                                  <h5 className="m-1">{detail.name}</h5>
+                                </div>
+                                <p className="m-1">{detail.message}</p>
+                              </div>
+                            </div>
+                          </SwiperSlide>
+                        ))
+                      ) : (
+                        <p>No community updates to display</p>
+                      )}
+                    </div>
 
                   </div>
                   <div className="swiper-pagination swiper-pagination-dark"></div>
@@ -225,81 +225,89 @@ const NewDashboard = () => {
           </Col>
 
           <Row>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Finance Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Commercial Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Treasury Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+  <Col md={4}>
+    <Link to="/subdashboard">
+      <Card className="card-animate">
+        <CardBody>
+          <div className="d-flex justify-content-between">
+            <div>
+              <h5 className="fw-medium text-muted mb-0">
+                Finance Department
+              </h5>
+              <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+              <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+            </div>
+            <div>
+              <div className="avatar-sm flex-shrink-0">
+                <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                  <FeatherIcon icon="file-text" className="text-info" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </Link>
+  </Col>
+  <Col md={4}>
+    <Link to="/subdashboard">
+      <Card className="card-animate">
+        <CardBody>
+          <div className="d-flex justify-content-between">
+            <div>
+              <h5 className="fw-medium text-muted mb-0">
+                Commercial Department
+              </h5>
+              <p className="mt-4 ff-secondary fw-semibold">
+                Business Plan
+              </p>
+              <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+              <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+            </div>
+            <div>
+              <div className="avatar-sm flex-shrink-0">
+                <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                  <FeatherIcon icon="file-text" className="text-info" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </Link>
+  </Col>
+  <Col md={4}>
+    <Link to="/subdashboard">
+      <Card className="card-animate">
+        <CardBody>
+          <div className="d-flex justify-content-between">
+            <div>
+              <h5 className="fw-medium text-muted mb-0">
+                Treasury Department
+              </h5>
+              <p className="mt-4 ff-secondary fw-semibold">
+                Business Plan
+              </p>
+              <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+              <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+            </div>
+            <div>
+              <div className="avatar-sm flex-shrink-0">
+                <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                  <FeatherIcon icon="file-text" className="text-info" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </Link>
+  </Col>
+</Row>
+
           <Row>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -320,8 +328,10 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -345,8 +355,10 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -370,6 +382,7 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
           </Row>
         </Container>

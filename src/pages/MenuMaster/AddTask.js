@@ -18,12 +18,27 @@ import { useNavigate } from "react-router-dom";
 const AddTask = () => {
   const navigate=useNavigate();
   const [departmenttype, setdepartmentype] = useState(null);
-  const { GetallDepartmentType,addTask } = useContext(SignContext);
+  const { GetDepTypeByIdForEditing,addTask,setDepartmentName,departmentName } = useContext(SignContext);
   const getalldtype = async () => {
-    const response = await GetallDepartmentType();
-    // console.log(response);
-    setdepartmentype(response.data);
+    try {
+      // Retrieve department ID from localStorage
+      // const departmentId = localStorage.getItem('your_department_id_key'); // Replace 'your_department_id_key' with the actual key
+  const departmentId = "65b0ebc59d84e445fc900f18";
+      // Make API call to get department data by ID for editing
+      const response = await GetDepTypeByIdForEditing(departmentId);
+      console.log("Dtype", response);
+      console.log("Department",response.data.name);
+      setdepartmentype(response.data.name);
+  
+      // Set the department type in state
+      // setdepartmentype(response.data);
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching department type for editing:', error);
+    }
   };
+  
+
   const addDetails = async (values) => {
     const response = await addTask(values);
 
@@ -36,7 +51,7 @@ const AddTask = () => {
     getalldtype();
   }, []);
   useEffect(() => {
-    console.log(departmenttype);
+    console.log("shdbhsdbhsdb",departmenttype);
   }, [departmenttype]);
   return (
     <>
@@ -104,28 +119,26 @@ const AddTask = () => {
                                     Department Types
                                   </label>
                                   <div className="">
-                                    <select
-                                      className="form-select"
-                                      name="departmentType"
-                                      onBlur={handleBlur}
-                                      value={values.departmentType}
-                                      onChange={handleChange}
-                                    >
-                                      <option value="">--select--</option>
-                                      {departmenttype &&
-                                      departmenttype.length > 0 ? (
-                                        departmenttype.map((type) => (
-                                          <option key={type} value={type._id}>
-                                            {type.name}
-                                          </option>
-                                        ))
-                                      ) : (
-                                        <option value="" disabled>
-                                          No department available
-                                        </option>
-                                      )}
-                                    </select>
-                                  </div>
+      <select
+        className="form-select"
+        name="departmentType"
+        onBlur={handleBlur}
+        value={values.departmenttype}
+        onChange={handleChange}
+      >
+        <option value="">-- Select Department --</option>
+        {departmenttype ? (
+          <option value={departmenttype}>{departmenttype}</option>
+        ) : (
+          <option value="" disabled>
+            No department available
+          </option>
+        )}
+      </select>
+    </div>
+
+
+
                                   <p className="error text-danger">
                                     {errors.checkupType &&
                                       touched.checkupType &&
