@@ -101,6 +101,7 @@ const Login = () => {
         localStorage.setItem("AddTask", serverResponse.AddTask);
         localStorage.setItem("AssignMaster", serverResponse.AssignMaster);
         localStorage.setItem("CMS",serverResponse.CMS);
+        localStorage.setItem("name",serverResponse.name);
         navigate("/dashboard");
       } else {
         // Handle the case where the server response indicates failure
