@@ -151,6 +151,154 @@ const NewDashboard = () => {
               </Card>
             </Col>
           </Row>
+          <Row>
+            <Col md={4}>
+              <Card className="card-animate">
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <h5 className="fw-medium text-muted mb-0">
+                        Finance Department
+                      </h5>
+                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="card-animate">
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <h5 className="fw-medium text-muted mb-0">
+                        Commercial Department
+                      </h5>
+                      <p className="mt-4 ff-secondary fw-semibold">
+                        Buisness Plan
+                      </p>
+                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="card-animate">
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <h5 className="fw-medium text-muted mb-0">
+                        Treasury Department
+                      </h5>
+                      <p className="mt-4 ff-secondary fw-semibold">
+                        Buisness Plan
+                      </p>
+                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4}>
+              <Card className="card-animate">
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <h5 className="fw-medium text-muted mb-0">
+                        Finance Department
+                      </h5>
+                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="card-animate">
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <h5 className="fw-medium text-muted mb-0">
+                        Commercial Department
+                      </h5>
+                      <p className="mt-4 ff-secondary fw-semibold">
+                        Buisness Plan
+                      </p>
+                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md={4}>
+              <Card className="card-animate">
+                <CardBody>
+                  <div className="d-flex justify-content-between">
+                    <div>
+                      <h5 className="fw-medium text-muted mb-0">
+                        Treasury Department
+                      </h5>
+                      <p className="mt-4 ff-secondary fw-semibold">
+                        Buisness Plan
+                      </p>
+                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
+                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
 
           <Col lg={12}>
             <Card>
@@ -224,154 +372,7 @@ const NewDashboard = () => {
             </Card>
           </Col>
 
-          <Row>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Finance Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Commercial Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Treasury Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Finance Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Commercial Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Treasury Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+          
         </Container>
       </div>
     </>
