@@ -26,8 +26,9 @@ import {
 import SignContext from "../../contextAPI/Context/SignContext";
 
 import { useNavigate } from "react-router-dom";
-// const id = localStorage.getItem("DepartmentTypeID")
+const id = localStorage.getItem("DepartmentTypeID")
 // console.log("type",typeof(id));
+console.log(id);
 // const parsedIdArray = JSON.parse(id);
 const AddTaskMaster = () => {
   const navigate=useNavigate();
@@ -78,60 +79,60 @@ const AddTaskMaster = () => {
 //       // Handle errors appropriately
 //     }
 //   };
-const gettask = async () => {
-  try {
-    // Retrieve the data from localStorage
-    const idArrayString = localStorage.getItem("DepartmentTypeID");
+// const gettask = async () => {
+//   try {
+//     // Retrieve the data from localStorage
+//     const idArrayString = localStorage.getItem("DepartmentTypeID");
 
-    // Check if idArrayString is defined and not null
-    if (idArrayString) {
-      // Split the string into an array of IDs
-      const parsedIdArray = idArrayString.split(',');
+//     // Check if idArrayString is defined and not null
+//     if (idArrayString) {
+//       // Split the string into an array of IDs
+//       const parsedIdArray = idArrayString.split(',');
 
-      // Perform the axios GET request for each individual ID
-      const responseArray = await Promise.all(parsedIdArray.map(async (id) => {
-        try {
-          // Perform the axios GET request for the individual ID
-          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
+//       // Perform the axios GET request for each individual ID
+//       const responseArray = await Promise.all(parsedIdArray.map(async (id) => {
+//         try {
+//           // Perform the axios GET request for the individual ID
+//           const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
           
-          // Return the data if the request was successful
-          return response.data;
-        } catch (error) {
-          // Handle errors or empty responses appropriately
-          console.error(`Error fetching tasks for ID ${id}:`, error);
-          return []; // Return an empty array in case of error
-        }
-      }));
+//           // Return the data if the request was successful
+//           return response.data;
+//         } catch (error) {
+//           // Handle errors or empty responses appropriately
+//           console.error(`Error fetching tasks for ID ${id}:`, error);
+//           return []; // Return an empty array in case of error
+//         }
+//       }));
 
-      // Combine the responses using an OR operation
-      const combinedData = responseArray.reduce((accumulator, responseData) => {
-        // Perform OR operation between accumulator and responseData
-        // You need to define your own logic for OR operation based on your requirements
-        // For example, you might want to merge arrays or combine data in a different way
-        return accumulator || responseData;
-      }, []);
+//       // Combine the responses using an OR operation
+//       const combinedData = responseArray.reduce((accumulator, responseData) => {
+//         // Perform OR operation between accumulator and responseData
+//         // You need to define your own logic for OR operation based on your requirements
+//         // For example, you might want to merge arrays or combine data in a different way
+//         return accumulator || responseData;
+//       }, []);
 
-      console.log("Combined data:", combinedData);
+//       console.log("Combined data:", combinedData);
 
-      // Set the task state with the combined data
-      setTask(combinedData);
-    } else {
-      console.error("Error: DepartmentTypeID is undefined or null");
-    }
-  } catch (error) {
-    console.error("Error fetching tasks:", error);
-    // Handle errors appropriately
-  }
-};
+//       // Set the task state with the combined data
+//       setTask(combinedData);
+//     } else {
+//       console.error("Error: DepartmentTypeID is undefined or null");
+//     }
+//   } catch (error) {
+//     console.error("Error fetching tasks:", error);
+//     // Handle errors appropriately
+//   }
+// };
 
   
   
-  // const gettask = async () => {
-  //   const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
-  //   console.log(">>>");
-  //   console.log(response.data);
-  //   setTask(response.data);
-  // };
+  const gettask = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
+    console.log(">>>");
+    console.log(response.data);
+    setTask(response.data);
+  };
   const handleDelete=async (abc)=>{
     const abc1= window.confirm("Are you sure you want to delete?");
     if(abc1){  

@@ -147,6 +147,16 @@ export const SignState = (props) => {
     } catch (error) {
       console.error("Error during API call:", error);
     }
+  };  const getSpecificUser= async (id, role) => {
+    try {
+      const response = await axios.post(`${url}/user/getspecificadmin`, {
+        id: id,
+        
+      });
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
   };
 
 
@@ -1010,7 +1020,8 @@ const getUsers = async () => {
         // UpdateUser
         resetUserPassword,changeUserPassword,forgotUserPassword,
         loginUser,getLoggedInUser,getUsers ,
-        getAllSpecificTaskByDepartmentTypeId
+        getAllSpecificTaskByDepartmentTypeId,
+        getSpecificUser
         
       }}
     >
