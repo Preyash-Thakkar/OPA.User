@@ -94,6 +94,7 @@ import AddUser from "../pages/Pages/Team/AddUser";
 // import BlogMaster from "../pages/BlogMaster/BlogsMaster";
 
 import NewDashboard from "../Dashboard/NewDashboard";
+import SubDashboard from "../Dashboard/SubDashboard";
 import MenuMater from "../pages/MenuMaster/MenuMater";
 import AddMenu from "../pages/MenuMaster/AddMenu";
 import RolesResponsibility from "../pages/MenuMaster/RolesResponsibility";
@@ -134,6 +135,7 @@ import Editadmin from "../pages/MenuMaster/Editadmin";
 // import customerNew from "../pages/Ecommerce/EcommerceCustomers/customerNew";
 const authProtectedRoutes = [
   { path: "/dashboard", component: <NewDashboard /> },
+  { path: "/subdashboard", component: <SubDashboard /> },
   {
     path: "/menumaster",
     component: (
