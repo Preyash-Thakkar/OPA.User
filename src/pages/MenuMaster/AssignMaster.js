@@ -3,6 +3,7 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import logo from "../../assets/images/brands/slack.png";
 import Example from "./FormOne";
 import SignContext from "../../contextAPI/Context/SignContext";
@@ -25,13 +26,15 @@ import {
   Row,
 } from "reactstrap";
 const AssignMaster = () => {
+  const id=localStorage.getItem("EmployeeNameID");
+  console.log(id)
   const { GetallAssignTask } = useContext(SignContext);
   const [task,settask]=useState(null);
   const getalltask = async () => {
-    const res = await GetallAssignTask();
-    console.log(res);
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getspecificassigntaskbydepartmenttype/${id}`)
+    console.log("kjgkjk5ky",res);
     settask(res.data);
-  };
+};
 
   useEffect(() => {
     getalltask();

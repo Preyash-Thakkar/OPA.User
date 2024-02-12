@@ -29,104 +29,14 @@ import { useNavigate } from "react-router-dom";
 const id = localStorage.getItem("DepartmentTypeID");
 
 
-// console.log("type",typeof(id));
+
 console.log(id);
-// const parsedIdArray = JSON.parse(id);
+
 const AddTaskMaster = () => {
 
   const navigate=useNavigate();
   const { GetallAddTask,DeleteAddTask } = useContext(SignContext);
   const [task, setTask] = useState(null);
-//   const gettask = async () => {
-//     try {
-//       // Retrieve the data from localStorage
-//       const idArrayString = localStorage.getItem("DepartmentTypeID");
-//       console.log("details", idArrayString);
-//       console.log("hdhd", typeof idArrayString);
-  
-//       // Ensure that idArrayString is a non-empty string
-//       if (!idArrayString || typeof idArrayString !== "string") {
-//         console.error("Error: DepartmentTypeID is not a valid string");
-//         return;
-//       }
-  
-//       // // Split the string into an array of IDs
-// const parsedIdArray = idArrayString.split(',');
-
-// console.log("type:", Array.isArray(parsedIdArray) ? "Array" : typeof(parsedIdArray));
-
-  
-//       // // Ensure that parsedIdArray is an array of strings
-//       // if (!Array.isArray(parsedIdArray)) {
-//       //   console.error("Error: DepartmentTypeID is not an array");
-//       //   return;
-//       // }
-  
-//       // Perform the axios GET request for each individual ID
-//       const responseArray = await Promise.all(parsedIdArray.map(async (id) => {
-//         return await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
-//       }));
-  
-//       // Combine or process the responses as needed
-//       const combinedData = responseArray.reduce((accumulator, response) => {
-//         return accumulator.concat(response.data);
-//       }, []);
-  
-//       console.log(">>>");
-//       console.log(combinedData);
-  
-//       // Set the task state with the combined data
-//       setTask(combinedData);
-//     } catch (error) {
-//       console.error("Error fetching tasks:", error);
-//       // Handle errors appropriately
-//     }
-//   };
-// const gettask = async () => {
-//   try {
-//     // Retrieve the data from localStorage
-//     const idArrayString = localStorage.getItem("DepartmentTypeID");
-
-//     // Check if idArrayString is defined and not null
-//     if (idArrayString) {
-//       // Split the string into an array of IDs
-//       const parsedIdArray = idArrayString.split(',');
-
-//       // Perform the axios GET request for each individual ID
-//       const responseArray = await Promise.all(parsedIdArray.map(async (id) => {
-//         try {
-//           // Perform the axios GET request for the individual ID
-//           const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
-          
-//           // Return the data if the request was successful
-//           return response.data;
-//         } catch (error) {
-//           // Handle errors or empty responses appropriately
-//           console.error(`Error fetching tasks for ID ${id}:`, error);
-//           return []; // Return an empty array in case of error
-//         }
-//       }));
-
-//       // Combine the responses using an OR operation
-//       const combinedData = responseArray.reduce((accumulator, responseData) => {
-//         // Perform OR operation between accumulator and responseData
-//         // You need to define your own logic for OR operation based on your requirements
-//         // For example, you might want to merge arrays or combine data in a different way
-//         return accumulator || responseData;
-//       }, []);
-
-//       console.log("Combined data:", combinedData);
-
-//       // Set the task state with the combined data
-//       setTask(combinedData);
-//     } else {
-//       console.error("Error: DepartmentTypeID is undefined or null");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching tasks:", error);
-//     // Handle errors appropriately
-//   }
-// };
 
   
   

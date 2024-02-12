@@ -4,7 +4,7 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
-
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SignContext from "../../contextAPI/Context/SignContext";
 
@@ -38,8 +38,10 @@ const CommunityUpdateMaster = () => {
 
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
+
+const id=localStorage.getItem("LocationID")
   const getreqcommdetails = async () => {
-    const res = await getReqCommDetails();
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };

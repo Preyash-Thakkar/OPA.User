@@ -39,10 +39,12 @@ const NewDashboard = () => {
   //const getReqCommDetails = useContext(SignContext)
 
   //const { id } = useParams();
+  const id=localStorage.getItem("LocationID")
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
   const getreqcommdetails = async () => {
-    const res = await axios.get(`${url}/communitymaster/getrequiredcommunitymessage`);
+    // const res = await axios.get(`${url}/communitymaster/getrequiredcommunitymessage`);
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
