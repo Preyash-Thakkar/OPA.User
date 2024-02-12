@@ -352,6 +352,8 @@ const NewDashboard = () => {
                 className="gallery-img img-fluid mx-auto"
                 src={`${url}/${detail.uploadimage}`} // Adjust accordingly if using base64 strings
                 alt={detail.name}
+                height="304px"
+                width="405px"
               />
               <div className="gallery-overlay">
                 <h5 className="overlay-caption">
