@@ -31,13 +31,16 @@ export const SignState = (props) => {
   };
   const loginAdmin = async (AdminInfo) => {
     try {
-      const response = await axios.post(`${url}/auth/authentication`, AdminInfo);
+      const response = await axios.post(
+        `${url}/auth/authentication`,
+        AdminInfo
+      );
       return response;
     } catch (error) {
       console.log(error);
       return error;
     }
-  }; 
+  };
   const loginUser = async (UserInfo) => {
     try {
       const response = await axios.post(`${url}/user/authentication`, UserInfo);
@@ -79,8 +82,8 @@ export const SignState = (props) => {
     } catch (error) {
       return { success: false, msg: "server Error" };
     }
-  }; 
-   const resetUserPassword = async (resetToken, password) => {
+  };
+  const resetUserPassword = async (resetToken, password) => {
     try {
       const response = await axios.put(
         `${url}/user/users/resetpassword/${resetToken}`,
@@ -139,26 +142,29 @@ export const SignState = (props) => {
 
   const getSpecificAdmin = async (id, role) => {
     try {
-      const response = await axios.post(`${url}/auth/getspecificadminwithroles`, {
-        id: id,
-        roles: role,
-      });
+      const response = await axios.post(
+        `${url}/auth/getspecificadminwithroles`,
+        {
+          id: id,
+          roles: role,
+        }
+      );
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
     }
-  };  const getSpecificUser= async (id, role) => {
+  };
+  const getSpecificUser = async (id, name) => {
     try {
-      const response = await axios.post(`${url}/user/getspecificadmin`, {
+      const response = await axios.post(`${url}/user/getspecificuser`, {
         id: id,
-        
+        name: name,
       });
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
     }
   };
-
 
   const getAdmins = async () => {
     try {
@@ -169,7 +175,7 @@ export const SignState = (props) => {
     }
   };
 
-const getUsers = async () => {
+  const getUsers = async () => {
     try {
       const response = await axios.post(`${url}/user/getusers`);
       return response;
@@ -177,7 +183,6 @@ const getUsers = async () => {
       return { success: false, msg: "server Error" };
     }
   };
-
 
   const updateAdmin = async (AdminInfo, image) => {
     try {
@@ -200,20 +205,35 @@ const getUsers = async () => {
       console.error("Error during API call:", error);
     }
   };
+  const updateUser = async (AdminInfo, id) => {
+    try {
+      console.log("info", AdminInfo.name, id);
 
-//   const UpdateUser=async(id,name)=>{
-//     try{
-// const response=await axios.put(`${url}/user/updateuser`)
-//     }
-//     catch(erorr){
-//       console.error("Error during API call:", error);
-//     }
-    
+      const formData = new FormData();
+      formData.append("name", AdminInfo.name);
+      formData.append("id", id);
+      const response = await axios.put(`${url}/user/updateuser/${id}`, {
+        name: AdminInfo.name,
+      });
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
 
-//   }
-
-  const setEditUserRoleValues = async (id, name, email, password, image, location, departmentGroup, departmentType, Role, status) => {
-    const formData = new FormData()
+  const setEditUserRoleValues = async (
+    id,
+    name,
+    email,
+    password,
+    image,
+    location,
+    departmentGroup,
+    departmentType,
+    Role,
+    status
+  ) => {
+    const formData = new FormData();
     try {
       console.log(name);
 
@@ -228,10 +248,7 @@ const getUsers = async () => {
       formData.append("departmentType", departmentType);
       formData.append("Role", Role);
       formData.append("status", status);
-      const response = await axios.put(
-        `${url}/auth/editadmin/${id}`,
-        formData,
-      );
+      const response = await axios.put(`${url}/auth/editadmin/${id}`, formData);
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -240,10 +257,7 @@ const getUsers = async () => {
 
   const GetallAdminname = async () => {
     try {
-      const response = await axios.get(
-        `${url}/auth/getadminnames`,
-        {}
-      );
+      const response = await axios.get(`${url}/auth/getadminnames`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -251,16 +265,12 @@ const getUsers = async () => {
   };
   const Deleteadmin = async (id) => {
     try {
-      const response = await axios.post(
-        `${url}/auth/deleteadmin/${id}`,
-        {}
-      );
+      const response = await axios.post(`${url}/auth/deleteadmin/${id}`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
     }
   };
-
 
   // Get roles
   const GetRoles = async () => {
@@ -402,10 +412,7 @@ const getUsers = async () => {
   };
   const GetallAssignTask = async () => {
     try {
-      const response = await axios.get(
-        `${url}/assigntask/getassigntask`,
-        {}
-      );
+      const response = await axios.get(`${url}/assigntask/getassigntask`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -464,7 +471,6 @@ const getUsers = async () => {
       console.error("Error during API call:", error);
     }
   };
-
 
   const GetDepTypeByIdForEditing = async (id) => {
     try {
@@ -616,8 +622,18 @@ const getUsers = async () => {
       return { success: false, msg: "server Error" };
     }
   };
-  const addCommMaster = async (name, message, uploadimage, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive) => {
-    const formData = new FormData()
+  const addCommMaster = async (
+    name,
+    message,
+    uploadimage,
+    locationSchema,
+    departmentGroup,
+    departmentType,
+    employeeRole,
+    employeeName,
+    isActive
+  ) => {
+    const formData = new FormData();
     try {
       console.log(name);
       console.log(message);
@@ -636,21 +652,31 @@ const getUsers = async () => {
 
       // console.log("hii",employeeName)
       const response = await axios.post(
-        `${url}/communitymaster/addcommunitymessages`, formData, {
+        `${url}/communitymaster/addcommunitymessages`,
+        formData,
+        {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-      }
-
-
+        }
       );
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
     }
-  }
-  const addadmin = async (name, email, password, location, departmentGroup, departmentType, Role, status, image) => {
-    const formData = new FormData()
+  };
+  const addadmin = async (
+    name,
+    email,
+    password,
+    location,
+    departmentGroup,
+    departmentType,
+    Role,
+    status,
+    image
+  ) => {
+    const formData = new FormData();
     try {
       console.log(name);
       // console.log(message);
@@ -668,34 +694,61 @@ const getUsers = async () => {
       formData.append("status", status);
 
       // console.log("hii",employeeName)
-      const response = await axios.post(
-        `${url}/auth/addadminname`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-      }
-
-
-      );
+      const response = await axios.post(`${url}/auth/addadminname`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
     }
-  }
+  };
   const GetUserRoleByIdForEditing = async (id) => {
     try {
       const response = await axios.get(`${url}/auth/getadminbyid/${id}`, {});
       return response;
+    } catch (error) {
+      console.log("Error During API call: ", error);
     }
-    catch (error) {
-      console.log("Error During API call: ", error)
-    }
-
-  }
-  const addAssignTaskmaster = async (documentname, documentdepartmenttype, tasktypes, documenttype, formlink, documentlink, uploaddocument, documentdescription, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive) => {
+  };
+  const addAssignTaskmaster = async (
+    documentname,
+    documentdepartmenttype,
+    tasktypes,
+    documenttype,
+    formlink,
+    documentlink,
+    uploaddocument,
+    documentdescription,
+    locationSchema,
+    departmentGroup,
+    departmentType,
+    employeeRole,
+    employeeName,
+    isActive
+  ) => {
     try {
-      const response = await axios.post(`
-        ${url}/assigntask/addassigntask`, { documentname, documentdepartmenttype, tasktypes, documenttype, formlink, documentlink, uploaddocument, documentdescription, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive });
+      const response = await axios.post(
+        `
+        ${url}/assigntask/addassigntask`,
+        {
+          documentname,
+          documentdepartmenttype,
+          tasktypes,
+          documenttype,
+          formlink,
+          documentlink,
+          uploaddocument,
+          documentdescription,
+          locationSchema,
+          departmentGroup,
+          departmentType,
+          employeeRole,
+          employeeName,
+          isActive,
+        }
+      );
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -793,19 +846,37 @@ const getUsers = async () => {
   };
   const GetEmployeeNameIdForEditing = async (id) => {
     try {
-      const response = await axios.get(`${url}/employeename/getemployeenamebyid/${id}`, {});
+      const response = await axios.get(
+        `${url}/employeename/getemployeenamebyid/${id}`,
+        {}
+      );
       return response;
+    } catch (error) {
+      console.log("Error During API call: ", error);
     }
-    catch (error) {
-      console.log("Error During API call: ", error)
-    }
-
-  }
-  const setEditEmployeeNameValues = async (id, departmentGroup, departmentType, EmployeeRole, name, email, password, isActive) => {
+  };
+  const setEditEmployeeNameValues = async (
+    id,
+    departmentGroup,
+    departmentType,
+    EmployeeRole,
+    name,
+    email,
+    password,
+    isActive
+  ) => {
     try {
       const response = await axios.put(
         `${url}/employeename/editemployeename/${id}`,
-        { departmentGroup, departmentType, EmployeeRole, name, email, password, isActive }
+        {
+          departmentGroup,
+          departmentType,
+          EmployeeRole,
+          name,
+          email,
+          password,
+          isActive,
+        }
       );
       return response;
     } catch (error) {
@@ -825,27 +896,39 @@ const getUsers = async () => {
   };
   const DeleteCommunityMaster = async (id) => {
     try {
-      const response = await axios.delete(`${url}/communitymaster/deleteCommunity/${id}`, {});
+      const response = await axios.delete(
+        `${url}/communitymaster/deleteCommunity/${id}`,
+        {}
+      );
       return response;
-    }
-
-    catch (error) {
-      return { success: false, msg: "Server Error" }
+    } catch (error) {
+      return { success: false, msg: "Server Error" };
     }
   };
   const GetCommunityNameIdForEditing = async (id) => {
     try {
-      const response = await axios.get(`${url}/communitymaster/getspecificcommunitymessage/${id}`, {}
-
+      const response = await axios.get(
+        `${url}/communitymaster/getspecificcommunitymessage/${id}`,
+        {}
       );
       return response;
-    }
-    catch (error) {
-      console.log("Error During API call: ", error)
+    } catch (error) {
+      console.log("Error During API call: ", error);
     }
   };
-  const setEditCommunityMasterName = async (id, name, message, uploadimage, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive) => {
-    const formData = new FormData()
+  const setEditCommunityMasterName = async (
+    id,
+    name,
+    message,
+    uploadimage,
+    locationSchema,
+    departmentGroup,
+    departmentType,
+    employeeRole,
+    employeeName,
+    isActive
+  ) => {
+    const formData = new FormData();
     try {
       console.log(name);
       // console.log(message);
@@ -884,12 +967,11 @@ const getUsers = async () => {
       //   return value;
       // });
 
-      const extractedlocationvalues = locationSchema.map(loc => loc.value);
-      const extracteddepartmentgroup = departmentGroup.map(dep => dep.value);
-      const extracteddepartmenttype = departmentType.map(type => type.value);
-      const extractedemployeerole = employeeRole.map(role => role.value);
-      const extractedemployeename = employeeName.map(name => name.value);
-
+      const extractedlocationvalues = locationSchema.map((loc) => loc.value);
+      const extracteddepartmentgroup = departmentGroup.map((dep) => dep.value);
+      const extracteddepartmenttype = departmentType.map((type) => type.value);
+      const extractedemployeerole = employeeRole.map((role) => role.value);
+      const extractedemployeename = employeeName.map((name) => name.value);
 
       formData.append("locationSchema", extractedlocationvalues);
       // formData.append("locationSchema", locationSchema.join(','));
@@ -898,27 +980,27 @@ const getUsers = async () => {
       //   formData.append("locationSchema", location.value);
       // });
 
-
       // // locationSchema.forEach((value, index) => {
       //   formData.append(`locationSchema`, value);
       // // });
       // console.log("location is thisss",locationSchema)
       formData.append("departmentGroup", extracteddepartmentgroup);
       // formData.append("departmentGroup", departmentGroup.join(','));
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", extracteddepartmentgroup);
+      console.log(
+        ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+        extracteddepartmentgroup
+      );
       // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",departmentGroup);
       formData.append("departmentType", extracteddepartmenttype);
       // formData.append("departmentType", departmentType.join(','));
-      console.log(">>>>>>>>>>>department type", extracteddepartmenttype)
+      console.log(">>>>>>>>>>>department type", extracteddepartmenttype);
       formData.append("employeeRole", extractedemployeerole);
       // formData.append("employeeRole",extractedemployeerole);
       // console.log(">>>>>>>employeeRole",extractedemployeerole);
 
-
-
       // formData.append("employeeName", extractedemployeename);
       formData.append("employeeName", extractedemployeename);
-      console.log(">>>>employeeName", extractedemployeename)
+      console.log(">>>>employeeName", extractedemployeename);
       formData.append("isActive", isActive);
       console.log("active", isActive);
 
@@ -930,7 +1012,7 @@ const getUsers = async () => {
     } catch (error) {
       console.error("Error during API call:", error);
     }
-  }
+  };
 
   // const loginuser=async(req,res)=>{
   //   try{
@@ -951,7 +1033,6 @@ const getUsers = async () => {
       console.error("Error during API call:", error);
     }
   };
-
 
   return (
     <SignContext.Provider
@@ -1018,15 +1099,18 @@ const getUsers = async () => {
         updateAdmin,
         getAdmins,
         // UpdateUser
-        resetUserPassword,changeUserPassword,forgotUserPassword,
-        loginUser,getLoggedInUser,getUsers ,
+        resetUserPassword,
+        changeUserPassword,
+        forgotUserPassword,
+        loginUser,
+        getLoggedInUser,
+        getUsers,
         getAllSpecificTaskByDepartmentTypeId,
-        getSpecificUser
-        
+        getSpecificUser,
+        updateUser,
       }}
     >
       {props.children}
     </SignContext.Provider>
   );
 };
-

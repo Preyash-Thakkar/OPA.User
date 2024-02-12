@@ -26,22 +26,21 @@ import progileBg from "../../../../assets/images/profile-bg.jpg";
 import avatar1 from "../../../../assets/images/users/avatar-1.jpg";
 import SignContext from "../../../../contextAPI/Context/SignContext";
 
+
 const Settings = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
-  const {updateAdmin,  getSpecificAdmin, changeadminPassword } =
+  const {updateUser,  getSpecificUser, changeUserPassword } =
     useContext(SignContext);
   const [AdminInfo, setAdminInfo] = useState({
     oldPassword: "",
     newPassword: "",
   });
-  // const [UserPassowrd, setUserPassword] = useState({
-  //   oldPassword: "",
-  //   newPassword: "",
-  // });
+
+
   const [Error, setError] = useState("");
   const [Success, setSuccess] = useState("");
-  // console.log(Success);
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("1");
 
@@ -59,9 +58,7 @@ const Settings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await updateAdmin(AdminInfo, id);
-  
-    console.log("hiii",res);
+    const res = await updateUser({password: AdminInfo.newPassword , id});
     if (res.success) {
       // setSuccess(res.msg);
       
@@ -79,7 +76,7 @@ const Settings = () => {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("authToken");
-    const res = await changeadminPassword(AdminInfo, token);
+    const res = await changeUserPassword(AdminInfo, token);
     // console.log(res);
     if (res.success) {
       // window.location.reload();
@@ -94,18 +91,20 @@ const Settings = () => {
     }
   };
 
-  const getspecificAdmin = async (id) => {
-    const res = await getSpecificAdmin(id);
+  const getspecificuser = async (id) => {
+    const res = await getSpecificUser(id);
     console.log(res);
     if (res.success) {
+      console.log("This is ",res);
       setAdminInfo(res);
+      console.log(AdminInfo);
     } else {
       console.log(res.msg);
     }
   };
 
   useEffect(() => {
-    getspecificAdmin(id);
+    getspecificuser(id);
   }, []);
 
   document.title = "Profile Settings | OPA";

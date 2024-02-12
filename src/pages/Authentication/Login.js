@@ -138,6 +138,31 @@ const Login = () => {
       // Perform login based on the determined API endpoint
       const res = await axios.post(apiEndpoint, AdminInfo);
         if (res.success) {
+          
+          localStorage.removeItem("loggedIn", true);
+        localStorage.removeItem("authToken", res.token);
+
+        localStorage.removeItem("ID", res._id);
+        localStorage.removeItem("LocationID", res.locationSchema);
+        localStorage.removeItem("DepartmentGroupID", res.departmentGroup);
+        localStorage.removeItem("DepartmentTypeID", res.departmentType);
+        localStorage.removeItem("EmployeeRoleID", res.employeeRole);
+        localStorage.removeItem("EmployeeNameID", res.employeeName);
+        localStorage.removeItem("LocationSchema", res.LocationMaster);
+        localStorage.removeItem("CommunityUpdateMaster", res.CommunityUpdateMaster);
+        localStorage.removeItem("AdminUser", res.AdminUser);
+        localStorage.removeItem("Roles", res.Roles);
+        localStorage.removeItem("MenuMaster", res.MenuMaster);
+        localStorage.removeItem("Dashboard", res. Dashboard);
+        localStorage.removeItem("isActive", res.isActive);
+        localStorage.removeItem("DepartmentGroup", res.DepartmentGroup);
+        localStorage.removeItem("DepartmentType", res.DepartmentType);
+        localStorage.removeItem("EmployeeRole", res.EmployeeRole);
+        localStorage.removeItem("Employeemaster", res.Employeemaster);
+        localStorage.removeItem("AddTask", res.AddTask);
+        localStorage.removeItem("AssignMaster", res.AssignMaster);
+        localStorage.removeItem("CMS", res.CMS);
+          
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("authToken", res.token);
 
@@ -161,7 +186,10 @@ const Login = () => {
         localStorage.setItem("AddTask", res.AddTask);
         localStorage.setItem("AssignMaster", res.AssignMaster);
         localStorage.setItem("CMS", res.CMS);
+        
         navigate("/dashboard")
+        window.location.reload();
+
       } else {
         setError(res.msg);
       }

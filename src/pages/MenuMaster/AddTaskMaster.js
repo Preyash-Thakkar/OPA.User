@@ -26,11 +26,14 @@ import {
 import SignContext from "../../contextAPI/Context/SignContext";
 
 import { useNavigate } from "react-router-dom";
-const id = localStorage.getItem("DepartmentTypeID")
+const id = localStorage.getItem("DepartmentTypeID");
+
+
 // console.log("type",typeof(id));
 console.log(id);
 // const parsedIdArray = JSON.parse(id);
 const AddTaskMaster = () => {
+
   const navigate=useNavigate();
   const { GetallAddTask,DeleteAddTask } = useContext(SignContext);
   const [task, setTask] = useState(null);
@@ -128,6 +131,7 @@ const AddTaskMaster = () => {
   
   
   const gettask = async () => {
+    // window.location.reload();
     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
     console.log(">>>");
     console.log(response.data);
@@ -193,6 +197,7 @@ const AddTaskMaster = () => {
                           {task &&
                             task.length > 0 &&
                             task.map((type, index) => {
+                              {/* window.location.reload();    */}
                               return (
                                 <tr key={type._id}>
                                   <td>{index+1}</td>

@@ -14,16 +14,18 @@ import {
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import { TagsInput } from "react-tag-input-component";
 import SignContext from "../../contextAPI/Context/SignContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 const AddTask = () => {
   const navigate=useNavigate();
   const [departmenttype, setdepartmentype] = useState(null);
   const { GetDepTypeByIdForEditing,addTask,setDepartmentName,departmentName } = useContext(SignContext);
   const getalldtype = async () => {
+
     try {
       // Retrieve department ID from localStorage
-      // const departmentId = localStorage.getItem('DepartmentTypeID'); // Replace 'your_department_id_key' with the actual key
-  const departmentId = "65b0ebc59d84e445fc900f18";
+      const departmentId = localStorage.getItem('DepartmentTypeID'); // Replace 'your_department_id_key' with the actual key
+  // const departmentId = "65b0ebc59d84e445fc900f18";
       // Make API call to get department data by ID for editing
       const response = await GetDepTypeByIdForEditing(departmentId);
       console.log("Dtype", response);

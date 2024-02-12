@@ -31,28 +31,36 @@ import { useNavigate, useParams } from "react-router-dom";
 const UserProfile = () => {
   const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
-  const { updateAdmin, getSpecificAdmin } = useContext(SignContext);
-  const [AdminInfo, setAdminInfo] = useState({ roles:"", status: "" });
+  const { updateUser, getSpecificUser } = useContext(SignContext);
+  const [AdminInfo, setAdminInfo] = useState({name:""});
   const [Error, setError] = useState("");
   const [Success, setSuccess] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // const handleChange = (e) => {
+  //   if (e.target.name === "roles") {
+  //     setAdminInfo({ ...AdminInfo, [e.target.name]: [e.target.value] });
+  //   } else if (e.target.name === "status") {
+  //     setAdminInfo({ ...AdminInfo, status: e.target.value });
+  //   } else {
+  //     setAdminInfo({ ...AdminInfo, [e.target.name]: e.target.value });
+  //   }
+  // };
+  
   const handleChange = (e) => {
-    if (e.target.name === "roles") {
-      setAdminInfo({ ...AdminInfo, [e.target.name]: [e.target.value] });
-    } else if (e.target.name === "status") {
-      setAdminInfo({ ...AdminInfo, status: e.target.value });
-    } else {
-      setAdminInfo({ ...AdminInfo, [e.target.name]: e.target.value });
-    }
+    const { name, value } = e.target;
+  
+    // Update the name field only
+    setAdminInfo({ ...AdminInfo, name: value });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    getspecificAdmin(id);
-    const res = await updateAdmin(AdminInfo, id);
-    console.log(res);
+    getspecificuser(id);
+    const res = await updateUser(AdminInfo, id);
+    console.log("newwww",res);
     if (res.success) {
       setSuccess(res.msg)
       setTimeout(() => {
@@ -66,18 +74,18 @@ const UserProfile = () => {
     }
   };
 
-  const getspecificAdmin = async (id) => {
-    const res = await getSpecificAdmin(id);
+  const getspecificuser = async (id) => {
+    const res = await getSpecificUser(id);
     if (res.success) {
       setAdminInfo(res);
       console.log("This is the message",res);
     } else {
-      console.log(res.msg);
+      console.log("Hiii",res.msg);
     }
   };
 
   useEffect(() => {
-    getspecificAdmin(id);
+    getspecificuser(id);
   }, []);
 
   document.title = "OPA|Profile";
