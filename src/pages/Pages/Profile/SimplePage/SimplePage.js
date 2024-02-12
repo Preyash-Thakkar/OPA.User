@@ -83,7 +83,7 @@ const SimplePage = () => {
         <Container fluid>
           <div className="profile-foreground position-relative mx-n4 mt-n4">
             <div className="profile-wid-bg">
-              <img src={"https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg"} alt="Image will be Shown here" className="profile-wid-img" />
+              <img src={"https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpgs"} alt="Image will be Shown here" className="profile-wid-img" />
             </div>
           </div>
           <div className="pt-4 mb-4 mb-lg-3 pb-lg-4">
@@ -91,7 +91,7 @@ const SimplePage = () => {
               <div className="col-auto">
                 <div className="avatar-lg">
                   <img
-                    // src={`${url}/${UserInfo.image}`}
+                    src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTStsoSO-6uUysC6wwkhhCmuXoY26DRV_jL1wo_4sC-yQ&s"}
                     alt="user-img"
                     className="rounded-circle avatar-xl img-thumbnail user-profile-image"
                     style={{height : "100%" , width : "100%"}}
@@ -102,7 +102,7 @@ const SimplePage = () => {
               <Col>
                 <div className="p-2">
                   <h3 className="text-white mb-1">{UserInfo.name}</h3>
-                  <h5><p className="text-white-75">User</p></h5>
+                  <h5><p className="text-white-75"><b>User</b></p></h5>
                   <div className="hstack text-white-50 gap-1">
                     {/* <div className="me-2">
                       <i className="ri-map-pin-user-line me-1 text-white-75 fs-16 align-middle"></i>

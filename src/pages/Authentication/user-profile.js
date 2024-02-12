@@ -37,16 +37,6 @@ const UserProfile = () => {
   const [Success, setSuccess] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // const handleChange = (e) => {
-  //   if (e.target.name === "roles") {
-  //     setAdminInfo({ ...AdminInfo, [e.target.name]: [e.target.value] });
-  //   } else if (e.target.name === "status") {
-  //     setAdminInfo({ ...AdminInfo, status: e.target.value });
-  //   } else {
-  //     setAdminInfo({ ...AdminInfo, [e.target.name]: e.target.value });
-  //   }
-  // };
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,9 +52,8 @@ const UserProfile = () => {
     const res = await updateUser(AdminInfo, id);
     console.log("newwww",res);
     if (res.success) {
-      setSuccess(res.msg)
+      setSuccess(res.msg);
       setTimeout(() => {
-        // navigate("/users");
       }, 1000);
     } else {
       setError(res.msg);
@@ -105,7 +94,7 @@ const UserProfile = () => {
                   <div className="d-flex">
                     <div className="mx-3">
                       <img
-                        src={"https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg"}
+                        src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTStsoSO-6uUysC6wwkhhCmuXoY26DRV_jL1wo_4sC-yQ&s"}
                         alt=""
                         className="avatar-md rounded-circle img-thumbnail"
                       />
@@ -142,7 +131,7 @@ const UserProfile = () => {
                     onChange={(e) => {
                       handleChange(e);
                     }}
-                    
+                    disabled={!AdminInfo.editable}
                   />
                 </div>
                 <div className="text-center mt-4">

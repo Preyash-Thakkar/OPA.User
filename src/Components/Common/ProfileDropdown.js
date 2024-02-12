@@ -12,9 +12,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 const ProfileDropdown = () => {
   const time=localStorage.getItem('timestamp');
-  const Role="user";
+  const Role="User";
   const url = `${process.env.REACT_APP_BASE_URL}`;
-  const { getLoggedInAdmin } = useContext(SignContext);
+  const { getLoggedInUser } = useContext(SignContext);
   const navigate = useNavigate();
   const [UserInfo, setUserInfo] = useState({});
 
@@ -24,8 +24,8 @@ const ProfileDropdown = () => {
     navigate("/");
   };
 
-  const getloggedinAdmin = async (token) => {
-    const res = await getLoggedInAdmin(token);
+  const getloggedinuser = async (token) => {
+    const res = await getLoggedInUser(token);
     if (res.success) {
       setUserInfo(res);
     } else {
@@ -35,7 +35,7 @@ const ProfileDropdown = () => {
 
   useEffect(() => {
     const authToken = window.localStorage.getItem("authToken");
-    getloggedinAdmin(authToken);
+    getloggedinuser(authToken);
   }, []);
 
   //Dropdown Toggle
@@ -54,7 +54,7 @@ const ProfileDropdown = () => {
           <span className="d-flex align-items-center">
             <img
               className="rounded-circle header-profile-user"
-              src={`${url}/${UserInfo.image}`}
+              src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTStsoSO-6uUysC6wwkhhCmuXoY26DRV_jL1wo_4sC-yQ&s"}
               alt="Header Avatar"
             />
             <span className="text-start ms-xl-2">

@@ -62,7 +62,7 @@ const Settings = () => {
     if (res.success) {
       setSuccess(res.msg);
       
-      toast.success("Updated Successfully", { autoClose: 3000 });
+      toast.success("Updated Successfully", { autoClose: 1000 });
       
       // window.location.reload();
     } else {
@@ -75,11 +75,11 @@ const Settings = () => {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("authToken");
+    const token = window.localStorage.getItem("authToken");
     const res = await changeUserPassword(AdminInfo, token);
     // console.log(res);
     if (res.success) {
-      // window.location.reload();
+      window.location.reload();
       setTimeout(() => {
         setSuccess(res.msg);
       }, 2000);
@@ -97,7 +97,7 @@ const Settings = () => {
     if (res.success) {
       // console.log("This is ",res);
       setAdminInfo(res);
-      console.log(AdminInfo);
+      // console.log(AdminInfo);
     } else {
       console.log(res.msg);
     }
@@ -127,7 +127,7 @@ const Settings = () => {
                   <div className="text-center">
                     <div className="profile-user position-relative d-inline-block mx-auto  mb-4">
                       <img
-                        src={"https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg"}
+                        src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTStsoSO-6uUysC6wwkhhCmuXoY26DRV_jL1wo_4sC-yQ&s"}
                         className="rounded-circle avatar-xl img-thumbnail user-profile-image"
                         alt="user-profile"
                       />

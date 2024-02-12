@@ -3,7 +3,7 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 
 
 import logo from "../../assets/images/brands/slack.png";
@@ -34,9 +34,10 @@ const EmployeeMaster = () => {
   const {GetallEmployeeName,DeleteEmployeeName}=useContext(SignContext)
   const [employeename,setemployeename]=useState(null);
 
- 
+ const id=localStorage.getItem("EmployeeRoleID");
+ console.log(id)
   const getemployeename=async()=>{
-     const res=await GetallEmployeeName(); 
+     const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/employeename/getemployeebyrole/${id}`)
      console.log("This is it",res); 
      setemployeename(res.data);    
   }

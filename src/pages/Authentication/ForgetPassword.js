@@ -34,7 +34,7 @@ import withRouter from "../../Components/Common/withRouter";
 import SignContext from "../../contextAPI/Context/SignContext";
 
 const ForgetPasswordPage = (props) => {
-  const { forgotPersonPassword } = useContext(SignContext);
+  const { forgotUserPassword} = useContext(SignContext);
   const [AdminInfo, setAdminInfo] = useState({
     email: "",
   });
@@ -47,7 +47,7 @@ const ForgetPasswordPage = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await forgotPersonPassword(AdminInfo);
+    const res = await forgotUserPassword(AdminInfo);
     if (res.success) {
       setSuccess(res.msg);
     } else {

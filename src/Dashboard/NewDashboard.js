@@ -39,12 +39,10 @@ const NewDashboard = () => {
   //const getReqCommDetails = useContext(SignContext)
 
   //const { id } = useParams();
-  const id=localStorage.getItem("LocationID")
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
   const getreqcommdetails = async () => {
-    // const res = await axios.get(`${url}/communitymaster/getrequiredcommunitymessage`);
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
+    const res = await axios.get(`${url}/communitymaster/getrequiredcommunitymessage`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
@@ -317,6 +315,8 @@ const NewDashboard = () => {
           <Col lg={12}>
             <Card>
               <CardBody>
+              <h4 className="mb-4">Business Community Updates</h4>
+              <hr/>
                 <Swiper
                   slidesPerView={1}
                   spaceBetween={10}
@@ -354,8 +354,8 @@ const NewDashboard = () => {
                 className="gallery-img img-fluid mx-auto"
                 src={`${url}/${detail.uploadimage}`} // Adjust accordingly if using base64 strings
                 alt={detail.name}
-                height="304px"
-                width="405px"
+                height="305px"
+                width="208.5px"
               />
               <div className="gallery-overlay">
                 <h5 className="overlay-caption">
