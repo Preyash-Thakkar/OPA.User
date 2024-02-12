@@ -83,7 +83,7 @@ const SimplePage = () => {
         <Container fluid>
           <div className="profile-foreground position-relative mx-n4 mt-n4">
             <div className="profile-wid-bg">
-              <img src={`${url}/${UserInfo.image}`} alt="Image will be Shown here" className="profile-wid-img" />
+              <img src={"https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg"} alt="Image will be Shown here" className="profile-wid-img" />
             </div>
           </div>
           <div className="pt-4 mb-4 mb-lg-3 pb-lg-4">

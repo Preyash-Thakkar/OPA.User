@@ -105,7 +105,7 @@ const UserProfile = () => {
                   <div className="d-flex">
                     <div className="mx-3">
                       <img
-                        src={`${url}/${AdminInfo.image}`}
+                        src={"https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg"}
                         alt=""
                         className="avatar-md rounded-circle img-thumbnail"
                       />
@@ -142,6 +142,7 @@ const UserProfile = () => {
                     onChange={(e) => {
                       handleChange(e);
                     }}
+                    
                   />
                 </div>
                 <div className="text-center mt-4">

@@ -205,22 +205,23 @@ export const SignState = (props) => {
       console.error("Error during API call:", error);
     }
   };
-  const updateUser = async (AdminInfo, id) => {
+  const updateUser = async (
+    Admininfo,id
+  ) => {
     try {
-      console.log("info", AdminInfo.name, id);
-
-      const formData = new FormData();
-      formData.append("name", AdminInfo.name);
-      formData.append("id", id);
-      const response = await axios.put(`${url}/user/updateuser/${id}`, {
-        name: AdminInfo.name,
-      });
+      console.log(Admininfo);
+      console.log(id);
+      const response = await axios.put(
+        `${url}/user/updateuser/${id}`,
+        {
+        Admininfo
+        }
+      );
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
     }
   };
-
   const setEditUserRoleValues = async (
     id,
     name,
