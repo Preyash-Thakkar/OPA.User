@@ -390,7 +390,7 @@ const VerticalLayout = (props) => {
 
       {iscms ? (
         <li className="nav-item">
-          <Link className="nav-link menu-link" to="/blogs">
+          <Link className="nav-link menu-link" to="/dashboard">
             <span data-key="t-apps">CMS </span>
           </Link>
         </li>) : (null)}
