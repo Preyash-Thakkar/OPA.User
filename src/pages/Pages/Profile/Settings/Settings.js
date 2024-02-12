@@ -390,14 +390,14 @@ const Settings = () => {
                   
 
                           <Col lg={12}>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                               <Link
                                 to="/forgot-password"
                                 className="link-primary text-decoration-underline"
                               >
                                 Forgot Password ?
                               </Link>
-                            </div>
+                            </div> */}
                           </Col>
 
                           <Col lg={12}>

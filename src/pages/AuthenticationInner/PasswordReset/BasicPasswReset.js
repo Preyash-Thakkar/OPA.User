@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const BasicPasswReset = () => {
-    document.title="Reset Password | Pushtishangar";
+    document.title="Reset Password | OPA";
 
     const validation = useFormik({
         enableReinitialize: true,

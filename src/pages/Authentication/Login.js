@@ -94,7 +94,29 @@ const Login = () => {
 
         // Create the formatted timestamp string
         const formattedTimestamp = `${day}-${month.toLowerCase()}-${year}-${formattedHours}:${minutes} ${ampm}`;
+        localStorage.removeItem("loggedIn", true);
+        localStorage.removeItem("authToken", serverResponse.token);
 
+        localStorage.removeItem("ID", serverResponse._id);
+        localStorage.removeItem("LocationID", serverResponse.locationSchema);
+        localStorage.removeItem("DepartmentGroupID", serverResponse.departmentGroup);
+        localStorage.removeItem("DepartmentTypeID", serverResponse.departmentType);
+        localStorage.removeItem("EmployeeRoleID", serverResponse.employeeRole);
+        localStorage.removeItem("EmployeeNameID", serverResponse.employeeName);
+        localStorage.removeItem("LocationSchema", serverResponse.LocationMaster);
+        localStorage.removeItem("CommunityUpdateMaster", serverResponse.CommunityUpdateMaster);
+        localStorage.removeItem("AdminUser",serverResponse.AdminUser);
+        localStorage.removeItem("Roles", serverResponse.Roles);
+        localStorage.removeItem("MenuMaster", serverResponse.MenuMaster);
+        localStorage.removeItem("Dashboard", serverResponse. Dashboard);
+        localStorage.removeItem("isActive", serverResponse.isActive);
+        localStorage.removeItem("DepartmentGroup", serverResponse.DepartmentGroup);
+        localStorage.removeItem("DepartmentType", serverResponse.DepartmentType);
+        localStorage.removeItem("EmployeeRole", serverResponse.EmployeeRole);
+        localStorage.removeItem("Employeemaster", serverResponse.Employeemaster);
+        localStorage.removeItem("AddTask", serverResponse.AddTask);
+        localStorage.removeItem("AssignMaster", serverResponse.AssignMaster);
+        localStorage.removeItem("CMS", serverResponse.CMS);
         // Set the formatted timestamp in local storage
         localStorage.setItem("timestamp", formattedTimestamp);
         localStorage.setItem("loggedIn", true);
@@ -121,6 +143,7 @@ const Login = () => {
         localStorage.setItem("CMS",serverResponse.CMS);
         localStorage.setItem("name",serverResponse.name);
         navigate("/dashboard");
+        window.location.reload();
       } else {
         // Handle the case where the server response indicates failure
         console.error('Error during Google login:', serverResponse.data.message);
@@ -224,8 +247,10 @@ const Login = () => {
         localStorage.setItem("AssignMaster", res.AssignMaster);
         localStorage.setItem("CMS", res.CMS);
         
+        // console.log("Hii",count)
         navigate("/dashboard")
-        window.location.reload();
+        const count = window.location.reload();
+       
 
       } else {
         setError(res.msg);
