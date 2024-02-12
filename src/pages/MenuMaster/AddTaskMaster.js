@@ -24,14 +24,17 @@ import {
   Row,
 } from "reactstrap";
 import SignContext from "../../contextAPI/Context/SignContext";
-//const id = localStorage.getItem("")
+
 import { useNavigate } from "react-router-dom";
+// console.log(id)
 const AddTaskMaster = () => {
   const navigate=useNavigate();
   const { GetallAddTask,DeleteAddTask } = useContext(SignContext);
   const [task, setTask] = useState(null);
   const gettask = async () => {
-    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/65b0f0b79d84e445fc900f31`);
+    
+    const id = localStorage.getItem("Department Type ID");
+    const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
     console.log(">>>");
     console.log(response.data);
     setTask(response.data);
@@ -49,6 +52,9 @@ const AddTaskMaster = () => {
   console.log(">>>id",id)
   navigate(`/edit-task/${id}`)
 }
+  useEffect(() => {
+    gettask();
+  }, []);
   useEffect(() => {
     gettask();
   }, []);
