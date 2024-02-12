@@ -4,7 +4,7 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
-import SignContext from "../../contextAPI/Context/SignContext";
+
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -25,7 +25,7 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-
+import SignContext from "../../contextAPI/Context/SignContext";
 const DepartmentGroup = () => {
   const { GetallDepartmentGroup ,deletegrp } = useContext(SignContext);
   const [depgroup, setDepgroup] = useState(null);
@@ -54,10 +54,13 @@ const DepartmentGroup = () => {
 
       navigate(`/edit_dggroup/${id}`);
   }
+
   useEffect(() => {
     getdepgroup();
   }, []);
-  
+  useEffect(() =>{
+    getdepgroup();
+  },[]);
   return (
     <>
       <UiContent />

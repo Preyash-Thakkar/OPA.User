@@ -53,7 +53,10 @@ const EmployeeRoles = () => {
   
   useEffect(()=>{
        getemployerole()
-  },[])
+  }, []);
+  useEffect(()=>{
+    getemployerole()
+}, []);
   return (
     <>
       <UiContent />
