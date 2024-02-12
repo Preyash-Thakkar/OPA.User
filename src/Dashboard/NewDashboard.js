@@ -153,6 +153,7 @@ const NewDashboard = () => {
           </Row>
           <Row>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -173,8 +174,10 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -198,8 +201,10 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -223,10 +228,12 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
           </Row>
           <Row>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -247,8 +254,10 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -272,8 +281,10 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
             <Col md={4}>
+            <Link to="/subdashboard">
               <Card className="card-animate">
                 <CardBody>
                   <div className="d-flex justify-content-between">
@@ -297,6 +308,7 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </Link>
             </Col>
           </Row>
 
