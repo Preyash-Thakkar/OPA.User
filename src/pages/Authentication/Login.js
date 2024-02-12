@@ -79,6 +79,24 @@ const Login = () => {
       console.log(serverResponse);
 
       if (serverResponse.success === true) {
+        const currentTimestamp = new Date();
+
+        // Get day, month, year, hour, minute, and AM/PM components
+        const day = currentTimestamp.getDate();
+        const month = currentTimestamp.toLocaleString('en-US', { month: 'long' });
+        const year = currentTimestamp.getFullYear();
+        const hours = currentTimestamp.getHours();
+        const minutes = currentTimestamp.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        // Convert hours to 12-hour format
+        const formattedHours = hours % 12 || 12;
+
+        // Create the formatted timestamp string
+        const formattedTimestamp = `${day}-${month.toLowerCase()}-${year}-${formattedHours}:${minutes} ${ampm}`;
+
+        // Set the formatted timestamp in local storage
+        localStorage.setItem("timestamp", formattedTimestamp);
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("authToken", serverResponse.token);
         localStorage.setItem("ID", serverResponse._id);
@@ -165,6 +183,25 @@ const Login = () => {
           
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("authToken", res.token);
+        const currentTimestamp = new Date();
+
+        // Get day, month, year, hour, minute, and AM/PM components
+        const day = currentTimestamp.getDate();
+        const month = currentTimestamp.toLocaleString('en-US', { month: 'long' });
+        const year = currentTimestamp.getFullYear();
+        const hours = currentTimestamp.getHours();
+        const minutes = currentTimestamp.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        // Convert hours to 12-hour format
+        const formattedHours = hours % 12 || 12;
+
+        // Create the formatted timestamp string
+        const formattedTimestamp = `${day}-${month.toLowerCase()}-${year}-${formattedHours}:${minutes} ${ampm}`;
+
+        // Set the formatted timestamp in local storage
+        localStorage.setItem("timestamp", formattedTimestamp);
+        localStorage.setItem("Role", res.Roles)
 
         localStorage.setItem("ID", res._id);
         localStorage.setItem("LocationID", res.locationSchema);
