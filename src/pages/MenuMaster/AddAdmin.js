@@ -15,7 +15,7 @@ const AddAdmin = () => {
     GetDepTypeById,
     GetEmployeeRoleById,
     addEmployeeName,
-    addadmin, // Add this line
+    addadmin, 
     GetRoles,
     addImage,
   } = useContext(SignContext);
@@ -79,6 +79,7 @@ const [allimage, setallImage] = useState(null);
  
   const handleDepartmentGroupChange = async (e) => {
     const depGrpId = e.target.value;
+    
     setSelectedDepartmentGroup(depGrpId);
 
     // Fetch department types based on the selected department group

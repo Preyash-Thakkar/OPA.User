@@ -34,8 +34,8 @@ const EmployeeMaster = () => {
   const {GetallEmployeeName,DeleteEmployeeName}=useContext(SignContext)
   const [employeename,setemployeename]=useState(null);
 
- const id=localStorage.getItem("EmployeeRoleID");
- console.log(id)
+ const id=localStorage.getItem("DepartmentTypeID");
+ console.log(id);
   const getemployeename=async()=>{
      const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/employeename/getemployeebyrole/${id}`)
      console.log("This is it",res); 

@@ -39,7 +39,7 @@ const AddRoles = () => {
     isActive: Yup.boolean(),
   });
  
-  const url ="http://localhost:5002";
+  const url = `${process.env.REACT_APP_BASE_URL}`;
   const {
     GetallDepartmentGroup,
     GetallLocation,

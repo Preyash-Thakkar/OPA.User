@@ -42,7 +42,7 @@ const Register = () => {
                 is: val => (val && val.length > 0 ? true : false),
                 then: Yup.string().oneOf(
                     [Yup.ref("password")],
-                    "Confirm Password Isn't Match"
+                    "Confirm Password Doesn't Match"
                 )
             })
         }),

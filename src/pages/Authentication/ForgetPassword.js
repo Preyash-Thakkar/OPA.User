@@ -18,16 +18,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-// Formik Validation
-// import * as Yup from "yup";
-// import { useFormik } from "formik";
 
-// action
-// import { userForgetPassword } from "../../store/actions";
-
-// import images
-// import profile from "../../assets/images/bg.png";
-// import logoLight from "../../assets/images/logo-light.png";
 import ParticlesAuth from "../AuthenticationInner/ParticlesAuth";
 
 import withRouter from "../../Components/Common/withRouter";
