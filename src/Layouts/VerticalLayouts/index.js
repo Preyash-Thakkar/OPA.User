@@ -117,10 +117,10 @@ const VerticalLayout = (props) => {
     if (employeemaster === 'false') {
       setisemployeemaster(false);
     }
-    roless = localStorage.getItem('Roles');
-    if (roless === 'false') {
+
+    
       setisroless(false);
-    }
+    
     assignmaster = localStorage.getItem('AssignMaster');
     if (assignmaster === 'false') {
       setisassignmaster(false);
