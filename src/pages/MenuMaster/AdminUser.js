@@ -41,14 +41,14 @@ const AdminUser = () => {
       }
   }
   function getImage() {
-  fetch("http://localhost:5002/adminname/getadminnames", {
+  fetch(`${process.env.REACT_APP_BASE_URL}/adminname/getadminnames`, {
    method: "GET",
 
   })
     .then((res) => res.json())
     .then((data) =>setallImage(data.data))
 }
-  const baseURL = "http://localhost:5002";
+  const baseURL = `${process.env.REACT_APP_BASE_URL}`;
 
   const getAdmin = async () => {
     try {

@@ -157,7 +157,7 @@ const EcommerceAllProducts = () => {
                                   }}
                                 >
                                   <img
-                                    src={`${url}/products/${product.imageGallery[0]}`}
+                                    src={`${process.env.REACT_APP_BASE_URL}/products/${product.imageGallery[0]}`}
                                     alt="productImage"
                                     style={{
                                       width: "100%",

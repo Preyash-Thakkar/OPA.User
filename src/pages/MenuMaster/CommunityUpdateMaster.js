@@ -27,7 +27,7 @@ import {
   Row,
 } from "reactstrap";
 
-const baseURL = "http://localhost:5002";
+const baseURL = `${process.env.REACT_APP_BASE_URL}`;
 
 const CommunityUpdateMaster = () => {
   const navigate = useNavigate();
