@@ -24,7 +24,7 @@ const EditDepGrp = () => {
   }
   );
   
-  const { EditDepGrp,setEditDepGrpValues } = useContext(SignContext);
+  const { EditDepGrp,setEditDepGrpValues,GetallDepartmentGroup  } = useContext(SignContext);
   const { id } = useParams();
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("department group is required"),
@@ -71,6 +71,7 @@ const EditDepGrp = () => {
                    const res=setEditDepGrpValues(id,grp.name,grp.isActive);
                    if(res)
                    {
+                    GetallDepartmentGroup(); 
                     navigate('/department-group')
                    }
                     resetForm();

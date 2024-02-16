@@ -19,14 +19,23 @@ import { useNavigate } from "react-router-dom";
 const AddDepType = () => {
   const [depgroup, setDepgroup] = useState(null);
 
-  const { GetallDepartmentGroup, addDepType } = useContext(SignContext);
+  const { GetallDepartmentGroup, addDepType ,GetallDepartmentType } = useContext(SignContext);
   const navigate=useNavigate();
+  const validationSchema = Yup.object().shape({
+    departmentGroup:Yup.string().required("Department Group is required"),
+    name: Yup.string().required("name is required"),
+    });
   const getdepgroup = async () => {
     const response = await GetallDepartmentGroup();
 
     console.log(response.data);
     setDepgroup(response.data);
   };
+  const getdeptype=async(values)=>{
+    const res=await GetallDepartmentType(values);
+    return res;
+
+  }
   const adddeptype = async (values) => {
     console.log(">>>>>> dep type")
     console.log(values);
@@ -53,14 +62,18 @@ const AddDepType = () => {
           <Row>
             <Col lg={12}>
               <Formik
-                // validationSchema={schema}
+                validationSchema={validationSchema}
                 initialValues={{
                   departmentGroup: "",
-                  name: " ",
+                  name:"",
                   isActive: true,
                 }}
                 onSubmit={(values, { resetForm }) => {
-                  adddeptype(values);
+                  const res=adddeptype(values);
+                  if(res){
+                    getdeptype();
+                    navigate('/department-type');
+                  }
                     resetForm();
                 }}
               >
@@ -122,6 +135,11 @@ const AddDepType = () => {
                                           </option>
                                         )}
                                       </select>
+                                      <ErrorMessage
+              name="departmentGroup"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>
@@ -146,11 +164,11 @@ const AddDepType = () => {
                                         onBlur={handleBlur}
                                         value={values.name}
                                       />
-                                      <p className="error text-danger">
-                                        {errors.gallaryCategoryTitle &&
-                                          touched.gallaryCategoryTitle &&
-                                          errors.gallaryCategoryTitle}
-                                      </p>
+                                      <ErrorMessage
+            name="name"
+            component="div"
+            className="text-danger"
+          />
                                     </div>
                                   </div>
                                 </Col>
