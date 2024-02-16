@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import UiContent from "../../Components/Common/UiContent";
+import axios from "axios";
 import {
   Card,
   CardHeader,
@@ -19,11 +20,26 @@ const AddEmployee = () => {
   const { GetallLocation, GetallDepartmentGroup, GetDepTypeById,GetEmployeeRoleById,addEmployeeName } =
     useContext(SignContext);
     const navigate=useNavigate();
+    const validationSchema = Yup.object().shape({
+      departmentGroup: Yup.string().required("Please select a Department Group"),
+      location: Yup.string().required("Please select a Location Group"),
+    departmentType: Yup.string().required("Please select a Department Type"),
+    employeeRole: Yup.string().required("Please select a Employee Role"),
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+      });
   const [loc, setloc] = useState(null);
   const [grp, setgrp] = useState(null);
   const [dtype, setdtype] = useState(null);
   const [aa, setaa] = useState("");
   const [employeerole,setemployeerole]=useState(null);
+  const getallemployeename=async(values)=>{
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/employeename/getemployeenames`);
+    return res;
+  }
   const getdeptype = async (id) => {
     const res = await GetDepTypeById(id);
     console.log(">>>>final", res);
@@ -116,14 +132,14 @@ const AddEmployee = () => {
           <Row>
             <Col lg={12}>
               <Formik
-                // validationSchema={schema}
+                validationSchema={validationSchema}
                 initialValues={
                   {
                     location:"",
-                      departmentGroup: "",
-                      departmentType: "",
-                      employeeRole: "",
-                       name: "",
+                      departmentGroup:"",
+                      departmentType:"",
+                      employeeRole:"",
+                      name:"",
                       email:"",
                       password:"",
 
@@ -132,7 +148,11 @@ const AddEmployee = () => {
                 onSubmit={(values, { resetForm }) => {
                     console.log("hello");
                     console.log(">>>>>",values);
-                    addEmployeeName1(values);
+                    const res=addEmployeeName1(values);
+                    if(res){
+                      getallemployeename();
+                      navigate('/employee-master')
+                    }
                     resetForm();
                 }}
               >
@@ -194,6 +214,11 @@ const AddEmployee = () => {
                                           </option>
                                         )}
                                       </select>
+                                      <ErrorMessage
+              name="location"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>
@@ -229,6 +254,11 @@ const AddEmployee = () => {
                                           </option>
                                         )}
                                       </select>
+                                      <ErrorMessage
+              name="departmentGroup"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>
@@ -264,6 +294,11 @@ const AddEmployee = () => {
                                           </option>
                                         )}
                                       </select>
+                                      <ErrorMessage
+              name="departmentType"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>
@@ -296,6 +331,11 @@ const AddEmployee = () => {
                                           </option>
                                         )}
                                       </select>
+                                      <ErrorMessage
+              name="employeeRole"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>
@@ -320,6 +360,11 @@ const AddEmployee = () => {
                                         onBlur={handleBlur}
                                         value={values.name}
                                       />
+                                      <ErrorMessage
+              name="name"
+              component="div"
+              className="text-danger"
+            />
                                       {/* <p className="error text-danger">
                                         {errors.gallaryCategoryTitle &&
                                           touched.gallaryCategoryTitle &&
@@ -354,6 +399,11 @@ const AddEmployee = () => {
                                           touched.gallaryCategoryTitle &&
                                           errors.gallaryCategoryTitle}
                                       </p> */}
+                                      <ErrorMessage
+              name="email"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>
@@ -383,6 +433,12 @@ const AddEmployee = () => {
                                           touched.gallaryCategoryTitle &&
                                           errors.gallaryCategoryTitle}
                                       </p> */}
+                                      <ErrorMessage
+              name="password"
+              component="div"
+              className="text-danger"
+            />
+                                      
                                     </div>
                                   </div>
                                 </Col>

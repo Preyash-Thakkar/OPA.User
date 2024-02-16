@@ -23,7 +23,7 @@ import { GoogleLogin } from "react-google-login";
 import { Link, useNavigate } from "react-router-dom";
 import withRouter from "../../Components/Common/withRouter";
 import SignContext from "../../contextAPI/Context/SignContext";
-// const url = `${process.env.REACT_APP_BASE_URL}`;
+// const process.env.REACT_APP_BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
 let arr = []
 
 let Roles = "";
@@ -46,7 +46,7 @@ const Login = () => {
   const [others , setothers] = useState(null)
 
  
-  const url = `${process.env.REACT_APP_BASE_URL}`;
+
 
   const { loginUser } = useContext(SignContext);
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ const Login = () => {
     console.log("Nenenen", response);
    
     try {
-      const serverResponse = await axios.post(`${url}/user/google-login-authentication`, {
+      const serverResponse = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/google-login-authentication`, {
         email: response.profileObj.email,
       });
       console.log("Hii", serverResponse.success);
@@ -169,14 +169,8 @@ const Login = () => {
     setButtnLoading(true);
   
     try {
-      let apiEndpoint = '';
-       
-      //  const response = await axios.get('')
-        // If the selected role is User, hit the /user/authentication endpoint
-        apiEndpoint = `${url}/user/authentication`;
+      let apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
       
-  
-      // Perform login based on the determined API endpoint
       const res = await axios.post(apiEndpoint, AdminInfo);
         if (res.success) {
           

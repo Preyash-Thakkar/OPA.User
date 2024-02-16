@@ -3,8 +3,8 @@ import SignContext from "../Context/SignContext";
 import React from "react";
 
 export const SignState = (props) => {
-  // const url = `http://localhost:5000`;
-  const url = `${process.env.REACT_APP_BASE_URL}`;
+  // const process.env.REACT_APP_BASE_URL = `http://localhost:5000`;
+  // const process.env.REACT_APP_BASE_URL = `${process.env.REACT_APP_BASE_process.env.REACT_APP_BASE_URL}`;
 
   //Register User
   const registerUser = async (UserInfo) => {
@@ -19,7 +19,7 @@ export const SignState = (props) => {
       formData.append("active", UserInfo.active);
       formData.append("photo", UserInfo.photo);
 
-      const response = await axios.post(`${url}/api/register`, formData, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -32,7 +32,7 @@ export const SignState = (props) => {
   const loginAdmin = async (AdminInfo) => {
     try {
       const response = await axios.post(
-        `${url}/auth/authentication`,
+        `${process.env.REACT_APP_BASE_URL}/auth/authentication`,
         AdminInfo
       );
       return response;
@@ -43,7 +43,7 @@ export const SignState = (props) => {
   };
   const loginUser = async (UserInfo) => {
     try {
-      const response = await axios.post(`${url}/user/authentication`, UserInfo);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/authentication`, UserInfo);
       return response;
     } catch (error) {
       console.log(error);
@@ -53,7 +53,7 @@ export const SignState = (props) => {
 
   const forgotPersonPassword = async (UserInfo) => {
     try {
-      const response = await axios.post(`${url}/auth/forgotpassword`, UserInfo);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/forgotpassword`, UserInfo);
 
       return response;
     } catch (error) {
@@ -63,7 +63,7 @@ export const SignState = (props) => {
 
   const forgotUserPassword = async (UserInfo) => {
     try {
-      const response = await axios.post(`${url}/user/forgotpassword`, UserInfo);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/forgotpassword`, UserInfo);
 
       return response;
     } catch (error) {
@@ -75,7 +75,7 @@ export const SignState = (props) => {
   const resetPersonPassword = async (resetToken, password) => {
     try {
       const response = await axios.put(
-        `${url}/auth/users/resetpassword/${resetToken}`,
+        `${process.env.REACT_APP_BASE_URL}/auth/users/resetpassword/${resetToken}`,
         { password: password }
       );
       return response.data;
@@ -86,7 +86,7 @@ export const SignState = (props) => {
   const resetUserPassword = async (resetToken, password) => {
     try {
       const response = await axios.put(
-        `${url}/user/users/resetpassword/${resetToken}`,
+        `${process.env.REACT_APP_BASE_URL}/user/users/resetpassword/${resetToken}`,
         { password: password }
       );
       return response.data;
@@ -97,7 +97,7 @@ export const SignState = (props) => {
 
   const changeadminPassword = async (AdminInfo, Token) => {
     try {
-      const response = await axios.put(`${url}/auth/updatepassword`, {
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/updatepassword`, {
         ...AdminInfo,
         token: Token,
       });
@@ -109,7 +109,7 @@ export const SignState = (props) => {
 
   const changeUserPassword = async (AdminInfo, Token) => {
     try {
-      const response = await axios.put(`${url}/user/updatepassword`, {
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/user/updatepassword`, {
         ...AdminInfo,
         token: Token,
       });
@@ -121,7 +121,7 @@ export const SignState = (props) => {
 
   const getLoggedInAdmin = async (Token) => {
     try {
-      const response = await axios.post(`${url}/auth/getloggedinadmin`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/getloggedinadmin`, {
         token: Token,
       });
       return response;
@@ -131,7 +131,7 @@ export const SignState = (props) => {
   };
   const getLoggedInUser = async (Token) => {
     try {
-      const response = await axios.post(`${url}/user/getloggedinuser`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/getloggedinuser`, {
         token: Token,
       });
       return response;
@@ -143,7 +143,7 @@ export const SignState = (props) => {
   const getSpecificAdmin = async (id, role) => {
     try {
       const response = await axios.post(
-        `${url}/auth/getspecificadminwithroles`,
+        `${process.env.REACT_APP_BASE_URL}/auth/getspecificadminwithroles`,
         {
           id: id,
           roles: role,
@@ -156,7 +156,7 @@ export const SignState = (props) => {
   };
   const getSpecificUser = async (id) => {
     try {
-      const response = await axios.post(`${url}/user/getspecificuser`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/getspecificuser`, {
         id: id,
       });
       return response;
@@ -167,7 +167,7 @@ export const SignState = (props) => {
 
   const getAdmins = async () => {
     try {
-      const response = await axios.post(`${url}/auth/getadmins`);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/getadmins`);
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -176,7 +176,7 @@ export const SignState = (props) => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.post(`${url}/user/getusers`);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/getusers`);
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -194,7 +194,7 @@ export const SignState = (props) => {
         formData.append("image", image);
       }
 
-      const response = await axios.put(`${url}/auth/updateadmin`, formData, {
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/updateadmin`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -214,7 +214,7 @@ export const SignState = (props) => {
       // formData.append("status", AdminInfo.status);
      
 
-      const response = await axios.put(`${url}/user/updateuser/${id}`,{
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/user/updateuser/${id}`,{
       name:AdminInfo.name,
       id
       }
@@ -253,7 +253,7 @@ export const SignState = (props) => {
       formData.append("departmentType", departmentType);
       formData.append("Role", Role);
       formData.append("status", status);
-      const response = await axios.put(`${url}/auth/editadmin/${id}`, formData);
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/editadmin/${id}`, formData);
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -262,7 +262,7 @@ export const SignState = (props) => {
 
   const GetallAdminname = async () => {
     try {
-      const response = await axios.get(`${url}/auth/getadminnames`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/getadminnames`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -270,7 +270,7 @@ export const SignState = (props) => {
   };
   const Deleteadmin = async (id) => {
     try {
-      const response = await axios.post(`${url}/auth/deleteadmin/${id}`, {});
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/deleteadmin/${id}`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -280,7 +280,7 @@ export const SignState = (props) => {
   // Get roles
   const GetRoles = async () => {
     try {
-      const response = await axios.get(`${url}/roles/getroles`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/roles/getroles`, {});
       return response;
     } catch (error) {
       console.log("erros is ", error);
@@ -291,7 +291,7 @@ export const SignState = (props) => {
   // GetrolesSpecificpermissions
   const GetRoleSpecificPermission = async (role) => {
     try {
-      const response = await axios.post(`${url}/api/getrolespecificpermisson`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/getrolespecificpermisson`, {
         role: role,
       });
       return response.data;
@@ -307,7 +307,7 @@ export const SignState = (props) => {
   const addDepGroup = async (depGrpData) => {
     try {
       const response = await axios.post(
-        `${url}/departmentgroup/adddepartmentgroup`,
+        `${process.env.REACT_APP_BASE_URL}/departmentgroup/adddepartmentgroup`,
         depGrpData
       );
       return response;
@@ -318,7 +318,7 @@ export const SignState = (props) => {
   const addMenu = async (depGrpData) => {
     try {
       const response = await axios.post(
-        `${url}/menu/addmenumaster`,
+        `${process.env.REACT_APP_BASE_URL}/menu/addmenumaster`,
         depGrpData
       );
       return response;
@@ -329,7 +329,7 @@ export const SignState = (props) => {
   const addDepType = async (depGrpData) => {
     try {
       const response = await axios.post(
-        `${url}/departmenttype/adddepartmenttype`,
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/adddepartmenttype`,
         depGrpData
       );
       return response;
@@ -340,7 +340,7 @@ export const SignState = (props) => {
   const addTask = async (depGrpData) => {
     try {
       const response = await axios.post(
-        `${url}/addtask/addnewtask`,
+        `${process.env.REACT_APP_BASE_URL}/addtask/addnewtask`,
         depGrpData
       );
       return response;
@@ -351,7 +351,7 @@ export const SignState = (props) => {
   const deletegrp = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/departmentgroup/deletedepartmentgroup/${id}`
+        `${process.env.REACT_APP_BASE_URL}/departmentgroup/deletedepartmentgroup/${id}`
       );
       return response;
     } catch (error) {
@@ -362,7 +362,7 @@ export const SignState = (props) => {
   const deletetype = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/departmenttype/deletedepartmenttype/${id}`
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/deletedepartmenttype/${id}`
       );
       return response;
     } catch (error) {
@@ -373,7 +373,7 @@ export const SignState = (props) => {
     try {
       console.log(depGrpData);
       const response = await axios.post(
-        `${url}/location/addlocation`,
+        `${process.env.REACT_APP_BASE_URL}/location/addlocation`,
         depGrpData
       );
       return response;
@@ -385,7 +385,7 @@ export const SignState = (props) => {
   const addEmployeeRole = async (depGrpData) => {
     try {
       const response = await axios.post(
-        `${url}/employeerole/adddemployeerole`,
+        `${process.env.REACT_APP_BASE_URL}/employeerole/adddemployeerole`,
         depGrpData
       );
       return response;
@@ -396,7 +396,7 @@ export const SignState = (props) => {
   const addEmployeeName = async (depGrpData) => {
     try {
       const response = await axios.post(
-        `${url}/employeename/adddemployeename`,
+        `${process.env.REACT_APP_BASE_URL}/employeename/adddemployeename`,
         depGrpData
       );
       return response;
@@ -407,7 +407,7 @@ export const SignState = (props) => {
   const GetallDepartmentGroup = async () => {
     try {
       const response = await axios.get(
-        `${url}/departmentgroup/getdepartments`,
+        `${process.env.REACT_APP_BASE_URL}/departmentgroup/getdepartments`,
         {}
       );
       return response;
@@ -417,7 +417,7 @@ export const SignState = (props) => {
   };
   const GetallAssignTask = async () => {
     try {
-      const response = await axios.get(`${url}/assigntask/getassigntask`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntask`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -426,7 +426,7 @@ export const SignState = (props) => {
   const GetallDepartmentType = async () => {
     try {
       const response = await axios.get(
-        `${url}/departmenttype/getdepartmentstypes`,
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/getdepartmentstypes`,
         {}
       );
       return response;
@@ -436,7 +436,7 @@ export const SignState = (props) => {
   };
   const GetallMenuMaster = async () => {
     try {
-      const response = await axios.get(`${url}/menu/getallmenumaster`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/menu/getallmenumaster`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -446,7 +446,7 @@ export const SignState = (props) => {
   const GetDepTypeById = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/departmenttype/departmenttypebygroup/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/departmenttypebygroup/${id}`,
         {}
       );
       return response;
@@ -457,7 +457,7 @@ export const SignState = (props) => {
   const GetSpecificTaskByDepartmentGroup = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/addtask/getalltaskbydtype/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/addtask/getalltaskbydtype/${id}`,
         {}
       );
       return response;
@@ -468,7 +468,7 @@ export const SignState = (props) => {
   const GetEmployeeRoleById = async (id, id1) => {
     try {
       const response = await axios.get(
-        `${url}/employeerole/getemployeerolebygroupandtype/${id}/${id1}`,
+        `${process.env.REACT_APP_BASE_URL}/employeerole/getemployeerolebygroupandtype/${id}/${id1}`,
         {}
       );
       return response;
@@ -480,7 +480,7 @@ export const SignState = (props) => {
   const GetDepTypeByIdForEditing = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/departmenttype/getdepartmenttypebyid/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/getdepartmenttypebyid/${id}`,
         {}
       );
       return response;
@@ -491,7 +491,7 @@ export const SignState = (props) => {
   const GetEmployeeRoleByIdForEditing = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/employeerole/getemployeerolebyid/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/employeerole/getemployeerolebyid/${id}`,
         {}
       );
       return response;
@@ -502,7 +502,7 @@ export const SignState = (props) => {
   const EditDepGrp = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/departmentgroup/getdepartmentbyid/${id}`
+        `${process.env.REACT_APP_BASE_URL}/departmentgroup/getdepartmentbyid/${id}`
       );
       return response;
     } catch (error) {
@@ -513,7 +513,7 @@ export const SignState = (props) => {
   const setEditDepGrpValues = async (id, name, isActive) => {
     try {
       const response = await axios.post(
-        `${url}/departmentgroup/editdepartmentgroup/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/departmentgroup/editdepartmentgroup/${id}`,
         { name, isActive }
       );
       return response;
@@ -531,7 +531,7 @@ export const SignState = (props) => {
     isActive
   ) => {
     try {
-      const response = await axios.post(`${url}/addtask/edittask/${id}`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/addtask/edittask/${id}`, {
         departmentType,
         taskName,
         taskType,
@@ -546,7 +546,7 @@ export const SignState = (props) => {
   };
   const setEditLocationValues = async (id, name, isActive) => {
     try {
-      const response = await axios.post(`${url}/location/editlocation/${id}`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/location/editlocation/${id}`, {
         name,
         isActive,
       });
@@ -558,7 +558,7 @@ export const SignState = (props) => {
   const setEditDepTypeValues = async (id, departmentGroup, name, isActive) => {
     try {
       const response = await axios.post(
-        `${url}/departmenttype/editdepartmenttype/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/editdepartmenttype/${id}`,
         { departmentGroup, name, isActive }
       );
       return response;
@@ -568,7 +568,7 @@ export const SignState = (props) => {
   };
   const setEditMenuMastervalues = async (id, menugroup, menuname, isActive) => {
     try {
-      const response = await axios.post(`${url}/menu/editmenumaster/${id}`, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/menu/editmenumaster/${id}`, {
         menugroup,
         menuname,
         isActive,
@@ -587,7 +587,7 @@ export const SignState = (props) => {
   ) => {
     try {
       const response = await axios.post(
-        `${url}/employeerole/editemployeerole/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/employeerole/editemployeerole/${id}`,
         { departmentGroup, departmentType, EmployeeRole, isActive }
       );
       return response;
@@ -598,7 +598,7 @@ export const SignState = (props) => {
   const GetallEmployeeRole = async () => {
     try {
       const response = await axios.get(
-        `${url}/employeerole/getemployeeroles`,
+        `${process.env.REACT_APP_BASE_URL}/employeerole/getemployeeroles`,
         {}
       );
       return response;
@@ -609,7 +609,7 @@ export const SignState = (props) => {
 
   const GetallLocation = async () => {
     try {
-      const response = await axios.get(`${url}/location/getlocations`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/location/getlocations`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -619,7 +619,7 @@ export const SignState = (props) => {
   const GetallEmployeeName = async () => {
     try {
       const response = await axios.get(
-        `${url}/employeename/getemployeenames`,
+        `${process.env.REACT_APP_BASE_URL}/employeename/getemployeenames`,
         {}
       );
       return response;
@@ -657,7 +657,7 @@ export const SignState = (props) => {
 
       // console.log("hii",employeeName)
       const response = await axios.post(
-        `${url}/communitymaster/addcommunitymessages`,
+        `${process.env.REACT_APP_BASE_URL}/communitymaster/addcommunitymessages`,
         formData,
         {
           headers: {
@@ -699,7 +699,7 @@ export const SignState = (props) => {
       formData.append("status", status);
 
       // console.log("hii",employeeName)
-      const response = await axios.post(`${url}/auth/addadminname`, formData, {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/addadminname`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -711,7 +711,7 @@ export const SignState = (props) => {
   };
   const GetUserRoleByIdForEditing = async (id) => {
     try {
-      const response = await axios.get(`${url}/auth/getadminbyid/${id}`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/getadminbyid/${id}`, {});
       return response;
     } catch (error) {
       console.log("Error During API call: ", error);
@@ -736,7 +736,7 @@ export const SignState = (props) => {
     try {
       const response = await axios.post(
         `
-        ${url}/assigntask/addassigntask`,
+        ${process.env.REACT_APP_BASE_URL}/assigntask/addassigntask`,
         {
           documentname,
           documentdepartmenttype,
@@ -761,7 +761,7 @@ export const SignState = (props) => {
   };
   const GetallAddTask = async () => {
     try {
-      const response = await axios.get(`${url}/addtask/getalltask`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getalltask`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -770,7 +770,7 @@ export const SignState = (props) => {
   const DeleteLocation = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/location/deletelocationbyid/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/location/deletelocationbyid/${id}`,
         {}
       );
       return response;
@@ -781,7 +781,7 @@ export const SignState = (props) => {
   const DeleteEmployeeRole = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/employeerole/deleteemployerole/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/employeerole/deleteemployerole/${id}`,
         {}
       );
       return response;
@@ -792,7 +792,7 @@ export const SignState = (props) => {
   const DeleteEmployeeName = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/employeename/deleteemployeename/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/employeename/deleteemployeename/${id}`,
         {}
       );
       return response;
@@ -803,7 +803,7 @@ export const SignState = (props) => {
   const DeleteAddTask = async (id) => {
     try {
       const response = await axios.delete(
-        `${url}/addtask/deletetask/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/addtask/deletetask/${id}`,
         {}
       );
       return response;
@@ -813,7 +813,7 @@ export const SignState = (props) => {
   };
   const DeleteMenuMaster = async (id) => {
     try {
-      const response = await axios.delete(`${url}/menu/deletemenu/${id}`, {});
+      const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/menu/deletemenu/${id}`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -822,7 +822,7 @@ export const SignState = (props) => {
   const GetLocationById = async (id) => {
     try {
       const response = await axios.post(
-        `${url}/location/getlocationbyid/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/location/getlocationbyid/${id}`,
         {}
       );
       return response;
@@ -832,7 +832,7 @@ export const SignState = (props) => {
   };
   const GetSpecificMenuMaster = async (id) => {
     try {
-      const response = await axios.get(`${url}/menu/getspecificmenu/${id}`, {});
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/menu/getspecificmenu/${id}`, {});
       return response;
     } catch (error) {
       return { success: false, msg: "server Error" };
@@ -841,7 +841,7 @@ export const SignState = (props) => {
   const GetAddTaskById = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/addtask/getspecifictask/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/addtask/getspecifictask/${id}`,
         {}
       );
       return response;
@@ -852,7 +852,7 @@ export const SignState = (props) => {
   const GetEmployeeNameIdForEditing = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/employeename/getemployeenamebyid/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/employeename/getemployeenamebyid/${id}`,
         {}
       );
       return response;
@@ -872,7 +872,7 @@ export const SignState = (props) => {
   ) => {
     try {
       const response = await axios.put(
-        `${url}/employeename/editemployeename/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/employeename/editemployeename/${id}`,
         {
           departmentGroup,
           departmentType,
@@ -891,7 +891,7 @@ export const SignState = (props) => {
   const getReqCommDetails = async () => {
     try {
       const response = await axios.get(
-        `${url}/communitymaster/getrequiredcommunitymessage`,
+        `${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessage`,
         {}
       );
       return response;
@@ -902,7 +902,7 @@ export const SignState = (props) => {
   const DeleteCommunityMaster = async (id) => {
     try {
       const response = await axios.delete(
-        `${url}/communitymaster/deleteCommunity/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/communitymaster/deleteCommunity/${id}`,
         {}
       );
       return response;
@@ -913,7 +913,7 @@ export const SignState = (props) => {
   const GetCommunityNameIdForEditing = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/communitymaster/getspecificcommunitymessage/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/communitymaster/getspecificcommunitymessage/${id}`,
         {}
       );
       return response;
@@ -1010,7 +1010,7 @@ export const SignState = (props) => {
       console.log("active", isActive);
 
       const response = await axios.put(
-        `${url}/communitymaster/editcommunitymessages/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/communitymaster/editcommunitymessages/${id}`,
         formData
       );
       return response;
@@ -1030,7 +1030,7 @@ export const SignState = (props) => {
   const getAllSpecificTaskByDepartmentTypeId = async (id) => {
     try {
       const response = await axios.get(
-        `${url}/addtask/getallspecifictaskbydtype/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`,
         {}
       );
       return response;

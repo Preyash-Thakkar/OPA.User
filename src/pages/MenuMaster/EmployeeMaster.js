@@ -40,6 +40,7 @@ const EmployeeMaster = () => {
      const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/employeename/getemployeebyrole/${id}`)
      console.log("This is it",res); 
      setemployeename(res.data);    
+     console.log("Hiii",res.data)
   }
   const handleDelete=async(id)=>{
    const confirm=window.confirm("Are U sure You want to delete this page");

@@ -29,7 +29,6 @@ import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UserProfile = () => {
-  const url = `${process.env.REACT_APP_BASE_URL}`;
   const { id } = useParams();
   const { updateUser, getSpecificUser } = useContext(SignContext);
   const [AdminInfo, setAdminInfo] = useState({name:""});
