@@ -317,7 +317,7 @@ const NewTeam = () => {
                                   }}
                                 >
                                   <img
-                                    src={`${url}/${user.photo}`}
+                                    src={`${process.env.REACT_APP_BASE_URL}/${user.photo}`}
                                     alt="userImage"
                                     style={{
                                       width: "100%",
@@ -682,7 +682,7 @@ const NewTeam = () => {
                 className="form-control"
                 id="profile-photo"
                 accept=".jpg, .jpeg, .png" // Add accepted image formats
-                // value={`${url}/${UserInfo.photo}`}
+                // value={`${process.env.REACT_APP_BASE_URL}/${UserInfo.photo}`}
                 onChange={handlePhotoChange} // Call a function to handle the file upload
               />
             </div>

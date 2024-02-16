@@ -12,7 +12,7 @@ const EcommerceOrderProduct = (props) => {
           <div className="d-flex">
             <div className="flex-shrink-0 avatar-md bg-light rounded p-1">
               <img
-                src={`${url}/products/${props.product.product.imageGallery[0]}`}
+                src={`${process.env.REACT_APP_BASE_URL}/products/${props.product.product.imageGallery[0]}`}
                 alt=""
                 className="img-fluid d-block"
               />

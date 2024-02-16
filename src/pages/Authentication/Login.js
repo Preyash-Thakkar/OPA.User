@@ -169,7 +169,11 @@ const Login = () => {
     setButtnLoading(true);
   
     try {
-      let apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
+      let apiEndpoint = '';
+       
+      //  const response = await axios.get('')
+        // If the selected role is User, hit the /user/authentication endpoint
+        apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
       
       const res = await axios.post(apiEndpoint, AdminInfo);
         if (res.success) {
