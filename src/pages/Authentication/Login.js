@@ -252,13 +252,31 @@ const Login = () => {
         const count = window.location.reload();
        
 
-      } else {
+      }else {
         setError(res.msg);
+        setTimeout(() => {
+          setError("Please Enter the Correct Password");
+        }, 3000);
       }
+
       setButtnLoading(false);
     } catch (error) {
-      // Handle error
+      const code = error.split(" ")[error.split(" ").length - 1];
+      // console.log("colled",code, error);
+      if (code === "401") {
+        setError("Invalid credentials. Please check your email and password.");
+      } else if (code === "403") {
+        setError(
+          "Access denied. You don't have permission to access this resource."
+        );
+      } else {
+        setError("An error occurred. Please try again later.");
+      }
       setButtnLoading(false);
+
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   };
   useEffect(()=>{

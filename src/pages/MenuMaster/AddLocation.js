@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import UiContent from "../../Components/Common/UiContent";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -15,13 +16,19 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import { TagsInput } from "react-tag-input-component";
 import SignContext from "../../contextAPI/Context/SignContext";
 const AddLocation = () => {
-  const { addLocation } = useContext(SignContext);
+  const { addLocation,GetallLocation } = useContext(SignContext);
   const addlocation = async (values) => {
+    
     console.log(">>>>>>>>>>>>>>>>>>>>>", values);
     const response = await addLocation(values);
 
     console.log(response);
   };
+  const validationSchema = Yup.object().shape({
+    name:Yup.string().required("Location is required")
+
+  })
+  const navigate=useNavigate();
   return (
     <>
       <UiContent />
@@ -35,13 +42,18 @@ const AddLocation = () => {
           <Row>
             <Col lg={12}>
               <Formik
-                // validationSchema={schema}
+               validationSchema={validationSchema}
                 initialValues={{
                   name: "",
                   isActive: true,
                 }}
                 onSubmit={(values, { resetForm }) => {
-                  addlocation(values);
+                  const res=addlocation(values);
+                  if(res){
+                  GetallLocation();
+                  navigate(`/location-master`)
+                  
+                 }
                   resetForm();
                 }}
               >
@@ -95,11 +107,16 @@ const AddLocation = () => {
                                         onBlur={handleBlur}
                                         value={values.name}
                                       />
-                                      <p className="error text-danger">
+                                       <ErrorMessage
+              name="name"
+              component="div"
+              className="text-danger"
+            />
+                                      {/* <p className="error text-danger">
                                         {errors.gallaryCategoryTitle &&
                                           touched.gallaryCategoryTitle &&
                                           errors.gallaryCategoryTitle}
-                                      </p>
+                                      </p> */}
                                     </div>
                                   </div>
                                 </Col>

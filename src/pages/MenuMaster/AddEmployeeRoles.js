@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -16,11 +15,16 @@ import BreadCrumb from "../../Components/Common/BreadCrumb";
 import { TagsInput } from "react-tag-input-component";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
+const validationSchema = Yup.object().shape({
+  departmentGroup:Yup.string().required("Please Select a Department Group"),
+  departmentType:Yup.string().required("Please Select a Department Type"),
+  EmployeeRole: Yup.string().required("name is required"),
+  });
 const AddEmployeeRoles = () => {
   const navigate=useNavigate();
   const [depgroup, setDepgroup] = useState(null);
   const[deptypebygroup,setDepTypeByGroup]=useState(null);
-  const { GetallDepartmentGroup, GetDepTypeById,addEmployeeRole } = useContext(SignContext);
+  const { GetallDepartmentGroup, GetDepTypeById,addEmployeeRole,GetallEmployeeRole } = useContext(SignContext);
   const getdepgroup = async () => {
     const response = await GetallDepartmentGroup();
 
@@ -64,7 +68,7 @@ const AddEmployeeRoles = () => {
           <Row>
             <Col lg={12}>
               <Formik
-                // validationSchema={schema}
+                validationSchema={validationSchema}
                 initialValues={
                   {
                         departmentGroup: "",
@@ -74,7 +78,11 @@ const AddEmployeeRoles = () => {
                   }
                 }
                 onSubmit={(values, { resetForm }) => {
-                    addemployeerole(values);
+                    const res=addemployeerole(values);
+                    if(res){
+                      GetallEmployeeRole();
+                      navigate('/employee-roles')
+                    }
                     resetForm();
                 }}
               >
@@ -139,6 +147,11 @@ const AddEmployeeRoles = () => {
                                           </option>
                                         )}
                                     </select>
+                                    <ErrorMessage
+              name="departmentGroup"
+              component="div"
+              className="text-danger"
+            />
                                   </div>
                                   </div>
                                   
@@ -173,6 +186,11 @@ const AddEmployeeRoles = () => {
                                           </option>
                                         )}
                                     </select>
+                                    <ErrorMessage
+              name="departmentType"
+              component="div"
+              className="text-danger"
+            />
                                   </div>
                                   </div>
                                   
@@ -204,6 +222,11 @@ const AddEmployeeRoles = () => {
                                           touched.gallaryCategoryTitle &&
                                           errors.gallaryCategoryTitle}
                                       </p> */}
+                                      <ErrorMessage
+              name="EmployeeRole"
+              component="div"
+              className="text-danger"
+            />
                                     </div>
                                   </div>
                                 </Col>

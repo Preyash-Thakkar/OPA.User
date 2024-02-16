@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const EditEmployeeRole = () => {
 
     const navigate=useNavigate();
-    const {GetEmployeeRoleByIdForEditing, setEditEmployeeRoleValues} = useContext(SignContext);
+    const {GetEmployeeRoleByIdForEditing, setEditEmployeeRoleValues,GetallEmployeeRole} = useContext(SignContext);
     const { id } = useParams();
     const[typeid1,settypeid1]=useState({
         departmentGroup:" ",
@@ -63,6 +63,7 @@ const EditEmployeeRole = () => {
                 onSubmit={(values, { resetForm }) => {
                     const res=setEditEmployeeRoleValues(id,typeid1.departmentGroup._id,typeid1.departmentType._id,typeid1.EmployeeRole,typeid1.isActive)
                     if(res){
+                      GetallEmployeeRole();
                         navigate('/employee-roles');
                     }
                     resetForm();

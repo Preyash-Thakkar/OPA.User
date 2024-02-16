@@ -24,7 +24,7 @@ const EditLocation = () => {
   }
   );
   
-  const { EditDepGrp,GetLocationById,setEditLocationValues } = useContext(SignContext);
+  const { EditDepGrp,GetLocationById,setEditLocationValues,GetallLocation } = useContext(SignContext);
   const { id } = useParams();
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("department group is required"),
@@ -73,6 +73,7 @@ const EditLocation = () => {
                    console.log(res);
                    if(res)
                    {
+                    GetallLocation();
                     navigate('/location-master')
                    }
                     resetForm();

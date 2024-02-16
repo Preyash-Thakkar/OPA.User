@@ -16,7 +16,7 @@ import { TagsInput } from "react-tag-input-component";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
 const AddDepGroup = () => {
-  const { addDepGroup } = useContext(SignContext);
+  const { addDepGroup,GetallDepartmentGroup } = useContext(SignContext);
   const navigate=useNavigate();
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("department group is required"),
@@ -50,9 +50,14 @@ const AddDepGroup = () => {
                 }}
                 onSubmit={(values, { resetForm }) => {
                   console.log(">>>", values);
-                  addDepartmentGroup(values);
+                  const res=addDepartmentGroup(values);
                   // resetForm();
-                  navigate('/department-group');
+                  if(res){
+                    GetallDepartmentGroup();
+                    navigate('/department-group');
+
+                  }
+                  
                 }}
               >
                 {({
