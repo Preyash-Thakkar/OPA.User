@@ -72,7 +72,7 @@ const Login = () => {
     console.log("Nenenen", response);
    
     try {
-      const serverResponse = await axios.post(`${url}/user/google-login-authentication`, {
+      const serverResponse = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/google-login-authentication`, {
         email: response.profileObj.email,
       });
       console.log("Hii", serverResponse.success);
@@ -173,7 +173,7 @@ const Login = () => {
        
       //  const response = await axios.get('')
         // If the selected role is User, hit the /user/authentication endpoint
-        apiEndpoint = `${url}/user/authentication`;
+        apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
       
   
       // Perform login based on the determined API endpoint

@@ -420,7 +420,7 @@ const Team = () => {
                                 <div className="avatar-lg img-thumbnail rounded-circle flex-shrink-0">
                                   {item.photo != null ? (
                                     <img
-                                      src={`${url}/${item.photo}`}
+                                      src={`${process.env.REACT_APP_BASE_URL}/${item.photo}`}
                                       alt=""
                                       className="img-fluid d-block rounded-circle"
                                       style={{
