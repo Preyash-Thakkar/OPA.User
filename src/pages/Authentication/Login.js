@@ -40,14 +40,8 @@ let locationmaster = ""
 let employeerole = ""
 let departmentgroup = ""
 
-
-
 const Login = () => {
-  const [others , setothers] = useState(null)
-
- 
-
-
+  const [others , setothers] = useState(null);
   const { loginUser } = useContext(SignContext);
   const navigate = useNavigate();
   const [AdminInfo, setAdminInfo] = useState({
@@ -168,12 +162,10 @@ const Login = () => {
     e.preventDefault();
     setButtnLoading(true);
   
-    try {
-      let apiEndpoint = '';
-       
+    try {       
       //  const response = await axios.get('')
         // If the selected role is User, hit the /user/authentication endpoint
-        apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
+        let apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
       
       const res = await axios.post(apiEndpoint, AdminInfo);
         if (res.success) {
@@ -423,7 +415,7 @@ const Login = () => {
                           </div>
                           <div>
                             <GoogleLogin
-                              clientId="1005087809695-bm5o5takeq3sug0au1n0hab4ge5ug7e2.apps.googleusercontent.com"
+                              clientId="856447581088-rv2lrac3uvp3f77n6ktjcu3qg7c0sg5b.apps.googleusercontent.com"
 
                               render={(renderProps) => (
                                 <span

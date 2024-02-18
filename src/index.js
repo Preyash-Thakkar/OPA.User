@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={configureStore({})}>
     <React.Fragment>
-      <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
+      <BrowserRouter basename={'/'}>
         <App />
       </BrowserRouter>
     </React.Fragment>
