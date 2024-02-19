@@ -161,6 +161,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtnLoading(true);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  // Check if email is provided and matches the regex pattern
+  if (!AdminInfo.email || !emailRegex.test(AdminInfo.email)) {
+    setError("Please provide a valid email address");
+    setButtnLoading(false);
+    return;
+  }
   
     try {       
       //  const response = await axios.get('')
@@ -244,9 +252,9 @@ const Login = () => {
 
       }else {
         setError(res.msg);
-        setTimeout(() => {
-          setError("Please Enter the Correct Password");
-        }, 3000);
+        // setTimeout(() => {
+        //   setError("Please Enter the Correct Password");
+        // }, 3000);
       }
 
       setButtnLoading(false);

@@ -159,8 +159,7 @@ const handleImageChange = (e) => {
                   {
                      name: "", // Set initial value for the "Name" field
           email: "", // Set initial value for the "Email" field
-          password: "", // Set initial value for the "Password" field
-          // ... (other fields)
+          password: "", // Set initial value for the "Password" fiel
           location: "", // Set initial value for the "Location" dropdown
           departmentGroup: "", // Set initial value for the "Department Group" dropdown
           departmentType: "", // Set initial value for the "Department Type" dropdown

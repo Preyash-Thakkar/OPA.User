@@ -88,9 +88,8 @@ const EditAddTask = () => {
                 }) => (
                   <div className="login">
                     <div className="form">
-                      {/* Passing handleSubmit parameter tohtml form onSubmit property */}
+                 
                       <form noValidate onSubmit={handleSubmit}>
-                        {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
 
                         <Card>
                           <CardHeader>
