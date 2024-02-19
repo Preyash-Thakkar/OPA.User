@@ -110,7 +110,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start --port 3001",
+    "start": "react-scripts start",
     "build": "react-scripts build --max_old_space_size=8000 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
