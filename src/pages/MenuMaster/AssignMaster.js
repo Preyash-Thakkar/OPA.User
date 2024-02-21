@@ -31,7 +31,7 @@ const AssignMaster = () => {
   const { GetallAssignTask } = useContext(SignContext);
   const [task,settask]=useState(null);
   const getalltask = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getspecificassigntaskbydepartmenttype/${id}`)
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getspecificassigntaskbyemployeenameid/${id}`)
     console.log("kjgkjk5ky",res);
     settask(res.data);
 };

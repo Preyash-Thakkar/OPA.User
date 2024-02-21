@@ -62,7 +62,7 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
     <React.Fragment>
       <header id="page-topbar" className={headerClass}>
         <div className="layout-width">
-          <div className="navbar-header">
+          <div className="navbar-header border-bottom">
             <div className="d-flex">
               <div className="navbar-brand-box horizontal-logo">
                 <Link to="/" className="logo logo-dark">
@@ -84,18 +84,18 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
                 </Link>
               </div>
 
-              <button
+              {/* <button
                 onClick={toogleMenuBtn}
                 type="button"
                 className="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
                 id="topnav-hamburger-icon"
-              >
-                <span className="hamburger-icon">
+              > */}
+                {/* <span className="hamburger-icon">
                   <span></span>
                   <span></span>
                   <span></span>
                 </span>
-              </button>
+              </button> */}
 
               <SearchOption />
             </div>
@@ -138,13 +138,13 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
               <FullScreenDropdown />
 
               {/* Dark/Light Mode set */}
-              <LightDark
+              {/* <LightDark
                 layoutMode={layoutModeType}
                 onChangeLayoutMode={onChangeLayoutMode}
-              />
+              /> */}
 
-              {/* NotificationDropdown */}
-              {/* <NotificationDropdown /> */}
+             
+               {/* <NotificationDropdown /> */}
 
               {/* ProfileDropdown */}
               <ProfileDropdown />

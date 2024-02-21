@@ -17,7 +17,7 @@ import {
   Alert,
 } from "reactstrap";
 import ParticlesAuth from "../AuthenticationInner/ParticlesAuth";
-import logo from "../../assets/images/logo-white.png";
+import logo from "../../assets/images/login_logo.png";
 import { GoogleLogin } from "react-google-login";
 //redux
 import { Link, useNavigate } from "react-router-dom";

@@ -38,6 +38,7 @@
     transition: all .1s ease-out;
 
     .navbar-nav {
+        margin: 10px;
         .nav-link {
             display: flex;
             align-items: center;
@@ -62,11 +63,12 @@
             }
 
             svg {
+                font-size: 23px !important;
                 width: 18px;
                 margin-right: 0.665rem;
                 color: $vertical-menu-item-color;
             }
-
+        
             .badge {
                 margin-left: auto;
                 margin-right: -2px;
@@ -308,6 +310,7 @@
 
     .navbar-menu {
         .container-fluid {
+            // margin-top: 95px;
             padding: 0;
         }
     }
@@ -751,8 +754,9 @@
 
     &[data-sidebar="dark"] {
         .navbar-menu {
-            background: $vertical-menu-bg-dark;
-            border-right: 1px solid $vertical-menu-border-dark;
+            background: white;
+            // background: $vertical-menu-bg-dark;
+            border-right:1px solid #e4e4e4;
 
             .hamburger-icon {
                 span {
@@ -768,11 +772,19 @@
         .navbar-nav {
 
             .nav-link {
+                font-weight: var(--vz-nav-link-font-weight);
+                font-family: yummo_bold, sans-serif;
+                color: black !important;
+                // color: #495057;
+                border: 1px solid #e8eaed;
+                border-radius: 500px;
+                margin-bottom: 8px;
                 color: $vertical-menu-item-color-dark;
 
                 &.active {
                     color: $vertical-menu-item-active-color-dark;
                 }
+                
 
                 &[data-bs-toggle=collapse] {
                     &:after {
@@ -794,24 +806,35 @@
                 }
 
                 svg {
-                    color: $vertical-menu-item-color-dark;
-                    fill: rgba($white, 0.10);
+                    color: black;
+                    // color: $vertical-menu-item-color-dark;
+                    fill: rgb(0 0 0 / 74%);
+                    // fill: rgba($white, 0.10);
                 }
-
+               
                 &:hover {
                     color: $vertical-menu-item-hover-color-dark;
-
+                   
+                        color: #ffffff !important;
+                        background-color: #185abc !important;
+                   
                     .icon-dual {
                         color: $vertical-menu-item-hover-color-dark;
                         fill: rgba($white, 0.16);
                     }
+                }
+                &:active{
+                    background-color: #185abc !important;
+                    color: white !important  ;
                 }
 
             }
 
             >.nav-item {
                 .nav-link.active {
-                    color: $vertical-menu-item-active-color-dark;
+                    color:white !important;
+                    background-color: #185abc;
+                    // color: $vertical-menu-item-active-color-dark;
 
                     .icon-dual {
                         color: $vertical-menu-item-hover-color-dark;
@@ -837,7 +860,8 @@
                     }
 
                     &.active {
-                        color: $vertical-menu-item-active-color-dark;
+                        color: white;
+                        // color: $vertical-menu-item-active-color-dark;
                     }
                 }
 

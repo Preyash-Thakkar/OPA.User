@@ -13,7 +13,7 @@ import { FaShoppingBag } from "react-icons/fa";
 import FeatherIcon from "feather-icons-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
-
+import "../Dashboard/dashboard.css"
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -38,11 +38,12 @@ const NewDashboard = () => {
   document.title = "Dashboard";
   //const getReqCommDetails = useContext(SignContext)
 
-  //const { id } = useParams();
+ const id = localStorage.getItem("LocationID");
+  // const { id } = useParams();
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
   const getreqcommdetails = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessage`);
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
@@ -57,15 +58,21 @@ const NewDashboard = () => {
   }, []);
   return (
     <>
-      <div className="page-content">
+      <div className="bg-white page-content">
         <Container fluid>
           <Row>
-            <Col md={4}>
-              <Card className="card-animate">
+            <h5><b>Dashboard</b></h5>
+            <br />
+            <br />
+            <Col md={4} >
+            <div class="col-lg-12 col-lg-4">
+              <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <p className="fw-medium text-muted mb-0">Users</p>
+                    <p class="fw-semibold new-class fs-16 mb-0">
+                        Users
+                      </p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
                           <CountUp
@@ -89,13 +96,17 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
+            
             <Col md={4}>
-              <Card className="card-animate">
+              <div class="col-lg-12 col-lg-4">
+            <Card className="card-animate card-custom card-res"  style={{borderRadius:'15px'}}>
+          
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <p className="fw-medium text-muted mb-0">No. Document</p>
+                    <p class="fw-semibold new-class fs-16 mb-0">No. Document</p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
                           <CountUp
@@ -118,14 +129,16 @@ const NewDashboard = () => {
                     </div>
                   </div>
                 </CardBody>
+              
               </Card>
+              </div>
             </Col>
             <Col md={4}>
-              <Card className="card-animate">
+            <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <p className="fw-medium text-muted mb-0">No. Form</p>
+                    <p class="fw-semibold new-class fs-16 mb-0">No. Form</p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
                           <CountUp
@@ -142,7 +155,7 @@ const NewDashboard = () => {
                     <div>
                       <div className="avatar-sm flex-shrink-0">
                         <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="users" className="text-info" />
+                        <FeatherIcon icon="file-text" className="text-info" />
                         </span>
                       </div>
                     </div>
@@ -154,15 +167,15 @@ const NewDashboard = () => {
           <Row>
             <Col md={4}>
             <Link to="/subdashboard">
-              <Card className="card-animate">
+            <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <h5 className="fw-medium text-muted mb-0">
+                    <p class="fw-semibold new-class fs-16 mb-0">
                         Finance Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                  </p>
+                      <h2 className="mt-4 ff-secondary fs-14" style={{ fontWeight: "bold" }}>MIS</h2>
+                      <h2 className="mt-1 ff-secondary fs-14" style={{ fontWeight: "bold" }}>SOPs</h2>
                     </div>
                     <div>
                       <div className="avatar-sm flex-shrink-0">
@@ -178,18 +191,18 @@ const NewDashboard = () => {
             </Col>
             <Col md={4}>
             <Link to="/subdashboard">
-              <Card className="card-animate">
+            <Card className="card-animate card-res card-hover" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <h5 className="fw-medium text-muted mb-0">
+                    <p class="fw-semibold new-class fs-16 mb-0">
                         Commercial Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
                       </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                      <h2 className="mt-4 ff-secondary fs-14" style={{ fontWeight: "bold" }}>
+                        Business Plan
+                      </h2>
+                      <h2 className="mt-2 ff-secondary fs-14" style={{ fontWeight: "bold" }}>MIS</h2>
+                        <h2 className="mt-1 ff-secondary fs-14" style={{ fontWeight: "bold" }}>SOPs</h2>
                     </div>
                     <div>
                       <div className="avatar-sm flex-shrink-0">
@@ -205,18 +218,16 @@ const NewDashboard = () => {
             </Col>
             <Col md={4}>
             <Link to="/subdashboard">
-              <Card className="card-animate">
+            <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <h5 className="fw-medium text-muted mb-0">
+                    <p class="fw-semibold new-class fs-16 mb-0">
                         Treasury Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                 </p>
+                
+                      <h2 className="mt-4 ff-secondary fs-14" style={{ fontWeight: "bold" }}>MIS</h2>
+                      <h2 className="mt-1 ff-secondary fs-14" style={{ fontWeight: "bold" }}>SOPs</h2>
                     </div>
                     <div>
                       <div className="avatar-sm flex-shrink-0">
@@ -234,15 +245,44 @@ const NewDashboard = () => {
           <Row>
             <Col md={4}>
             <Link to="/subdashboard">
-              <Card className="card-animate">
+            <div class="col-lg-12 col-lg-4">
+            <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
+                <CardBody>
+
+                  <div className="d-flex justify-content-between">
+                    <div>
+                    <p class="fw-semibold new-class fs-16 mb-0">
+                        Compliance Department
+                      </p>
+                      <h2 class="mt-4 ff-secondary fs-14" style={{ fontWeight: "bold" }}>MIS</h2>
+<h2 class="mt-1 ff-secondary fs-14" style={{ fontWeight: "bold" }}>SOPs</h2>
+
+                    </div>
+                    <div>
+                      <div className="avatar-sm flex-shrink-0">
+                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
+                          <FeatherIcon icon="file-text" className="text-info" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+              </div>
+              </Link>
+            </Col>
+            <Col md={4}>
+            <Link to="/subdashboard">
+            <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Finance Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                    <p class="fw-semibold new-class fs-16 mb-0">
+                        Technology Department
+                      </p>
+                      <h2 className="mt-4 ff-secondary fs-14" style={{ fontWeight: "bold" }}>IT requests </h2>
+                      <h2 className="mt-2 ff-secondary fs-14" style={{ fontWeight: "bold" }}>Inventory</h2>
+                      <h2 className="mt-1 ff-secondary fs-14" style={{ fontWeight: "bold" }}>SOPs</h2>
                     </div>
                     <div>
                       <div className="avatar-sm flex-shrink-0">
@@ -258,45 +298,18 @@ const NewDashboard = () => {
             </Col>
             <Col md={4}>
             <Link to="/subdashboard">
-              <Card className="card-animate">
+            <Card className="card-animate card-res" style={{borderRadius:'15px'}}>
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Commercial Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
+                    <p class="fw-semibold new-class fs-16 mb-0">
+                        Data Analytics Department
                       </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
-                    </div>
-                    <div>
-                      <div className="avatar-sm flex-shrink-0">
-                        <span className="avatar-title bg-soft-info rounded-circle fs-2">
-                          <FeatherIcon icon="file-text" className="text-info" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-              </Link>
-            </Col>
-            <Col md={4}>
-            <Link to="/subdashboard">
-              <Card className="card-animate">
-                <CardBody>
-                  <div className="d-flex justify-content-between">
-                    <div>
-                      <h5 className="fw-medium text-muted mb-0">
-                        Treasury Department
-                      </h5>
-                      <p className="mt-4 ff-secondary fw-semibold">
-                        Buisness Plan
-                      </p>
-                      <p className="mt-4 ff-secondary fw-semibold">MIS</p>
-                      <p className="mt-4 ff-secondary fw-semibold">SOP</p>
+                      <h2 className="mt-4 ff-secondary fs-14" style={{ fontWeight: "bold" }}>
+                        New Dashboard Request
+                      </h2>
+                      <h2 className="mt-2 ff-secondary fs-14" style={{ fontWeight: "bold" }}>Item Master Creation</h2>
+
                     </div>
                     <div>
                       <div className="avatar-sm flex-shrink-0">
@@ -396,3 +409,16 @@ const NewDashboard = () => {
 };
 
 export default NewDashboard;
+
+
+
+
+// const id = localStorage.getItem("LocationID");
+//   // const { id } = useParams();
+//   const [communityrequireddetails, setcommunityrequireddetails] =
+//     useState(null);
+//   const getreqcommdetails = async () => {
+//     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
+//     console.log("jfjfijefjekf", res);
+//     setcommunityrequireddetails(res.data);
+//   };
