@@ -113,7 +113,7 @@ const MenuMater = () => {
                                         <button
                                           type="button"
                                           className="btn btn-danger btn-icon waves-effect waves-light"
-                                          onClick={() => handleEdit(type._id)}
+                                          // onClick={() => handleEdit(type._id)}
                                         >
                                           <i className="ri-pencil-fill"></i>
                                         </button>
@@ -122,7 +122,7 @@ const MenuMater = () => {
                                         <button
                                           type="button"
                                           className="btn btn-success btn-icon waves-effect waves-light"
-                                          onClick={() => handleDelete(type._id)}
+                                          // onClick={() => handleDelete(type._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>

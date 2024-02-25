@@ -159,11 +159,11 @@ console.log(isAdmin)
                 Menu Master
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/roles-responsibilty" className="nav-link">
                 Roles & Responsibility
               </Link>
-            </li>
+            </li> */}
 
             {!isAdmin ? (
                 <li className="nav-item">

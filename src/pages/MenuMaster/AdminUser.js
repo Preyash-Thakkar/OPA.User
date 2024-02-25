@@ -145,7 +145,7 @@ const AdminUser = () => {
               <button
                 type="button"
                 className="btn btn-success btn-icon waves-effect waves-light"
-                onClick={()=>handleEdit(admin._id)}
+                // onClick={()=>handleEdit(admin._id)}
               >
                 <i className="ri-pencil-fill"></i>
               </button>
@@ -153,7 +153,7 @@ const AdminUser = () => {
             <div className="flex-grow-1">
               <button
                 type="button"
-                onClick={() => handleDelete(admin._id)}
+                // onClick={() => handleDelete(admin._id)}
                 className="btn btn-danger btn-icon waves-effect waves-light"
               >
                 <i className="ri-delete-bin-5-line"></i>
