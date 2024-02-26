@@ -33,7 +33,7 @@ import {
   EffectCoverflow,
   Autoplay,
 } from "swiper";
-// const url = "http://localhost:5002";
+
 const NewDashboard = () => {
   document.title = "Dashboard";
   //const getReqCommDetails = useContext(SignContext)
@@ -42,17 +42,62 @@ const NewDashboard = () => {
   // const { id } = useParams();
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
+ 
+    const[rolesresponsibilities,setrolesresponsibility]=useState(null);
+    const[admin,setadmin]=useState(null);
+    const[addtask,setaddtask]=useState(null);
+    const[assigntask,setassigntask]=useState(null);
+    const[commsg,setcommmsg]=useState(null);
+
   const getreqcommdetails = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
+  const getreqassigntask = async () => {
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntask`);
+    console.log("jfjfijefjekf", res);
+    setassigntask(res.assigncount)
+  };
+  const getreqadmincount = async () => {
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/getadmins`);
+    console.log("jfjfijefjekf", res);
+    setadmin(res.adminCount)
+  };
+  const getrolesresponsibility=async()=>{
+    const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/rolesresponsibilities/getRolesResponsibilities`)
+    setrolesresponsibility(res.rolesResponsibilitiesCount);
+console.log(res.rolesResponsibilitiesCount);
+  }
+
+  const getcomdetails=async()=>{
+    const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessage`)
+setcommmsg(res.count);
+
+
+  }
+  const gettaskdetails=async()=>{
+    const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getalltask`)
+setaddtask(res.formTasksCount);
+
+
+  }
+  useEffect(()=>{
+    getrolesresponsibility();
+    getreqadmincount();
+    getreqassigntask();
+    getreqcommdetails();
+    getcomdetails();
+    gettaskdetails();
+  },[])
+
+
 
   useEffect(() => {
     // Set a delay for the execution
     const timer = setTimeout(() => {
       getreqcommdetails();
-    }, 5000); // Delay the execution for 5000 milliseconds (5 seconds)
+    }, []); // Delay the execution for 5000 milliseconds (5 seconds)
 
     return () => clearTimeout(timer);
   }, []);
@@ -73,18 +118,12 @@ const NewDashboard = () => {
                     <p class="fw-semibold new-class fs-16 mb-0">
                         Users
                       </p>
+                      
                       <h2 className="mt-4 ff-secondary fw-semibold">
-                        <span className="counter-value">
-                          <CountUp
-                            start={0}
-                            end={28.05}
-                            decimals={1}
-                            duration={4}
-                          />
-                          2
-                        </span>
-                        k
-                      </h2>
+          <span className="counter-value">
+            {rolesresponsibilities}
+          </span>
+        </h2>
                     </div>
                     <div>
                       <div className="avatar-sm flex-shrink-0">
@@ -109,15 +148,9 @@ const NewDashboard = () => {
                     <p class="fw-semibold new-class fs-16 mb-0">No. of Document</p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
-                          <CountUp
-                            start={0}
-                            end={2}
-                            decimals={1}
-                            duration={4}
-                          />
-                          0
+                          {commsg+admin+assigntask}
                         </span>
-                        k
+                        
                       </h2>
                     </div>
                     <div>
@@ -141,15 +174,9 @@ const NewDashboard = () => {
                     <p class="fw-semibold new-class fs-16 mb-0">No. of Form</p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
-                          <CountUp
-                            start={0}
-                            end={100}
-                            decimals={1}
-                            duration={4}
-                          />
-                          0
+                          {addtask}
                         </span>
-                        k
+                        
                       </h2>
                     </div>
                     <div>
@@ -408,16 +435,3 @@ const NewDashboard = () => {
 };
 
 export default NewDashboard;
-
-
-
-
-// const id = localStorage.getItem("LocationID");
-//   // const { id } = useParams();
-//   const [communityrequireddetails, setcommunityrequireddetails] =
-//     useState(null);
-//   const getreqcommdetails = async () => {
-//     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
-//     console.log("jfjfijefjekf", res);
-//     setcommunityrequireddetails(res.data);
-//   };

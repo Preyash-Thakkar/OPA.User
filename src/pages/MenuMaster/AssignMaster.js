@@ -60,7 +60,7 @@ const AssignMaster = () => {
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Assign Task Detail" />
                   <div className="mt-3 mb-2">
-                    {/* <Link to="/assign-task">
+                    <Link to="/assign-task">
                       <button
                         className="btn btn-primary"
                         type="submit"
@@ -68,7 +68,7 @@ const AssignMaster = () => {
                       >
                         Add Assign Task
                       </button>
-                    </Link> */}
+                    </Link>
                   </div>
                 </div>
                 <CardBody>

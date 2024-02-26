@@ -43,7 +43,7 @@ const AddTask = () => {
 
   const addDetails = async (values) => {
     const response = await addTask(values);
-
+return response;
     console.log(response);
   };
   const cancel=()=>{
