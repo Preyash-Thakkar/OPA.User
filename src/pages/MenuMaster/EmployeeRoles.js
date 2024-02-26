@@ -4,6 +4,9 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -27,24 +30,50 @@ import { useNavigate } from "react-router-dom";
 const EmployeeRoles = () => {
   const navigate=useNavigate();      
   const { GetallEmployeeRole, DeleteEmployeeRole} = useContext(SignContext);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalEmployeeRole, setOriginalEmployeeRole] = useState(null);
   const [employeerole,setemployeerole]=useState(null);
 
  
   const getemployerole=async()=>{
      const res=await GetallEmployeeRole(); 
      console.log(res); 
+     setOriginalEmployeeRole(res.data)
      setemployeerole(res.data);    
   }
-  const handleDelete=async(id)=>{
-        console.log(">>id",id);
+  // const handleDelete=async(id)=>{
+  //       console.log(">>id",id);
       
-      const abc=window.confirm("Are you sure you want to delete");
-      if(abc){
-      const res= await DeleteEmployeeRole(id);
-      getemployerole()
-      console.log(res);
+  //     const abc=window.confirm("Are you sure you want to delete");
+  //     if(abc){
+  //     const res= await DeleteEmployeeRole(id);
+  //     getemployerole()
+  //     console.log(res);
+  //     }
+  // }
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteEmployeeRole = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
+
+      try {
+        await DeleteEmployeeRole(selectedForUpdate);
+        getemployerole();
+      } catch (error) {
+        // Handle error if needed
+        console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
       }
-  }
+    }
+  };
   
   const handleEdit=async(id)=>{
          console.log(id);
@@ -54,8 +83,32 @@ const EmployeeRoles = () => {
   useEffect(()=>{
        getemployerole()
   },[])
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    console.log("Input Value:", inputVal); // Log input value for debugging
+    let filterData = [];
+    
+    if (originalEmployeeRole) {
+      filterData = originalEmployeeRole.filter((el) => {
+        const lowerCaseName = el.name && el.name.toLowerCase();
+        console.log("Lowercase Name:", lowerCaseName); // Log lowercase name for debugging
+        return (lowerCaseName && lowerCaseName.indexOf(inputVal) !== -1) ||
+               (el.isActive && el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1);
+      });
+    }
+    
+    console.log("Filtered Data:", filterData); // Log filtered data for debugging
+    setemployeerole(filterData);
+  };
   return (
     <>
+    <ToastContainer closeButton={false} />
+    <DeleteModal
+      show={deleteModal}
+      isLoading={isDeletebuttonLoading}
+      onDeleteClick={() => handleDeleteEmployeeRole()}
+      onCloseClick={() => setDeleteModal(false)}
+    />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -81,6 +134,7 @@ const EmployeeRoles = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">

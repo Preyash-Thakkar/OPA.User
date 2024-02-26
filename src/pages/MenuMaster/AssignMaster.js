@@ -8,6 +8,9 @@ import logo from "../../assets/images/brands/slack.png";
 import Example from "./FormOne";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -31,12 +34,17 @@ const AssignMaster = () => {
   
   const id=localStorage.getItem("EmployeeNameID");
   console.log(id)
-  const { GetallAssignTask } = useContext(SignContext);
+  const { GetallAssignTask,DeleteAssignTask } = useContext(SignContext);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalAssignTask, setOriginalAssignTask] = useState(null);
   const [task,settask]=useState(null);
   const getalltask = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getspecificassigntaskbyemployeenameid/${id}`)
     console.log("kjgkjk5ky",res);
     settask(res.data);
+    setOriginalAssignTask(res.data);
 };
 
   useEffect(() => {
@@ -45,13 +53,52 @@ const AssignMaster = () => {
   useEffect(() => {
     console.log(">>>>>",task)
   }, [task]);
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteAssignTask = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
+
+      try {
+        await DeleteAssignTask(selectedForUpdate);
+        getalltask();
+      } catch (error) {
+        // Handle error if needed
+        console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
+    }
+  };
   const handleEdit = async (id) => {
     console.log(">>>vaishalllllllllllllllllllll", id);
     navigate(`/edit-assigntask/${id}`);
   };
-
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalAssignTask.filter(
+      (el) =>
+        el.documentname.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.documentdepartmenttype.name.toLowerCase().indexOf(inputVal) !==
+          -1 ||
+        el.tasktypes.taskName.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.documenttype.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    settask(filterData);
+  };
   return (
-    <>
+    <><ToastContainer closeButton={false} />
+    <DeleteModal
+      show={deleteModal}
+      isLoading={isDeletebuttonLoading}
+      onDeleteClick={() => handleDeleteAssignTask()}
+      onCloseClick={() => setDeleteModal(false)}
+    />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -81,6 +128,7 @@ const AssignMaster = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList} />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">

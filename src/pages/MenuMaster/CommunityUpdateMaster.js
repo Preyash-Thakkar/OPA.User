@@ -7,7 +7,9 @@ import logo from "../../assets/images/brands/slack.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SignContext from "../../contextAPI/Context/SignContext";
-
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -32,6 +34,10 @@ const baseURL = `${process.env.REACT_APP_BASE_URL}`;
 const CommunityUpdateMaster = () => {
   const navigate = useNavigate();
   console.log("SingContext working : ", SignContext);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalcommunityrequireddetails, setoriginalcommunityrequireddetails] = useState(null);
   const { getReqCommDetails, DeleteCommunityMaster } = useContext(SignContext);
   console.log("useContext : ", getReqCommDetails, DeleteCommunityMaster);
   // console.log("test1,", getReqCommDetails);
@@ -44,19 +50,40 @@ const id=localStorage.getItem("LocationID")
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
     console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
+    setoriginalcommunityrequireddetails(res.data)
   };
   console.log(">>>", communityrequireddetails);
 
-  const handleDelete = async (id) => {
-    console.log(id);
-    const abc = window.confirm("Are you sure you want to delete");
-    if (abc) {
-      const res = await DeleteCommunityMaster(id);
-      console.log("The id isss", id);
-      getreqcommdetails();
-    }
+  // const handleDelete = async (id) => {
+  //   console.log(id);
+  //   const abc = window.confirm("Are you sure you want to delete");
+  //   if (abc) {
+  //     const res = await DeleteCommunityMaster(id);
+  //     console.log("The id isss", id);
+  //     getreqcommdetails();
+  //   }
+  //   console.log(">>", id);
+  // };
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
 
-    console.log(">>", id);
+  const handleDeleteDepartmentType = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
+
+      try {
+        await DeleteCommunityMaster(selectedForUpdate);
+        getreqcommdetails();
+      } catch (error) {
+        // Handle error if needed
+        console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
+    }
   };
   const handleEdit = async (id) => {
     console.log(">>>>>", id);
@@ -71,9 +98,23 @@ const id=localStorage.getItem("LocationID")
 
     return () => clearTimeout(timer);
   }, []);
-
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalcommunityrequireddetails.filter(
+      (el) =>
+        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setcommunityrequireddetails(filterData);
+  };
   return (
-    <>
+    <><ToastContainer closeButton={false} />
+    <DeleteModal
+      show={deleteModal}
+      isLoading={isDeletebuttonLoading}
+      onDeleteClick={() => handleDeleteDepartmentType()}
+      onCloseClick={() => setDeleteModal(false)}
+    />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -98,6 +139,7 @@ const id=localStorage.getItem("LocationID")
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
