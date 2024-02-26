@@ -4,7 +4,9 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 
 import logo from "../../assets/images/brands/slack.png";
 import {
@@ -33,25 +35,48 @@ const EmployeeMaster = () => {
   const navigate=useNavigate();
   const {GetallEmployeeName,DeleteEmployeeName}=useContext(SignContext)
   const [employeename,setemployeename]=useState(null);
-
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalEmployeeMaster, setOriginalEmployeeMaster] = useState(null);
  const id=localStorage.getItem("DepartmentTypeID");
  console.log(id);
   const getemployeename=async()=>{
      const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/employeename/getemployeebyrole/${id}`)
      console.log("This is it",res); 
      setemployeename(res.data);    
-     console.log("Hiii",res.data)
+     console.log("Hiii",res.data);
+     setOriginalEmployeeMaster(res.data);
   }
-  const handleDelete=async(id)=>{
-   const confirm=window.confirm("Are U sure You want to delete this page");
-   if(confirm){
-    const res=await DeleteEmployeeName(id);
-    getemployeename();
-   }
-   console.log(id);
+  // const handleDelete=async(id)=>{
+  //  const confirm=window.confirm("Are U sure You want to delete this page");
+  //  if(confirm){
+  //   const res=await DeleteEmployeeName(id);
+  //   getemployeename();
+  //  }
+  //  console.log(id);
+  // }
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
+  const handleDeleteEmployee = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
   
+      try {
+        await DeleteEmployeeName(selectedForUpdate);
+        getemployeename();
+      } catch (error) {
+        // Handle error if needed
+        console.error("Error deleting employee:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
+    }
+  };
 
-  }
   const handleEdit=async(id)=>{
     console.log(">>>id",id)
     navigate(`/edit-employeename/${id}`)
@@ -61,8 +86,23 @@ const EmployeeMaster = () => {
   useEffect(()=>{
     getemployeename()
 },[])
+const searchList = (e) => {
+  let inputVal = e.toLowerCase();
+  let filterData = originalEmployeeMaster.filter(
+    (el) =>
+      el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+      el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+  );
+  setemployeename(filterData);
+};
   return (
-    <>
+    <><ToastContainer closeButton={false} />
+    <DeleteModal
+      show={deleteModal}
+      isLoading={isDeletebuttonLoading}
+      onDeleteClick={() => handleDeleteEmployee()}
+      onCloseClick={() => setDeleteModal(false)}
+    />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -87,6 +127,7 @@ const EmployeeMaster = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">

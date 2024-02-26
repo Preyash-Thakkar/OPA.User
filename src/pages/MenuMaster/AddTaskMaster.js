@@ -5,6 +5,9 @@ import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
 import axios from "axios";
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -36,6 +39,10 @@ const AddTaskMaster = () => {
 
   const navigate=useNavigate();
   const { GetallAddTask,DeleteAddTask } = useContext(SignContext);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalAddtask, setOriginalAddTask] = useState(null);
   const [task, setTask] = useState(null);
 
   
@@ -46,15 +53,36 @@ const AddTaskMaster = () => {
     console.log(">>>");
     console.log(response.data);
     setTask(response.data);
+    setOriginalAddTask(response.data);
   };
-  const handleDelete=async (abc)=>{
-    const abc1= window.confirm("Are you sure you want to delete?");
-    if(abc1){  
-    const res=await DeleteAddTask(abc);
-    gettask();
-    }
+//   const handleDelete=async (abc)=>{
+//     const abc1= window.confirm("Are you sure you want to delete?");
+//     if(abc1){  
+//     const res=await DeleteAddTask(abc);
+//     gettask();
+//     }
+//  }
+ const handleDelete = (previewImage) => {
+  setselectedForUpdate(previewImage);
+  setDeleteModal(true);
+};
 
- }
+const handleDeleteAddTask = async () => {
+  if (selectedForUpdate) {
+    setIsDeletebuttonLoading(true);
+
+    try {
+      await DeleteAddTask(selectedForUpdate);
+      gettask();
+    } catch (error) {
+      // Handle error if needed
+      console.error("Error deleting department group:", error);
+    } finally {
+      setIsDeletebuttonLoading(false);
+      setDeleteModal(false);
+    }
+  }
+};
 
  const handleEdit=async(id)=>{
   console.log(">>>id",id)
@@ -63,8 +91,27 @@ const AddTaskMaster = () => {
   useEffect(() => {
     gettask();
   }, []);
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalAddtask.filter(
+      (el) =>
+        el.departmentType.name.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.taskName.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.taskType.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.accessLocation.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setTask(filterData);
+  };
   return (
     <>
+    <ToastContainer closeButton={false} />
+      <DeleteModal
+        show={deleteModal}
+        isLoading={isDeletebuttonLoading}
+        onDeleteClick={() => handleDeleteAddTask()}
+        onCloseClick={() => setDeleteModal(false)}
+      />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -89,6 +136,7 @@ const AddTaskMaster = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList} />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">

@@ -5,6 +5,9 @@ import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -28,25 +31,49 @@ import SignContext from "../../contextAPI/Context/SignContext";
 const DepartmentType = () => {
   const navigate=useNavigate();
   const [deptype,setdeptype]=useState(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalDepType, setOriginalDepType] = useState(null);
   const {GetallDepartmentType,deletetype} = useContext(SignContext);
   const getalldeptype = async () => {
     const response = await GetallDepartmentType();
     console.log(">>>");
     console.log(response.data);
+    setOriginalDepType(response.data)
     setdeptype(response.data);
   };
 
-  const handleDelete=async(id)=>{
-    const abc=window.confirm('Are you sure you want to delete')
-    if(abc){
-    const res=await deletetype(id);
-    getalldeptype();
+  // const handleDelete=async(id)=>{
+  //   const abc=window.confirm('Are you sure you want to delete')
+  //   if(abc){
+  //   const res=await deletetype(id);
+  //   getalldeptype();
+  //     }    
+  //   console.log(">>",id)
+  // }
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteDepartmentType = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
+
+      try {
+        await deletetype(selectedForUpdate);
+        getalldeptype();
+      } catch (error) {
+        // Handle error if needed
+        console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
     }
-    
-    console.log(">>",id)
-
-  }
-
+  };
+  
   const handleEdit=async(id)=>{
     console.log(">>>id",id)
     navigate(`/edit-deptype/${id}`)
@@ -54,10 +81,24 @@ const DepartmentType = () => {
 
   useEffect(() => {
     getalldeptype();
-
   }, []);
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalDepType.filter(
+      (el) =>
+        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setdeptype(filterData);
+  };
   return (
-    <>
+    <><ToastContainer closeButton={false} />
+    <DeleteModal
+      show={deleteModal}
+      isLoading={isDeletebuttonLoading}
+      onDeleteClick={() => handleDeleteDepartmentType()}
+      onCloseClick={() => setDeleteModal(false)}
+    />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -79,6 +120,7 @@ const DepartmentType = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">

@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from 'react-router-dom';
-
+import DeleteModal from "../../common/DeleteModal";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -29,26 +31,48 @@ import {
 const DepartmentGroup = () => {
   const { GetallDepartmentGroup ,deletegrp } = useContext(SignContext);
   const [depgroup, setDepgroup] = useState(null);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalDepgroup, setOriginalDepgroup] = useState(null);
   // const [itemsPerPage] = useState(3);
   const navigate=useNavigate();
   const getdepgroup = async () => {
     const response = await GetallDepartmentGroup();
     console.log(">>>");
     console.log(response.data);
+    setOriginalDepgroup(response.data);
     setDepgroup(response.data);
   };
 
-  
+  // const handleDelete=async (abc)=>{
+  //    const abc1= window.confirm("Are you sure you want to delete?");
+  //    if(abc1){  
+  //    const res=await deletegrp(abc);
+  //    getdepgroup();
+  //    }
+  // }
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
 
+  const handleDeleteDepartmentGroup = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
 
-  const handleDelete=async (abc)=>{
-     const abc1= window.confirm("Are you sure you want to delete?");
-     if(abc1){  
-     const res=await deletegrp(abc);
-     getdepgroup();
-     }
-
-  }
+      try {
+        await deletegrp(selectedForUpdate);
+        getdepgroup();
+      } catch (error) {
+        // Handle error if needed
+        console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
+    }
+  };
   const handleEdit=(id)=>{
       console.log("edit>>>",id);
 
@@ -57,9 +81,23 @@ const DepartmentGroup = () => {
   useEffect(() => {
     getdepgroup();
   }, []);
-  
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalDepgroup.filter(
+      (el) =>
+        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setDepgroup(filterData);
+  };
   return (
-    <>
+    <><ToastContainer closeButton={false} />
+    <DeleteModal
+      show={deleteModal}
+      isLoading={isDeletebuttonLoading}
+      onDeleteClick={() => handleDeleteDepartmentGroup()}
+      onCloseClick={() => setDeleteModal(false)}
+    />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -84,6 +122,7 @@ const DepartmentGroup = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
