@@ -64,7 +64,7 @@ const LocationMaster = () => {
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Location Detail" />
                   <div className="mt-3 mb-2">
-                    <Link to="/add-location">
+                    {/* <Link to="/add-location">
                       <button
                         className="btn btn-primary"
                         type="submit"
@@ -72,7 +72,7 @@ const LocationMaster = () => {
                       >
                         Add Location
                       </button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <CardBody>

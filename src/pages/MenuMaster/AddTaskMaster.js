@@ -80,12 +80,12 @@ const AddTaskMaster = () => {
 
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Add Task" />
-                  <div className="mt-3 mb-2">
+                  {/* <div className="mt-3 mb-2">
                     <Link to='/add-task'><button className="btn btn-primary" type="submit" style={{marginRight:'9px'}}>
                       Add Task
                     </button>
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
                 <CardBody>
                   <div className="live-preview">

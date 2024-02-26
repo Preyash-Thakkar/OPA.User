@@ -106,7 +106,7 @@ const NewDashboard = () => {
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                    <p class="fw-semibold new-class fs-16 mb-0">No. Document</p>
+                    <p class="fw-semibold new-class fs-16 mb-0">No. of Document</p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
                           <CountUp
@@ -138,7 +138,7 @@ const NewDashboard = () => {
                 <CardBody>
                   <div className="d-flex justify-content-between">
                     <div>
-                    <p class="fw-semibold new-class fs-16 mb-0">No. Form</p>
+                    <p class="fw-semibold new-class fs-16 mb-0">No. of Form</p>
                       <h2 className="mt-4 ff-secondary fw-semibold">
                         <span className="counter-value">
                           <CountUp

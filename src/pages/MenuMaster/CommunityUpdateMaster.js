@@ -85,7 +85,7 @@ const id=localStorage.getItem("LocationID")
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Community Update Detail" />
                   <div className="mt-3 mb-2">
-                    <Link to="/add-community">
+                    {/* <Link to="/add-community">
                       <button
                         className="btn btn-primary"
                         type="submit"
@@ -93,7 +93,7 @@ const id=localStorage.getItem("LocationID")
                       >
                         Add Community Update
                       </button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <CardBody>

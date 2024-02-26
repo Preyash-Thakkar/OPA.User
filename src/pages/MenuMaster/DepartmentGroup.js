@@ -71,7 +71,7 @@ const DepartmentGroup = () => {
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Depatment Group" />
                   <div className="mt-3 mb-2">
-                    <Link to="/add-dgroup">
+                    {/* <Link to="/add-dgroup">
                       <button
                         className="btn btn-primary"
                         type="submit"
@@ -79,7 +79,7 @@ const DepartmentGroup = () => {
                       >
                         Add Department Group
                       </button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <CardBody>

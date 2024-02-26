@@ -88,12 +88,12 @@ const AdminUser = () => {
 
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Admin User" />
-                  <div className="mt-3 mb-2">
+                  {/* <div className="mt-3 mb-2">
                     <Link to='/add-user'><button className="btn btn-primary" type="submit" style={{marginRight:'9px'}}>
                       Add Admin User
                     </button>
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
                 <CardBody>
                   <div className="live-preview">

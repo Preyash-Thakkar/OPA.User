@@ -161,14 +161,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtnLoading(true);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  // Check if email is provided and matches the regex pattern
-  if (!AdminInfo.email || !emailRegex.test(AdminInfo.email)) {
-    setError("Please provide a valid email address");
-    setButtnLoading(false);
-    return;
-  }
+  // // Check if email is provided and matches the regex pattern
+  // if (!AdminInfo.email || !emailRegex.test(AdminInfo.email)) {
+  //   setError("Please provide a valid email address");
+  //   setButtnLoading(false);
+  //   return;
+  // }
   
     try {       
       //  const response = await axios.get('')
@@ -338,11 +338,11 @@ const Login = () => {
                         </div>
 
                         <div className="mb-3">
-                          {/* <div className="float-end">
+                          <div className="float-end">
                             <Link to="/forgot-password" className="text-muted">
                               Forgot password?
                             </Link>
-                          </div> */}
+                          </div>
                           <Label
                             className="form-label"
                             htmlFor="password-input"

@@ -71,10 +71,10 @@ const DepartmentType = () => {
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Department Type" />
                   <div className="mt-3 mb-2">
-                    <Link to='/add-dtype'><button className="btn btn-primary" type="submit" style={{marginRight:'9px'}}>
+                    {/* <Link to='/add-dtype'><button className="btn btn-primary" type="submit" style={{marginRight:'9px'}}>
                       Add Department Type
                     </button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <CardBody>

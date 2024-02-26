@@ -74,7 +74,7 @@ const EmployeeMaster = () => {
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Employee Master" />
                   <div className="mt-3 mb-2">
-                    <Link to="/add-employee">
+                    {/* <Link to="/add-employee">
                       <button
                         className="btn btn-primary"
                         type="submit"
@@ -82,7 +82,7 @@ const EmployeeMaster = () => {
                       >
                         Add Employee
                       </button>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <CardBody>
