@@ -19,7 +19,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const AddTask = () => {
   const navigate=useNavigate();
   const [departmenttype, setdepartmentype] = useState(null);
-  const { GetDepTypeByIdForEditing,addTask,setDepartmentName,departmentName } = useContext(SignContext);
+  const { GetDepTypeByIdForEditing,addTask,setDepartmentName,departmentName,GetallAddTask } = useContext(SignContext);
   const getalldtype = async () => {
 
     try {
@@ -29,8 +29,8 @@ const AddTask = () => {
       // Make API call to get department data by ID for editing
       const response = await GetDepTypeByIdForEditing(departmentId);
       console.log("Dtype", response);
-      console.log("Department",response.data.name);
-      setdepartmentype(response.data.name);
+      console.log("Department",response.data);
+      setdepartmentype(response.data);
   
       // Set the department type in state
       // setdepartmentype(response.data);
@@ -80,7 +80,11 @@ return response;
                   }
                 }
                 onSubmit={(values, { resetForm }) => {
-                    addDetails(values);
+                    const res=addDetails(values);
+                    if(res){
+                      GetallAddTask();
+                      navigate('/add-taskmaster');
+                    }
                     resetForm();
                 }}
               >
@@ -130,7 +134,7 @@ return response;
       >
         <option value="">-- Select Department --</option>
         {departmenttype ? (
-          <option value={departmenttype}>{departmenttype}</option>
+          <option key={departmenttype} value={departmenttype._id}>{departmenttype.name}</option>
         ) : (
           <option value="" disabled>
             No department available

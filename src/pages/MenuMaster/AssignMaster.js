@@ -7,6 +7,7 @@ import axios from "axios";
 import logo from "../../assets/images/brands/slack.png";
 import Example from "./FormOne";
 import SignContext from "../../contextAPI/Context/SignContext";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -26,6 +27,8 @@ import {
   Row,
 } from "reactstrap";
 const AssignMaster = () => {
+  const navigate=useNavigate();
+  
   const id=localStorage.getItem("EmployeeNameID");
   console.log(id)
   const { GetallAssignTask } = useContext(SignContext);
@@ -42,6 +45,11 @@ const AssignMaster = () => {
   useEffect(() => {
     console.log(">>>>>",task)
   }, [task]);
+  const handleEdit = async (id) => {
+    console.log(">>>vaishalllllllllllllllllllll", id);
+    navigate(`/edit-assigntask/${id}`);
+  };
+
   return (
     <>
       <UiContent />
