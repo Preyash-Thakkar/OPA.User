@@ -62,6 +62,7 @@ import Register from "../pages/Authentication/Register";
 // User Profile
 import UserProfile from "../pages/Authentication/user-profile";
 import NewTeam from "../pages/Pages/Team/NewTeam";
+
 // import NewCutomer from "../pages/Ecommerce/EcommerceCustomers/NewCutomer";
 // import NewCustomer from "../pages/Ecommerce/EcommerceCustomers/NewCustomer";
 // import Content from "../pages/ContentManagement/Content";
@@ -131,6 +132,7 @@ import EditMenuMaster from "../pages/MenuMaster/EditMenuMaster";
 import EditEmployeeName from "../pages/MenuMaster/EditEmployeeName";
 import EditCommunityUpdateMaster from "../pages/MenuMaster/EditCommunityUpdateMaster"
 import Editadmin from "../pages/MenuMaster/Editadmin";
+import EditAssignTask from "../pages/MenuMaster/EditAssignTask";
 
 // import customerNew from "../pages/Ecommerce/EcommerceCustomers/customerNew";
 const authProtectedRoutes = [
@@ -309,6 +311,14 @@ const authProtectedRoutes = [
     component: (
       <SignState>
         <EditDepType />
+      </SignState>
+    ),
+  },
+  {
+    path:"/edit-assigntask/:id",
+    component: (
+      <SignState>
+        <EditAssignTask/>
       </SignState>
     ),
   },

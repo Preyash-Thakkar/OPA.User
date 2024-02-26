@@ -143,7 +143,7 @@ const AssignMaster = () => {
                                         <button
                                           type="button"
                                           className="btn btn-danger btn-icon waves-effect waves-light"
-                                          // onClick={() => handleEdit(type._id)}
+                                          onClick={() => handleEdit(type._id)}
                                         >
                                           <i className="ri-pencil-fill"></i>
                                         </button>
