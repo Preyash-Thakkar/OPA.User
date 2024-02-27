@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../common/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import SearchComponent from "../../common/SearchComponent";
+import '../MenuMaster/1.css'
 import {
   Button,
   Card,
@@ -30,28 +31,28 @@ import {
   Row,
 } from "reactstrap";
 const AssignMaster = () => {
-  const navigate=useNavigate();
-  
-  const id=localStorage.getItem("DepartmentTypeID");
+  const navigate = useNavigate();
+
+  const id = localStorage.getItem("DepartmentTypeID");
   console.log(id)
-  const { GetallAssignTask,DeleteAssignTask } = useContext(SignContext);
+  const { GetallAssignTask, DeleteAssignTask } = useContext(SignContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalAssignTask, setOriginalAssignTask] = useState(null);
-  const [task,settask]=useState(null);
+  const [task, settask] = useState(null);
   const getalltask = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`)
-    console.log("kjgkjk5ky",res);
+    console.log("kjgkjk5ky", res);
     settask(res.data);
     setOriginalAssignTask(res.data);
-};
+  };
 
   useEffect(() => {
     getalltask();
   }, []);
   useEffect(() => {
-    console.log(">>>>>",task)
+    console.log(">>>>>", task)
   }, [task]);
   const handleDelete = (previewImage) => {
     setselectedForUpdate(previewImage);
@@ -84,7 +85,7 @@ const AssignMaster = () => {
       (el) =>
         el.documentname.toLowerCase().indexOf(inputVal) !== -1 ||
         el.documentdepartmenttype.name.toLowerCase().indexOf(inputVal) !==
-          -1 ||
+        -1 ||
         el.tasktypes.taskName.toLowerCase().indexOf(inputVal) !== -1 ||
         el.documenttype.toLowerCase().indexOf(inputVal) !== -1 ||
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
@@ -93,17 +94,17 @@ const AssignMaster = () => {
   };
   return (
     <><ToastContainer closeButton={false} />
-    <DeleteModal
-      show={deleteModal}
-      isLoading={isDeletebuttonLoading}
-      onDeleteClick={() => handleDeleteAssignTask()}
-      onCloseClick={() => setDeleteModal(false)}
-    />
+      <DeleteModal
+        show={deleteModal}
+        isLoading={isDeletebuttonLoading}
+        onDeleteClick={() => handleDeleteAssignTask()}
+        onCloseClick={() => setDeleteModal(false)}
+      />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
           <BreadCrumb title="Form Validation" pageTitle="Forms" />
-      {/* 9.20 to 14:30  */}
+          {/* 9.20 to 14:30  */}
           <Row>
             <Col xl={12}>
               <Card>
@@ -128,7 +129,7 @@ const AssignMaster = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
-                  <SearchComponent searchList={searchList} />
+                    <SearchComponent searchList={searchList} />
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
@@ -166,17 +167,17 @@ const AssignMaster = () => {
                             task.map((type, index) => {
                               return (
                                 <tr key={type._id}>
-                                  <td>{index+1}</td>
+                                  <td>{index + 1}</td>
                                   <td>{type.documentname}</td>
-                                  
+
                                   <td>{type.documentdepartmenttype.name}</td>
                                   <td>{type.tasktypes.taskName}</td>
                                   <td> {type.documenttype === ""
-                                      ? "FormLink"
-                                      : type.documenttype}</td>
+                                    ? "FormLink"
+                                    : type.documenttype}</td>
                                   <td> {type.departmentGroup === null
-                                      ? "No"
-                                      : "Yes"}</td>
+                                    ? "No"
+                                    : "Yes"}</td>
 
                                   <td>
                                     {type.isActive ? (
@@ -194,7 +195,7 @@ const AssignMaster = () => {
                                       <div className="flex-shrink-0">
                                         <button
                                           type="button"
-                                          className="btn btn-success btn-icon waves-effect waves-light"
+                                          className="btn btn-danger btn-icon waves-effect waves-light"
                                           onClick={() => handleEdit(type._id)}
                                         >
                                           <i className="ri-pencil-fill"></i>
@@ -203,15 +204,15 @@ const AssignMaster = () => {
                                       <div className="flex-grow-1">
                                         <button
                                           type="button"
-                                          className="btn btn-danger btn-icon waves-effect waves-light"
-                                          onClick={() => handleDelete(type._id)}
+                                          className="btn btn-success btn-icon waves-effect waves-light"
+                                        // onClick={() => handleDelete(type._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>
                                       </div>
-                                      
-                                      {/* <Example/> */}
-                                      
+
+                                      <Example props={task}/>
+
                                     </div>
 
                                   </td>

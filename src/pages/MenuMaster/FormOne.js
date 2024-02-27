@@ -26,12 +26,14 @@ import * as Yup from "yup";
 import { companies } from "../../common/data";
 import SignContext from "../../contextAPI/Context/SignContext";
 
-function Example() {
+function Example({props}) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+  console.log(">>>>",props);
 
+  
   // const res1 = allcompany.find(({ _id }) => _id === companyId);
   // console.log("res",res1)
   // seta1(res1.companyJobCategorys)
