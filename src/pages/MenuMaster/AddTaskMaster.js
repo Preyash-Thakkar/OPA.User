@@ -4,6 +4,7 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
+import Example from "./FormOne";
 import axios from "axios";
 import DeleteModal from "../../common/DeleteModal";
 import { ToastContainer } from "react-toastify";
@@ -194,6 +195,7 @@ const handleDeleteAddTask = async () => {
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>
                                       </div>
+                                      <Example props={task}/>
                                     </div>
                                   </td>
                                 </tr>
