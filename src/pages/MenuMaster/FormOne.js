@@ -1,72 +1,23 @@
-import classnames from "classnames";
-import { Form, Formik } from "formik";
-
-import React, { useContext, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Col, Row, Table } from "reactstrap";
 
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Input,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-  Table,
-} from "reactstrap";
-import * as Yup from "yup";
-
-import { companies } from "../../common/data";
-import SignContext from "../../contextAPI/Context/SignContext";
-
-function Example({props}) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const navigate = useNavigate();
-  console.log(">>>>",props);
-
-  
-  // const res1 = allcompany.find(({ _id }) => _id === companyId);
-  // console.log("res",res1)
-  // seta1(res1.companyJobCategorys)
-  // setDepartment(res1.companyDepartments);
-
-  const [customActiveTab, setcustomActiveTab] = useState("1");
-  const toggleCustom = (tab) => {
-    if (customActiveTab !== tab) {
-      setcustomActiveTab(tab);
-    }
-  };
-
-  //   const handleSavedcat = async (Values) => {
-  //     const data1 = { ...Values, companyId, employeeId: empId };
-  //     const res = await AddContact(data1);
-  //     console.log("--------------data-------");
-  //     console.log(res);
-  //     navigate('/form');
-  //   };
+function Example({ selectedItem, handleClose }) {
+  const [eyeshow, setEyeshow] = useState(null);
 
   return (
     <React.Fragment>
       <div className="flex-grow-1 mt-3 " style={{ marginLeft: "0px" }}>
         <button
           type="button"
-          class="btn btn-primary btn-icon waves-effect waves-light"
-          onClick={handleShow}
+          className="btn btn-primary btn-icon waves-effect waves-light"
+          onClick={() => setEyeshow(true)}
         >
-          <i class="ri-eye-line"></i>
+          <i className="ri-eye-line"></i>
         </button>
       </div>
 
-      <Modal size="xl" show={show} onHide={handleClose} animation={false}>
+      <Modal size="xl" show={eyeshow} onHide={() => setEyeshow(false)} animation={false}>
         <Modal.Header closeButton>
           <h5>Task Detail of HR Policy</h5>
         </Modal.Header>
@@ -78,11 +29,7 @@ function Example({props}) {
                   <Table className="align-middle table-nowrap mb-0">
                     <thead className="table-light">
                       <tr>
-                        <th
-                          scope="col"
-                          colSpan={2}
-                          style={{ textAlign: "center" }}
-                        >
+                        <th scope="col" colSpan={2} style={{ textAlign: "center" }}>
                           Task Detail
                         </th>
                       </tr>
@@ -90,34 +37,33 @@ function Example({props}) {
                     <tbody>
                       <tr>
                         <td>Task Name</td>
-                        <td>Hr Policy</td>
+                        <td>{selectedItem ? selectedItem.documentname : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>
-                          Document
+                          Document Department Type
                           <br></br>Type
                         </td>
-                        <td>File</td>
+                        <td>{selectedItem ? selectedItem.documentdepartmenttype.name : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>Document File</td>
                         <td>
-                          <a href="">View</a>
+                        <td>{selectedItem ? selectedItem.documentdepartmenttype.name : "N/A"}</td>
+                        {/* <a href={`${process.env.REACT_APP_BASE_URL}/${selectedItem.uploaddocument}`}>View</a> */}
+
                         </td>
                       </tr>
                       <tr>
                         <td>Document Link</td>
-                        <td>N/A</td>
+                        <td>{selectedItem ? selectedItem.formlink : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>
                           Text
                           <br></br>Description
                         </td>
-                        <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Velit, eius? .
-                        </td>
+                        <td>{selectedItem ? selectedItem.documentdescription : "N/A"}</td>
                       </tr>
                     </tbody>
                   </Table>
@@ -127,14 +73,10 @@ function Example({props}) {
             <Col lg={6} md={12}>
               <div className="live-preview">
                 <div className="table-responsive">
-                  <Table className="align-middle table-nowrap mb-0">
+                  {/* <Table className="align-middle table-nowrap mb-0">
                     <thead className="table-light">
                       <tr>
-                        <th
-                          scope="col"
-                          colSpan={2}
-                          style={{ textAlign: "center" }}
-                        >
+                        <th scope="col" colSpan={2} style={{ textAlign: "center" }}>
                           Task Access
                         </th>
                       </tr>
@@ -142,25 +84,25 @@ function Example({props}) {
                     <tbody>
                       <tr>
                         <td>Location</td>
-                        <td>abc</td>
+                        <td>{selectedItem ? selectedItem.locationSchema : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>
                           Department
                           <br></br>Group
                         </td>
-                        <td>abc</td>
+                        <td>{selectedItem ? selectedItem.departmentgroup : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>Employee Roles</td>
-                        <td>abc</td>
+                        <td>{selectedItem ? selectedItem.employeeroles : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>
                           Employee
                           <br></br> Access
                         </td>
-                        <td>abc || abc</td>
+                        <td>{selectedItem ? selectedItem.employeeaccess : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>
@@ -171,10 +113,10 @@ function Example({props}) {
                       </tr>
                       <tr>
                         <td>Status</td>
-                        <td>Active</td>
+                        <td>{selectedItem && selectedItem.isActive ? "Active" : "Inactive"}</td>
                       </tr>
                     </tbody>
-                  </Table>
+                  </Table> */}
                 </div>
               </div>
             </Col>

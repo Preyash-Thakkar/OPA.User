@@ -4,56 +4,55 @@ import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import logo from "../../assets/images/brands/slack.png";
 import Example from "./FormOne";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../../common/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import SearchComponent from "../../common/SearchComponent";
-import '../MenuMaster/1.css'
 import {
   Button,
   Card,
   CardBody,
-  CardHeader,
   Col,
-  Input,
   Label,
   Table,
   Container,
-  ListGroup,
-  ListGroupItem,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
   Row,
 } from "reactstrap";
+
 const AssignMaster = () => {
   const navigate = useNavigate();
-
   const id = localStorage.getItem("DepartmentTypeID");
-  console.log(id)
   const { GetallAssignTask, DeleteAssignTask } = useContext(SignContext);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalAssignTask, setOriginalAssignTask] = useState(null);
-  const [task, settask] = useState(null);
+  const [task, setTask] = useState(null);
+
   const getalltask = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`)
-    console.log("kjgkjk5ky", res);
-    settask(res.data);
-    setOriginalAssignTask(res.data);
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`
+      );
+      console.log("kjgkjk5ky", res);
+      setTask(res.data);
+      setOriginalAssignTask(res.data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
   };
 
   useEffect(() => {
     getalltask();
   }, []);
+
   useEffect(() => {
-    console.log(">>>>>", task)
+    console.log(">>>>>", task);
   }, [task]);
+
   const handleDelete = (previewImage) => {
     setselectedForUpdate(previewImage);
     setDeleteModal(true);
@@ -75,25 +74,38 @@ const AssignMaster = () => {
       }
     }
   };
+
   const handleEdit = async (id) => {
     console.log(">>>vaishalllllllllllllllllllll", id);
     navigate(`/edit-assigntask/${id}`);
   };
+
+  const handleViewDocument = (item) => {
+    setSelectedItem(item);
+    console.log("selected ",item )
+  };
+
+  const handleExampleClose = () => {
+    setSelectedItem(null);
+  };
+
   const searchList = (e) => {
     let inputVal = e.toLowerCase();
     let filterData = originalAssignTask.filter(
       (el) =>
         el.documentname.toLowerCase().indexOf(inputVal) !== -1 ||
         el.documentdepartmenttype.name.toLowerCase().indexOf(inputVal) !==
-        -1 ||
+          -1 ||
         el.tasktypes.taskName.toLowerCase().indexOf(inputVal) !== -1 ||
         el.documenttype.toLowerCase().indexOf(inputVal) !== -1 ||
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
     );
-    settask(filterData);
+    setTask(filterData);
   };
+
   return (
-    <><ToastContainer closeButton={false} />
+    <>
+      <ToastContainer closeButton={false} />
       <DeleteModal
         show={deleteModal}
         isLoading={isDeletebuttonLoading}
@@ -104,15 +116,9 @@ const AssignMaster = () => {
       <div className="page-content">
         <Container fluid={true}>
           <BreadCrumb title="Form Validation" pageTitle="Forms" />
-          {/* 9.20 to 14:30  */}
           <Row>
             <Col xl={12}>
               <Card>
-                {/* <div className="d-flex">
-                  <PreviewCardHeader title="User Detail" />
-                  <button className="btn btn-primary float-end mt-3 mb-2 " type="submit" style={{marginLeft:'880px'}} >Add Admin User</button>
-                </div> */}
-
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Assign Task Detail" />
                   <div className="mt-3 mb-2">
@@ -134,26 +140,9 @@ const AssignMaster = () => {
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
                           <tr>
-                            {/* <th scope="col" style={{ "width": "42px" }}>
-                                                            <div className="form-check">
-                                                                <Input className="form-check-input" type="checkbox" defaultValue="" id="responsivetableCheck" />
-                                                                <Label className="form-check-label" for="responsivetableCheck"></Label>
-                                                            </div>
-                                                        </th> */}
-                            <th scope="col">
-                              <br />
-                              ID
-                            </th>
-                            <th scope="col">
-                              Document
-                              <br></br> Name
-                            </th>
-                            <th scope="col">
-                              Document
-                              <br></br> Department
-                              <br />
-                              Type
-                            </th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Document Name</th>
+                            <th scope="col">Document Department Type</th>
                             <th scope="col">Task Type</th>
                             <th scope="col">Document Type</th>
                             <th scope="col">Access Location</th>
@@ -169,16 +158,18 @@ const AssignMaster = () => {
                                 <tr key={type._id}>
                                   <td>{index + 1}</td>
                                   <td>{type.documentname}</td>
-
                                   <td>{type.documentdepartmenttype.name}</td>
                                   <td>{type.tasktypes.taskName}</td>
-                                  <td> {type.documenttype === ""
-                                    ? "FormLink"
-                                    : type.documenttype}</td>
-                                  <td> {type.departmentGroup === null
-                                    ? "No"
-                                    : "Yes"}</td>
-
+                                  <td>
+                                    {type.documenttype === ""
+                                      ? "FormLink"
+                                      : type.documenttype}
+                                  </td>
+                                  <td>
+                                    {type.departmentGroup === null
+                                      ? "No"
+                                      : "Yes"}
+                                  </td>
                                   <td>
                                     {type.isActive ? (
                                       <span className="badge bg-success">
@@ -205,16 +196,25 @@ const AssignMaster = () => {
                                         <button
                                           type="button"
                                           className="btn btn-success btn-icon waves-effect waves-light"
-                                        // onClick={() => handleDelete(type._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>
                                       </div>
-
-                                      <Example props={task}/>
-
+                                      <div className="flex-grow-1">
+                                        <button
+                                          type="button"
+                                          className="btn btn-primary btn-icon waves-effect waves-light"
+                                          onClick={() => handleViewDocument(type)}
+                                        >
+                                          {/* <i className="ri-eye-line"></i> */}
+                                          <Example
+                                        selectedItem={selectedItem}
+                                        handleClose={handleExampleClose}
+                                      />
+                                        </button>
+                                      </div>
+                                      
                                     </div>
-
                                   </td>
                                 </tr>
                               );

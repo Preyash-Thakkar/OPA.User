@@ -10,12 +10,13 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Editadmin = () => {
-  const navigate=useNavigate();
-    const {GetUserRoleByIdForEditing , setEditUserRoleValues,GetDepTypeById,
-    GetEmployeeRoleById,GetallLocation,GetallDepartmentGroup,GetRoles} = useContext(SignContext);
-    const { id } = useParams();
-     const [locations, setLocations] = useState([]);
-  const [departmentGroups, setDepartmentGroups] = useState([]);
+  const navigate = useNavigate();
+  const { GetUserRoleByIdForEditing, setEditUserRoleValues, GetDepTypeById,
+    GetEmployeeRoleById, GetallLocation, GetallDepartmentGroup, GetRoles } = useContext(SignContext);
+  const { id } = useParams();
+  let preyash ;
+  const [locations, setLocations] = useState([]);
+  const [departmentGroups, setDepartmentGroups] = useState(preyash);
   const [departmentTypes, setDepartmentTypes] = useState([]);
   const [employeeRoles, setEmployeeRoles] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -23,20 +24,20 @@ const Editadmin = () => {
   const [selectedDepartmentType, setSelectedDepartmentType] = useState("");
   const [selectedEmployeeRole, setSelectedEmployeeRole] = useState("");
   const [Roles, setRoles] = useState([]);
-  const [status,setstatus]=useState("");
+  const [status, setstatus] = useState("");
   const [image, setImage] = useState(null);
-    const[typeid1,settypeid1]=useState({
-        name:"",
-        email:"",
-        password:"",
-        location:"",
-        departmentGroup:" ",
-        departmentType:" ",
-        roles:" ",
-        status:" ",
-        image:"",
-      });
-    
+  const [typeid1, settypeid1] = useState({
+    name: "",
+    email: "",
+    password: "",
+    location: "",
+    departmentGroup: " ",
+    departmentType: " ",
+    roles: " ",
+    status: " ",
+    image: "",
+  });
+
   const handleDepartmentGroupChange = async (e) => {
     const depGrpId = e.target.value;
     setSelectedDepartmentGroup(depGrpId);
@@ -46,18 +47,19 @@ const Editadmin = () => {
     setDepartmentTypes(depTypeResponse.data);
   };
   useEffect(() => {
-    const roleload=async()=>{
-      try{
-      const RoleResponse = await GetRoles();
-       const res=setRoles(RoleResponse);
-       console.log("roles are",RoleResponse.data);
+    const roleload = async () => {
+      try {
+        const RoleResponse = await GetRoles();
+        const res = setRoles(RoleResponse);
+        console.log("roles are", RoleResponse.data);
       }
-   catch (error) {
-    console.error("Error fetching data:", error);
-  }}
+      catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
 
-roleload();
-}, [GetRoles]);
+    roleload();
+  }, [GetRoles]);
   const handleDepartmentTypeChange = async (e) => {
     const depTypeId = e.target.value;
     setSelectedDepartmentType(depTypeId);
@@ -67,22 +69,23 @@ roleload();
       selectedDepartmentGroup,
       depTypeId
     );
-   const res= setEmployeeRoles(empRoleResponse.data);
-   console.log("vaishal",res);
+    const res = setEmployeeRoles(empRoleResponse.data);
+    console.log("vaishal", res);
   };
-   const handleImageChange = (e) => {
+  const handleImageChange = (e) => {
     //setImage(e.target.files[0]);
-     const file = e.target.files[0];
-  console.log(file);
-  setImage(file); 
-   };    
-    const gettingadmin=async (id)=>{
-      const res=await GetUserRoleByIdForEditing(id);
-      console.log(res);
-      settypeid1(res.data)
-      
-    }
-      useEffect(() => {
+    const file = e.target.files[0];
+    console.log(file);
+    setImage(file);
+  };
+  const gettingadmin = async (id) => {
+    const res = await GetUserRoleByIdForEditing(id);
+    console.log(res);
+    settypeid1(res.data)
+    preyash=res.data.departmentGroup.name;
+    console.log("preyash",preyash);
+      }
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const locationResponse = await GetallLocation();
@@ -97,15 +100,15 @@ roleload();
 
     fetchData();
   }, [GetallDepartmentGroup]);
-    useEffect(() => {
-        
-      }, []);
-    useEffect(()=>{
-         gettingadmin(id);
-    },[])
-    const cancel=()=>{
-      navigate('/admin-user')
-    }
+  useEffect(() => {
+
+  }, []);
+  useEffect(() => {
+    gettingadmin(id);
+  }, [])
+  const cancel = () => {
+    navigate('/admin-user')
+  }
 
   return (
     <>
@@ -122,23 +125,26 @@ roleload();
               <Formik
                 // validationSchema={schema}
                 initialValues={
-                     typeid1
-                    }
+                  typeid1
+                }
                 onSubmit={(values, { resetForm }) => {
-                  console.log("type id",typeid1);
-                  console.log("location",typeid1.location);
-                  console.log("values",values);
-                  typeid1.image=image;
-                  console.log("image uploaded in edit is",values.image);
+                  console.log("hello");
+                  console.log("status", typeid1.status);
+                  console.log("hello");
+                  console.log("type id", typeid1);
+                  console.log("location", typeid1.location);
+                  console.log("values", values);
+                  typeid1.image = image;
+                  console.log("image uploaded in edit is", values.image);
+                    console.log("preyash",preyash);
+                  const res = setEditUserRoleValues(id, typeid1.name, typeid1.email, typeid1.password, typeid1.image, typeid1.location._id, typeid1.departmentGroup._id, typeid1.departmentType._id, typeid1.roles._id, typeid1.status)
+                  if (res) {
+                    navigate('/admin-user');
+                  }
+                  resetForm();
 
-                  const res=setEditUserRoleValues(id,typeid1.name,typeid1.email,typeid1.password,typeid1.image,typeid1.location._id,typeid1.departmentGroup._id,typeid1.departmentType._id,typeid1.roles._id,typeid1.status)
-                    if(res){
-                        navigate('/admin-user');
-                    }
-                    resetForm();
-                  
-                  
-        }}
+
+                }}
               >
                 {({
                   values,
@@ -151,7 +157,7 @@ roleload();
                   <div className="login">
                     <div className="form">
                       {/* Passing handleSubmit parameter tohtml form onSubmit property */}
-                      <form noValidate onSubmit={handleSubmit}  encType="multipart/form-data">
+                      <form noValidate onSubmit={handleSubmit} encType="multipart/form-data">
                         {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
 
                         <Card>
@@ -174,7 +180,7 @@ roleload();
                                     className="form-label mt-3"
                                     htmlFor="product-orders-input"
                                   >
-                                     Name
+                                    Name
                                   </label>
                                   <div className="">
                                     <Input
@@ -186,11 +192,11 @@ roleload();
                                       ia-describedby="product-orders-addon"
                                       //onChange={handleChange}
                                       onBlur={handleBlur}
-                                      onChange={(e)=>settypeid1((prev)=>({...prev,name:e.target.value}))}
+                                      onChange={(e) => settypeid1((prev) => ({ ...prev, name: e.target.value }))}
 
 
 
-                                    //  onBlur={handleBlur}
+                                      //  onBlur={handleBlur}
                                       value={typeid1.name}
                                     />
                                   </div>
@@ -220,7 +226,7 @@ roleload();
 
 
 
-                                     // onBlur={handleBlur}
+                                      // onBlur={handleBlur}
                                       value={typeid1.email}
                                     />
                                   </div>
@@ -250,7 +256,7 @@ roleload();
 
 
 
-                                     // onBlur={handleBlur}
+                                      // onBlur={handleBlur}
                                       value={typeid1.password}
                                     />
                                   </div>
@@ -273,21 +279,21 @@ roleload();
                                       className="form-select"
                                       name="location"
                                       onBlur={handleBlur}
-                                       value={values.location}
-                                       onChange={handleChange}
-                                       >
-                                       <option>{typeid1.location.name}</option>
-      {locations && locations.length > 0 ? (
-        locations.map((location) => (  // Change from loc to locations
-          <option key={location._id} value={location._id}>
-            {location.name}
-          </option>
-        ))
-      ) : (
-        <option value="" disabled>
-          No locations available
-        </option>
-      )}
+                                      value={values.location}
+                                      onChange={handleChange}
+                                    >
+                                      <option>{typeid1.location.name}</option>
+                                      {locations && locations.length > 0 ? (
+                                        locations.map((location) => (  // Change from loc to locations
+                                          <option key={location._id} value={location._id}>
+                                            {location.name}
+                                          </option>
+                                        ))
+                                      ) : (
+                                        <option value="" disabled>
+                                          No locations available
+                                        </option>
+                                      )}
                                     </select>
                                   </div>
                                   <p className="error text-danger">
@@ -309,24 +315,24 @@ roleload();
                                       name="departmentGroup"
                                       onBlur={handleBlur}
                                       value={values.departmentGroup}
-                                  onChange={(e) => {
-                                    //setSelectedDepartmentGroup(e.target.value);
-                                    handleChange(e);
-                                    handleDepartmentGroupChange(e);
-                                  }}
+                                      onChange={(e) => {
+                                        //setSelectedDepartmentGroup(e.target.value);
+                                        handleChange(e);
+                                        handleDepartmentGroupChange(e);
+                                      }}
                                     >
-                                      <option><option>{typeid1.departmentGroup.name}</option></option>
-      {departmentGroups && departmentGroups.length > 0 ? (
-        departmentGroups.map((group) => (  // Change from loc to departmentGroups
-          <option key={group._id} value={group._id}>
-            {group.name}
-          </option>
-        ))
-      ) : (
-        <option value="" disabled>
-          No department groups available
-        </option>
-      )}
+                                      <option>{typeid1.departmentGroup.name}</option>
+                                      {departmentGroups && departmentGroups.length > 0 ? (
+                                        departmentGroups.map((group) => (  // Change from loc to departmentGroups
+                                          <option key={group._id} value={group._id}>
+                                            {group.name}
+                                          </option>
+                                        ))
+                                      ) : (
+                                        <option value="" disabled>
+                                          No department groups available
+                                        </option>
+                                      )}
                                     </select>
                                   </div>
                                   <p className="error text-danger">
@@ -347,29 +353,29 @@ roleload();
                                       className="form-select"
                                       name="departmentType"
                                       onBlur={handleBlur}
-                                       value={values.departmentType}
-                                  onChange={(e) => {
-                                    //setSelectedDepartmentType(e.target.value);
-                                    handleChange(e);
-                                    handleDepartmentTypeChange(e);
-                                  }}
+                                      value={values.departmentType}
+                                      onChange={(e) => {
+                                        //setSelectedDepartmentType(e.target.value);
+                                        handleChange(e);
+                                        handleDepartmentTypeChange(e);
+                                      }}
                                     >
-                                       <option >{typeid1.departmentType.name}</option>
-                                    {departmentTypes &&
-                                    departmentTypes.length > 0 ? (
-                                      departmentTypes.map((type) => (
-                                        <option
-                                          key={type._id}
-                                          value={type._id}
-                                        >
-                                          {type.name}
+                                      <option >{typeid1.departmentType.name}</option>
+                                      {departmentTypes &&
+                                        departmentTypes.length > 0 ? (
+                                        departmentTypes.map((type) => (
+                                          <option
+                                            key={type._id}
+                                            value={type._id}
+                                          >
+                                            {type.name}
+                                          </option>
+                                        ))
+                                      ) : (
+                                        <option value="" disabled>
+                                          No department types available
                                         </option>
-                                      ))
-                                    ) : (
-                                      <option value="" disabled>
-                                        No department types available
-                                      </option>
-                                    )}
+                                      )}
                                     </select>
                                   </div>
                                   <p className="error text-danger">
@@ -393,22 +399,22 @@ roleload();
                                       value={values.roles}
                                       onChange={handleChange}
                                     >
-                                 <option>{typeid1.roles.role}</option>
-                                  {Roles &&
-                                    Roles.length > 0 ? (
-                                      Roles.map((role) => (
-                                        <option
-                                          key={role._id}
-                                          value={role._id}
-                                        >
-                                          {role.role}
+                                      <option>{typeid1.roles.role}</option>
+                                      {Roles &&
+                                        Roles.length > 0 ? (
+                                        Roles.map((role) => (
+                                          <option
+                                            key={role._id}
+                                            value={role._id}
+                                          >
+                                            {role.role}
+                                          </option>
+                                        ))
+                                      ) : (
+                                        <option value="" disabled>
+                                          No employee roles available
                                         </option>
-                                      ))
-                                    ) : (
-                                      <option value="" disabled>
-                                        No employee roles available
-                                      </option>
-                                    )}
+                                      )}
                                     </select>
                                   </div>
                                   <p className="error text-danger">
@@ -418,21 +424,21 @@ roleload();
                                   </p>
                                 </Col>
                                 <Col sm={4}>
-          <label className="form-label mt-3" htmlFor="product-orders-input">
-            Image
-          </label>
-          <div className="">
-            <Input
-              type="file"
-              className="form-control"
-              id="image"
-              name="image"
-              onChange={handleImageChange}
-             
-            />
-          </div>
-          <p className="error text-danger"></p>
-        </Col>
+                                  <label className="form-label mt-3" htmlFor="product-orders-input">
+                                    Image
+                                  </label>
+                                  <div className="">
+                                    <Input
+                                      type="file"
+                                      className="form-control"
+                                      id="image"
+                                      name="image"
+                                      onChange={handleImageChange}
+
+                                    />
+                                  </div>
+                                  <p className="error text-danger"></p>
+                                </Col>
                                 <Col sm={4}>
                                   <label
                                     className="form-label mt-3"
@@ -472,7 +478,7 @@ roleload();
                             <button
                               className="btn btn-danger w-sm"
                               onClick={cancel}
-                              style={{marginLeft:'3px'}}
+                              style={{ marginLeft: '3px' }}
                             >
                               Cancel
                             </button>
