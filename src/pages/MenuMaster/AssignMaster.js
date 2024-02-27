@@ -194,7 +194,7 @@ const AssignMaster = () => {
                                       <div className="flex-shrink-0">
                                         <button
                                           type="button"
-                                          className="btn btn-danger btn-icon waves-effect waves-light"
+                                          className="btn btn-success btn-icon waves-effect waves-light"
                                           onClick={() => handleEdit(type._id)}
                                         >
                                           <i className="ri-pencil-fill"></i>
@@ -203,8 +203,8 @@ const AssignMaster = () => {
                                       <div className="flex-grow-1">
                                         <button
                                           type="button"
-                                          className="btn btn-success btn-icon waves-effect waves-light"
-                                          // onClick={() => handleDelete(type._id)}
+                                          className="btn btn-danger btn-icon waves-effect waves-light"
+                                          onClick={() => handleDelete(type._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>

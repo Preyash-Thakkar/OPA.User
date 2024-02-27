@@ -453,6 +453,17 @@ export const SignState = (props) => {
       console.error("Error during API call:", error);
     }
   };
+  const DeleteAssignTask = async (id) => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/assigntask/deleteassigntask/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      return { success: false, msg: "Server Error" };
+    }
+  };
   const GetSpecificTaskByDepartmentGroup = async (id) => {
     try {
       const response = await axios.get(
@@ -1148,7 +1159,8 @@ export const SignState = (props) => {
         GetSpecificAssignTaskById,
         GetSpecificAssignTaskByDeptId,
         setEditAssignTask,
-        setEditAddTaskValues
+        setEditAddTaskValues,
+        DeleteAssignTask
       }}
     >
       {props.children}

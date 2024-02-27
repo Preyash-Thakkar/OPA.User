@@ -17,6 +17,20 @@ import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddTask = () => {
+  const validationSchema = Yup.object().shape({
+    departmentType: Yup.string().required("Please select a Department Type"),
+    taskName: Yup.string().required("Please Enter a Task Name"),
+    taskType: Yup.string().required("Please select a task Type"),
+    accessLocation: Yup.string().required("Please select Access Location"),
+
+  detail: Yup.string().required("Detail is required"),
+  // email: Yup.string().email("Invalid email").required("Email is required"),
+  // password: Yup.string()
+    // .min(8, "Password must be at least 8 characters")
+    // .required("Password is required"),
+
+    
+    });
   const navigate=useNavigate();
   const [departmenttype, setdepartmentype] = useState(null);
   const { GetDepTypeByIdForEditing,addTask,setDepartmentName,departmentName,GetallAddTask } = useContext(SignContext);
@@ -68,7 +82,7 @@ return response;
           <Row>
             <Col lg={12}>
               <Formik
-                // validationSchema={schema}
+                validationSchema={validationSchema}
                 initialValues={
                   {
                     departmentType:"",
@@ -141,16 +155,17 @@ return response;
           </option>
         )}
       </select>
+      <ErrorMessage
+              name="departmentType"
+              component="div"
+              className="text-danger"
+            />
+                
     </div>
 
 
 
-                                  <p className="error text-danger">
-                                    {errors.checkupType &&
-                                      touched.checkupType &&
-                                      errors.checkupType}
-                                  </p>
-                                </Col>
+                   </Col>
                                 <Col sm={4}>
                                   <label
                                     className="form-label mt-3"
@@ -174,11 +189,12 @@ return response;
                                     />
                                   </div>
 
-                                  <p className="error text-danger">
-                                    {/* {errors.checkupNumber &&
-                                      touched.checkupNumber &&
-                                      errors.checkupNumber} */}
-                                  </p>
+                                  <ErrorMessage
+              name="taskName"
+              component="div"
+              className="text-danger"
+            />
+                
                                 </Col>
 
                                 
@@ -201,12 +217,17 @@ return response;
                                       <option value="Form">Form</option>
                                       <option value="Data">Data</option>
                                     </select>
+                                    
                                   </div>
-                                  <p className="error text-danger">
-                                    {errors.checkupType &&
-                                      touched.checkupType &&
-                                      errors.checkupType}
-                                  </p>
+                                  <ErrorMessage
+              name="taskType"
+              component="div"
+              className="text-danger"/>
+                                  {/* <p className="error text-danger">
+                                  //   {errors.checkupType &&
+                                  //     touched.checkupType &&
+                                  //     errors.checkupType}
+                                  // </p> */}
                                 </Col>
 
                                 <Col sm={4}>
@@ -228,6 +249,11 @@ return response;
                                       <option value="Yes">Yes</option>
                                       <option value="No">No</option>
                                     </select>
+                                    <ErrorMessage
+              name="accessLocation"
+              component="div"
+              className="text-danger"
+            />
                                   </div>
                                   <p className="error text-danger">
                                     {errors.checkupType &&
@@ -252,6 +278,11 @@ return response;
                                       value={values.detail}
                                       onChange={handleChange}
                                     ></textarea>
+                                     <ErrorMessage
+              name="detail"
+              component="div"
+              className="text-danger"
+            />
                                   </div>
                                 </Col>
                                 <Col sm={2}>

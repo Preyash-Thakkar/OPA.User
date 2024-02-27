@@ -17,6 +17,9 @@ import SignContext from "../../contextAPI/Context/SignContext";
 import { SignState } from "../../contextAPI/State/SignState";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ClickTrigger } from "lord-icon-element";
 const EditAddTask = () => {
   const [departmenttype, setdepartmentype] = useState(null);
   const { GetAddTaskById, GetallDepartmentType,setEditAddTaskValues,GetDepTypeByIdForEditing } = useContext(SignContext);
@@ -85,8 +88,17 @@ const EditAddTask = () => {
                 }}
                 onSubmit={(values, { resetForm }) => {
                   
-                  const res=setEditAddTaskValues(id,task.departmentType._id,task.taskName,task.taskType,task.accessLocation,task.detail,task.isActive)
+                  const res=setEditAddTaskValues(id,task.departmentType._id,task.taskName,task.taskType,task.accessLocation,task.detail,task.isActive);
+                  if(!task.taskName){
+                  toast.error("Please Fill Task Name");
+                  return ;
+                }
+                if(!task.detail){
+                  toast.error("Please Fill Details");
+                  return;
+                }
                     if(res){
+
                         navigate('/add-taskmaster');
                     }
                     resetForm();
@@ -384,6 +396,7 @@ const EditAddTask = () => {
                   </div>
                 )}
               </Formik>
+              <ToastContainer />
             </Col>
           </Row>
         </Container>
