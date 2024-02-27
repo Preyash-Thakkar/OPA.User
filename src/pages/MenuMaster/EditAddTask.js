@@ -19,7 +19,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const EditAddTask = () => {
   const [departmenttype, setdepartmentype] = useState(null);
-  const { GetAddTaskById, GetallDepartmentType,setEditAddTaskValues } = useContext(SignContext);
+  const { GetAddTaskById, GetallDepartmentType,setEditAddTaskValues,GetDepTypeByIdForEditing } = useContext(SignContext);
   const { id } = useParams();
   const navigate=useNavigate();
   const [task, settask] = useState({
@@ -37,9 +37,23 @@ const EditAddTask = () => {
     console.log(res);
   };
   const getalldtype = async () => {
-    const response = await GetallDepartmentType();
-    console.log(response);
-    setdepartmentype(response.data);
+
+    try {
+      // Retrieve department ID from localStorage
+      const departmentId = localStorage.getItem('DepartmentTypeID'); // Replace 'your_department_id_key' with the actual key
+  // const departmentId = "65b0ebc59d84e445fc900f18";
+      // Make API call to get department data by ID for editing
+      const response = await GetDepTypeByIdForEditing(departmentId);
+      console.log("Dtype", response);
+      console.log("Department",response.data);
+      setdepartmentype(response.data);
+  
+      // Set the department type in state
+      // setdepartmentype(response.data);
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching department type for editing:', error);
+    }
   };
   const cancel=()=>{
     navigate('/add-taskmaster')
@@ -173,7 +187,7 @@ const EditAddTask = () => {
                                         })
                                       }
                                     >
-                                      <option value="">--select--</option>
+                                      {/* <option value="">--select--</option>
                                       {departmenttype &&
                                       departmenttype.length > 0 ? (
                                         departmenttype.map((type) => (
@@ -188,7 +202,14 @@ const EditAddTask = () => {
                                         <option value="" disabled>
                                           No locations available
                                         </option>
-                                      )}
+                                      )} */}
+                                      {departmenttype ? (
+          <option key={departmenttype} value={departmenttype._id}>{departmenttype.name}</option>
+        ) : (
+          <option value="" disabled>
+            No department available
+          </option>
+        )}
                                     </select>
                                   </div>
                                   <p className="error text-danger">

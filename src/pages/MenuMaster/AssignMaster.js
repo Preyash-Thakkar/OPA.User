@@ -32,7 +32,7 @@ import {
 const AssignMaster = () => {
   const navigate=useNavigate();
   
-  const id=localStorage.getItem("EmployeeNameID");
+  const id=localStorage.getItem("DepartmentTypeID");
   console.log(id)
   const { GetallAssignTask,DeleteAssignTask } = useContext(SignContext);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -41,7 +41,7 @@ const AssignMaster = () => {
   const [originalAssignTask, setOriginalAssignTask] = useState(null);
   const [task,settask]=useState(null);
   const getalltask = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getspecificassigntaskbyemployeenameid/${id}`)
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`)
     console.log("kjgkjk5ky",res);
     settask(res.data);
     setOriginalAssignTask(res.data);
@@ -171,8 +171,12 @@ const AssignMaster = () => {
                                   
                                   <td>{type.documentdepartmenttype.name}</td>
                                   <td>{type.tasktypes.taskName}</td>
-                                  <td>{type.departmentGroup === null ? 'FormLink' : (type.uploaddocument ? 'Upload Document' : 'File Upload')}</td>
-                                  <td>{type.departmentGroup === null ? 'Yes' : 'No'}</td>
+                                  <td> {type.documenttype === ""
+                                      ? "FormLink"
+                                      : type.documenttype}</td>
+                                  <td> {type.departmentGroup === null
+                                      ? "No"
+                                      : "Yes"}</td>
 
                                   <td>
                                     {type.isActive ? (

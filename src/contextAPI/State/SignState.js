@@ -716,42 +716,30 @@ export const SignState = (props) => {
       console.log("Error During API call: ", error);
     }
   };
-  const addAssignTaskmaster = async (
-    documentname,
-    documentdepartmenttype,
-    tasktypes,
-    documenttype,
-    formlink,
-    documentlink,
-    uploaddocument,
-    documentdescription,
-    locationSchema,
-    departmentGroup,
-    departmentType,
-    employeeRole,
-    employeeName,
-    isActive
-  ) => {
+  const addAssignTaskmaster = async (documentname,documentdepartmenttype,tasktypes,documenttype,formlink,documentlink,uploaddocument,documentdescription,locationSchema,departmentGroup,departmentType,employeeRole,employeeName,isActive) => {
     try {
-      const response = await axios.post(
-        `
-        ${process.env.REACT_APP_BASE_URL}/assigntask/addassigntask`,
-        {
-          documentname,
-          documentdepartmenttype,
-          tasktypes,
-          documenttype,
-          formlink,
-          documentlink,
-          uploaddocument,
-          documentdescription,
-          locationSchema,
-          departmentGroup,
-          departmentType,
-          employeeRole,
-          employeeName,
-          isActive,
-        }
+      const formData=new FormData();
+      formData.append("documentname", documentname);
+      formData.append("documentdepartmenttype",documentdepartmenttype);
+      formData.append("tasktypes", tasktypes);
+      formData.append("documenttype",documenttype);
+      formData.append("formlink", formlink);
+    formData.append("documentlink", documentlink);
+    formData.append("uploaddocument", uploaddocument);
+    formData.append("documentdescription", documentdescription);
+    formData.append("locationSchema",locationSchema);
+    formData.append("departmentGroup", departmentGroup);
+  formData.append("departmentType", departmentType);
+  formData.append("employeeRole", employeeRole);
+  formData.append("employeeName", employeeName);
+    formData.append("isActive", isActive);
+
+      const response = await axios.post(`
+        ${process.env.REACT_APP_BASE_URL}/assigntask/addassigntask`,formData,{headers: {
+          "Content-Type": "multipart/form-data",
+        },}
+     
+        
       );
       return response;
     } catch (error) {
@@ -1025,6 +1013,17 @@ export const SignState = (props) => {
   //   catch(error){
   //   }
   // }
+  const GetSpecificAssignTaskByDeptId = async (id) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
 
   const getAllSpecificTaskByDepartmentTypeId = async (id) => {
     try {
@@ -1032,6 +1031,40 @@ export const SignState = (props) => {
         `${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`,
         {}
       );
+      return response;
+    } catch (error) {
+      console.error("Error during API call:", error);
+    }
+  };
+  const GetSpecificAssignTaskById = async (id) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyid/${id}`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
+  const setEditAssignTask = async (id, documentname, documentdepartmenttype, tasktypes, formlink, documenttype, uploaddocument, documentlink, documentdescription, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive) => {
+    console.log(">>>>>>>>>id")
+    console.log("tushya", documentname);
+    // const formData = new FormData();
+    const locationIds = locationSchema.map(item => item.value);
+    const departmentGroupIds = departmentGroup.map(item => item.value);
+    const departmentTypeIds = departmentType.map(item => item.value);
+    const employeeRoleIds = employeeRole.map(item => item.value);
+    const employeeNameIds = employeeName.map(item => item.value);
+    try {
+
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/assigntask/editassigntask/${id}`,
+        {
+          documentname, documentdepartmenttype, tasktypes, formlink, documenttype, uploaddocument, documentlink, documentdescription, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive
+        },
+      );
+
       return response;
     } catch (error) {
       console.error("Error during API call:", error);
@@ -1112,6 +1145,10 @@ export const SignState = (props) => {
         getAllSpecificTaskByDepartmentTypeId,
         getSpecificUser,
         updateUser,
+        GetSpecificAssignTaskById,
+        GetSpecificAssignTaskByDeptId,
+        setEditAssignTask,
+        setEditAddTaskValues
       }}
     >
       {props.children}

@@ -1124,7 +1124,7 @@ const EditAssignTask = () => {
     departmentType: [],
     employeeRole: [],
     employeeName: [],
-    isActive: true,
+    isActive: "",
   });
   const [assigntask, setassigntask] = useState(null);
   const {
@@ -1139,12 +1139,35 @@ const EditAssignTask = () => {
     GetSpecificAssignTaskById,
     GetSpecificAssignTaskByDeptId,
     setEditAssignTask,
+    GetDepTypeByIdForEditing
   } = useContext(SignContext);
   
   const getalldtype = async () => {
-    const response = await GetallDepartmentType();
-
-    setdepartmenttype(response.data);
+    // const response = await axios.get(`${P}`);
+    // const response = await GetallDepartmentType();
+    // setdepartmenttype(response.data);
+    // console.log("This is the data",response.data)
+    // setdepartmenttype(response.data);
+ 
+      // // Retrieve department ID from localStorage
+      try {
+        // Retrieve department ID from localStorage
+        const departmentId = localStorage.getItem('DepartmentTypeID'); // Replace 'your_department_id_key' with the actual key
+    // const departmentId = "65b0ebc59d84e445fc900f18";
+        // Make API call to get department data by ID for editing
+        const response = await GetDepTypeByIdForEditing(departmentId);
+        console.log("Dtype", response);
+        console.log("Department",response.data);
+        setdepartmenttype(response.data);
+    
+        // Set the department type in state
+        // setdepartmentype(response.data);
+      } catch (error) {
+        // Handle error
+        console.error('Error fetching department type for editing:', error);
+      }
+      
+   
   };
   function handleSelectSingle(selectedSingle) {
     setSelectedSingle(selectedSingle);
@@ -1249,7 +1272,7 @@ const EditAssignTask = () => {
     console.log("task is ", typearr);
     settasktype(typearr);
 
-    console.log("This is task type", res.data[0].tasktypes.name);
+    // console.log("This is task type", res.data[0].tasktypes.name);
   };
   const getdeptype = async () => {
     const response = await GetallDepartmentType();
@@ -1431,7 +1454,7 @@ const EditAssignTask = () => {
     console.log("dt", dt);
     console.log("er", er);
     console.log("en", en);
-
+console.log(res.data);
     settypeid1({
       documentname: res.data.documentname,
       documentdepartmenttype: res.data.documentdepartmenttype,
@@ -1446,7 +1469,7 @@ const EditAssignTask = () => {
       departmentType: dt,
       employeeRole: er,
       employeeName: en,
-      isActive: true,
+      isActive: res.data.isActive,
     });
 
     console.log("THis is my data", typeid1);
@@ -1510,8 +1533,10 @@ const EditAssignTask = () => {
                   typeid1
                 }
                 onSubmit={async(values, { resetForm }) => {
+                  console.log(typeid1.locationSchema);
        
                   const locationSchemaValues = typeid1.locationSchema ? typeid1.locationSchema.map(item => item.value) : [];
+                  console.log(locationSchemaValues);
   const departmentGroupValues = typeid1.departmentGroup ? typeid1.departmentGroup.map(item => item.value) : [];
   const departmentTypeValues = typeid1.departmentType ? typeid1.departmentType.map(item => item.value) : [];
   const employeeRoleValues = typeid1.employeeRole ? typeid1.employeeRole.map(item => item.value) : [];
@@ -1543,6 +1568,7 @@ const EditAssignTask = () => {
                 
                   if (response) {
                     console.log("THis is the form link",response.formlink)
+                    GetSpecificAssignTaskByDeptId();
                     navigate("/assign-master");
                     
                   }
@@ -1618,17 +1644,17 @@ const EditAssignTask = () => {
                                       value={typeid1.documentdepartmenttype._id}
                                       onChange={(e) => settypeid1((prev) => ({ ...prev, documentdepartmenttype: e.target.value }))}
                                     >
-                                      <option value="">--select--</option>
-                                      {departmenttype &&
-                                        departmenttype.length > 0 ? (
-                                        departmenttype.map((type) => (
+                                     
+                                     
                                           <option key={type} value={type._id}>
-                                            {type.name}
-                                          </option>
-                                        ))
-                                      ) : (
-                                        <option value="" disabled>
-                                          No department available
+                                          {departmenttype ? (
+          <option key={departmenttype} value={departmenttype._id}>{departmenttype.name}</option>
+        ) : (
+          <option value="" disabled>
+            No department available
+          </option>
+        )}
+                                      
                                         </option>
                                       )}
                                     </select>
@@ -1824,6 +1850,7 @@ Update
                                           name="isActive"
                                           checked={typeid1.isActive}
                                           onChange={(e) => settypeid1((prev) => ({ ...prev, isActive: e.target.checked }))}
+                                          // onChange={handleChange}
                                         />
                                         <label className="me-2">
                                           Is Active
@@ -2025,9 +2052,10 @@ Update
                                         type="checkbox"
                                         id="isActive"
                                         label="Is Active"
-                                        name="active"
-                                        checked={values.active}
+                                        name="isActive"
+                                        checked={values.isActive}
                                         onChange={handleChange}
+                                        // onChange={(e) => settypeid1((prev) => ({ ...prev, isActive: e.target.checked }))}
                                       />
                                       <label className="me-2">Is Active</label>
                                     </div>

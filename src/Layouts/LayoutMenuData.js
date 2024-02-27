@@ -293,7 +293,7 @@ const Navdata = () => {
       id: "cmsmaster",
       label: "CMS Master",
       icon: "ri-pencil-ruler-2-line",
-      link: "/cmsmaster",
+      link: "/dashboard",
       stateVariables: isDashboard,
     },
   ];
