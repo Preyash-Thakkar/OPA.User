@@ -17,7 +17,12 @@ function Example({ selectedItem, handleClose }) {
         </button>
       </div>
 
-      <Modal size="xl" show={eyeshow} onHide={() => setEyeshow(false)} animation={false}>
+      <Modal
+        size="xl"
+        show={eyeshow}
+        onHide={() => setEyeshow(false)}
+        animation={false}
+      >
         <Modal.Header closeButton>
           <h5>Task Detail of HR Policy</h5>
         </Modal.Header>
@@ -29,7 +34,11 @@ function Example({ selectedItem, handleClose }) {
                   <Table className="align-middle table-nowrap mb-0">
                     <thead className="table-light">
                       <tr>
-                        <th scope="col" colSpan={2} style={{ textAlign: "center" }}>
+                        <th
+                          scope="col"
+                          colSpan={2}
+                          style={{ textAlign: "center" }}
+                        >
                           Task Detail
                         </th>
                       </tr>
@@ -37,21 +46,35 @@ function Example({ selectedItem, handleClose }) {
                     <tbody>
                       <tr>
                         <td>Task Name</td>
-                        <td>{selectedItem ? selectedItem.documentname : "N/A"}</td>
+                        <td>
+                          {selectedItem ? selectedItem.documentname : "N/A"}
+                        </td>
                       </tr>
                       <tr>
                         <td>
                           Document Department Type
                           <br></br>Type
                         </td>
-                        <td>{selectedItem ? selectedItem.documentdepartmenttype.name : "N/A"}</td>
+                        <td>
+                          {selectedItem
+                            ? selectedItem.documentdepartmenttype.name
+                            : "N/A"}
+                        </td>
                       </tr>
                       <tr>
                         <td>Document File</td>
                         <td>
-                        <td>{selectedItem ? selectedItem.documentdepartmenttype.name : "N/A"}</td>
-                        {/* <a href={`${process.env.REACT_APP_BASE_URL}/${selectedItem.uploaddocument}`}>View</a> */}
-
+                          <td>
+                            {selectedItem ? (
+                              <a
+                                href={`${process.env.REACT_APP_BASE_URL}/${selectedItem.uploaddocument}`}
+                              >
+                                View Document
+                              </a>
+                            ) : (
+                              "N/A"
+                            )}
+                          </td>
                         </td>
                       </tr>
                       <tr>
@@ -63,7 +86,11 @@ function Example({ selectedItem, handleClose }) {
                           Text
                           <br></br>Description
                         </td>
-                        <td>{selectedItem ? selectedItem.documentdescription : "N/A"}</td>
+                        <td>
+                          {selectedItem
+                            ? selectedItem.documentdescription
+                            : "N/A"}
+                        </td>
                       </tr>
                     </tbody>
                   </Table>

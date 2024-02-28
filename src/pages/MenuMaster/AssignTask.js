@@ -25,7 +25,7 @@ const SingleOptions = [
   { value: "Choices 4", label: "Choices 4" },
 ];
 const AssignTask = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [selectedSingle, setSelectedSingle] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedGroup2, setSelectedGroup2] = useState(null);
@@ -62,7 +62,7 @@ const AssignTask = () => {
   const [dtype, setdtype] = useState(null);
   const [emprole, setemprole] = useState(null);
   const [empname, setempname] = useState(null);
-  const [file,setfile]=useState("");
+  const [file, setfile] = useState("");
 
   const [uniqueDepartmentTypes, setUniqueDepartmentTypes] = useState([]);
 
@@ -70,31 +70,31 @@ const AssignTask = () => {
 
   const [uniqueEmployeeNames, setuniqueEmployeeNames] = useState([]);
   const getalldtype = async () => {
-    // const response = await axios.get(`${P}`);
+    // const response = await axios.get(${P});
     // const response = await GetallDepartmentType();
     // setdepartmenttype(response.data);
     // console.log("This is the data",response.data)
     // setdepartmenttype(response.data);
- 
-      // // Retrieve department ID from localStorage
-      try {
-        // Retrieve department ID from localStorage
-        const departmentId = localStorage.getItem('DepartmentTypeID'); // Replace 'your_department_id_key' with the actual key
-    // const departmentId = "65b0ebc59d84e445fc900f18";
-        // Make API call to get department data by ID for editing
-        const response = await GetDepTypeByIdForEditing(departmentId);
-        console.log("Dtype", response);
-        console.log("Department",response.data);
-        setdepartmenttype(response.data);
-    
-        // Set the department type in state
-        // setdepartmentype(response.data);
-      } catch (error) {
-        // Handle error
-        console.error('Error fetching department type for editing:', error);
-      }
-      
-   
+
+    // // Retrieve department ID from localStorage
+    try {
+      // Retrieve department ID from localStorage
+      const departmentId = localStorage.getItem('DepartmentTypeID'); // Replace 'your_department_id_key' with the actual key
+      // const departmentId = "65b0ebc59d84e445fc900f18";
+      // Make API call to get department data by ID for editing
+      const response = await GetDepTypeByIdForEditing(departmentId);
+      console.log("Dtype", response);
+      console.log("Department", response.data);
+      setdepartmenttype(response.data);
+
+      // Set the department type in state
+      // setdepartmentype(response.data);
+    } catch (error) {
+      // Handle error
+      console.error('Error fetching department type for editing:', error);
+    }
+
+
   };
   function handleSelectSingle(selectedSingle) {
     setSelectedSingle(selectedSingle);
@@ -222,7 +222,7 @@ const AssignTask = () => {
     const res = await GetAddTaskById(taskid);
     // console.log(">>>>", res.data);
     setaccesslocation(res.data.accessLocation);
-    
+
     settype(res.data.taskType);
 
     // console.log(">>>>>>>>>>>>>", res.data.accessLocation);
@@ -242,12 +242,12 @@ const AssignTask = () => {
     }));
     setdep(names);
   };
-  const id=localStorage.getItem("DepartmentTypeID");
+  const id = localStorage.getItem("DepartmentTypeID");
 
-  const addassigntask = async (documentname,documentdepartmenttype,tasktypes,documenttype,formlink,documentlink,uploaddocument,documentdescription,locationSchema,departmentGroup,departmentType,employeeRole,employeeName,isActive) => {
+  const addassigntask = async (documentname, documentdepartmenttype, tasktypes, documenttype, formlink, documentlink, uploaddocument, documentdescription, locationSchema, departmentGroup, departmentType, employeeRole, employeeName, isActive) => {
     console.log(">>>>", documentlink);
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",locationSchema,departmentGroup,departmentType,employeeRole,employeeName);
-    
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", locationSchema, departmentGroup, departmentType, employeeRole, employeeName);
+
     const res = await addAssignTaskmaster(
       documentname,
       documentdepartmenttype,
@@ -264,8 +264,8 @@ const AssignTask = () => {
       employeeName,
       isActive
     );
-  
-      
+
+
     console.log(">>", res);
   };
   const addassigntask1 = async (
@@ -344,9 +344,9 @@ const AssignTask = () => {
   useEffect(() => {
     getalldtype();
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[departmenttype])
+  }, [departmenttype])
   useEffect(() => {
     getdepgroup();
     getloc();
@@ -391,56 +391,56 @@ const AssignTask = () => {
                   let er = [];
                   let en = [];
                   console.log("employeename>>>>>", selectedMulti4);
-                  if(selectedMulti2){
+                  if (selectedMulti2) {
                     selectedMulti2.map((type) => {
-                    loc1.push(type.id);
-                  });
+                      loc1.push(type.id);
+                    });
                   }
-                 
-                  if(selectedMulti){
-                  selectedMulti.map((type) => {
-                    dg1.push(type.id);
-                  });
+
+                  if (selectedMulti) {
+                    selectedMulti.map((type) => {
+                      dg1.push(type.id);
+                    });
                   }
-                  
-                  if(selectedMulti1){
-                  selectedMulti1.map((type) => {
-                    dt.push(type.new_Id);
-                  });
+
+                  if (selectedMulti1) {
+                    selectedMulti1.map((type) => {
+                      dt.push(type.new_Id);
+                    });
                   }
-               
-                  if(selectedMulti3){
-                  selectedMulti3.map((type) => {
-                    er.push(type.neww_id);
-                  });
+
+                  if (selectedMulti3) {
+                    selectedMulti3.map((type) => {
+                      er.push(type.neww_id);
+                    });
                   }
-                  if(selectedMulti4){
-                  selectedMulti4.map((type) => {
-                    en.push(type.newid);
-                  });
-                }
+                  if (selectedMulti4) {
+                    selectedMulti4.map((type) => {
+                      en.push(type.newid);
+                    });
+                  }
                   // console.log("en>>>>", en);
-                  console.log("values",values);
-                  values.uploaddocument=file;
-                  const res=addassigntask(values.documentname,values.documentdepartmenttype,values.tasktypes,values.documenttype,values.formlink,values.documentlink,values.uploaddocument,values.documentdescription,loc1,dg1,dt,er,en,values.isActive);
+                  console.log("values", values);
+                  values.uploaddocument = file;
+                  const res = addassigntask(values.documentname, values.documentdepartmenttype, values.tasktypes, values.documenttype, values.formlink, values.documentlink, values.uploaddocument, values.documentdescription, loc1, dg1, dt, er, en, values.isActive);
                   // if(!values.uploaddocument){
                   //   toast.error("Please Upload an Image");
                   //   return ;
                   // }
-                  if(res){
+                  if (res) {
                     GetSpecificAssignTaskByDeptId(id);
 
                     navigate('/assign-master');
-                
+
                   }
-    //               if (values.uploaddocument !== "" ) {
-    //     if (res) {
-    //         GetallAssignTask();
-    //         navigate('/assign-master');
-    //     }
-    // } else {
-    //     toast.error("Please Upload an Image");
-    // }
+                  //               if (values.uploaddocument !== "" ) {
+                  //     if (res) {
+                  //         GetallAssignTask();
+                  //         navigate('/assign-master');
+                  //     }
+                  // } else {
+                  //     toast.error("Please Upload an Image");
+                  // }
                   resetForm();
                 }}
               >
@@ -496,7 +496,7 @@ const AssignTask = () => {
                                   </div>
 
                                   <p className="error text-danger">
-                                   
+
                                   </p>
                                 </Col>
                                 <Col sm={4}>
@@ -518,14 +518,14 @@ const AssignTask = () => {
                                       }}
                                     >
                                       /* <option value="">--select--</option>
-                                      
+
                                       {departmenttype ? (
-          <option key={departmenttype} value={departmenttype._id}>{departmenttype.name}</option>
-        ) : (
-          <option value="" disabled>
-            No department available
-          </option>
-        )}
+                                        <option key={departmenttype} value={departmenttype._id}>{departmenttype.name}</option>
+                                      ) : (
+                                        <option value="" disabled>
+                                          No department available
+                                        </option>
+                                      )}
                                     </select>
                                   </div>
                                   <p className="error text-danger">
@@ -598,8 +598,8 @@ const AssignTask = () => {
                                     <p className="error text-danger"></p>
                                   </Col>
                                 )}
-                                
-                                {type === "Data"  &&(
+
+                                {type === "Data" && (
                                   <>
                                     <Col sm={4}>
                                       <label
@@ -657,7 +657,7 @@ const AssignTask = () => {
                                         <label
                                           className="form-label mt-3"
                                           htmlFor="product-orders-input"
-                                        
+
                                         >
                                           Document Link
                                         </label>
@@ -698,27 +698,27 @@ const AssignTask = () => {
                                         </label>
                                       </div>
                                     </Col>
-                                    {accesslocation!=="Yes"&&(
-                                    
+                                    {accesslocation !== "Yes" && (
 
-                                    <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
- <button
-    className="btn btn-success w-sm"
-    type="submit"
-    style={{ marginLeft: '-20px' }}
-  >
-Submit
-</button>
- <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "5px" }}
-                                      >
-                                        Cancel
-                                      </button>
+
+                                      <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px', paddingTop: '40px' }}>
+                                        <button
+                                          className="btn btn-success w-sm"
+                                          type="submit"
+                                          style={{ marginLeft: '-20px' }}
+                                        >
+                                          Submit
+                                        </button>
+                                        <button
+                                          className="btn btn-danger w-sm"
+                                          onClick={cancel}
+                                          style={{ marginLeft: "5px" }}
+                                        >
+                                          Cancel
+                                        </button>
                                       </div>
                                     )}
-                              
+
                                   </>
                                 )}
                                 <Col sm={8}>
@@ -756,33 +756,33 @@ Submit
                                         </label>
                                       </div>
                                     </Col>
-                                    {accesslocation!=="Yes"&&(
+                                    {accesslocation !== "Yes" && (
 
-                                    <div className="text-end mb-3 me-3">
-                                      <button
-                                        className="btn btn-success w-sm"
-                                        type="submit"
-                                        onClick={() => {
-                                          addassigntask1(
-                                            values.documentname,
-                                            values.documentdepartmenttype,
-                                            values.tasktypes,
-                                            values.formlink,
-                                            values.documentdescription,
-                                            values.isActive
-                                          );
-                                        }}
-                                      >
-                                        Submit
-                                      </button>
-                                      <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "5px" }}
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
+                                      <div className="text-end mb-3 me-3">
+                                        <button
+                                          className="btn btn-success w-sm"
+                                          type="submit"
+                                          onClick={() => {
+                                            addassigntask1(
+                                              values.documentname,
+                                              values.documentdepartmenttype,
+                                              values.tasktypes,
+                                              values.formlink,
+                                              values.documentdescription,
+                                              values.isActive
+                                            );
+                                          }}
+                                        >
+                                          Submit
+                                        </button>
+                                        <button
+                                          className="btn btn-danger w-sm"
+                                          onClick={cancel}
+                                          style={{ marginLeft: "5px" }}
+                                        >
+                                          Cancel
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 )}
@@ -897,34 +897,34 @@ Submit
                                       />
                                     </div>
                                   </Col>
-                                  <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
- <button
-    className="btn btn-success w-sm"
-    type="submit"
-    style={{ marginLeft: '-20px' }}
-  >
-Submit
-</button>
- <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "5px" }}
-                                      >
-                                        Cancel
-                                      </button>
-                                      </div>
+                                  <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px', paddingTop: '40px' }}>
+                                    <button
+                                      className="btn btn-success w-sm"
+                                      type="submit"
+                                      style={{ marginLeft: '-20px' }}
+                                    >
+                                      Submit
+                                    </button>
+                                    <button
+                                      className="btn btn-danger w-sm"
+                                      onClick={cancel}
+                                      style={{ marginLeft: "5px" }}
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
                                 </Row>
                               </div>
                             </div>
                           </Card>
                         )}
 
-                       
+
                       </form>
                     </div>
                   </div>
                 )}
-             
+
               </Formik>
               <ToastContainer />
             </Col>
