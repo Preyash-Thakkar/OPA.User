@@ -112,7 +112,7 @@ const handleDeleteAddTask = async () => {
   const currentItems = task && task.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  
+
   return (
     <>
     <ToastContainer closeButton={false} />
@@ -217,6 +217,39 @@ const handleDeleteAddTask = async () => {
               </Card>
             </Col>
           </Row>
+          <nav>
+            <ul className="pagination">
+              {task && task.length > itemsPerPage && (
+                <>
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  {Array.from({ length: Math.ceil(task.length / itemsPerPage) }, (_, i) => i + 1).map(pageNumber => (
+                    <li key={pageNumber} className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}>
+                      <button onClick={() => paginate(pageNumber)} className="page-link">
+                        {pageNumber}
+                      </button>
+                    </li>
+                  ))}
+                  <li className={`page-item ${currentPage === Math.ceil(task.length / itemsPerPage) ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === Math.ceil(task.length / itemsPerPage)}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+          </nav>       
         </Container>
       </div>
     </>
