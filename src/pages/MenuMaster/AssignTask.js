@@ -26,6 +26,14 @@ const SingleOptions = [
 ];
 const AssignTask = () => {
   const navigate=useNavigate();
+  const validationSchema = Yup.object().shape({
+    documentname: Yup.string().required("Please Enter a Document Name"),
+    documentdepartmenttype: Yup.string().required(
+      "Please Select a Document Department Type"
+    ),
+    tasktypes: Yup.string().required("Please select a task Type"),
+    documentdescription: Yup.string().required("Please enter Description"),
+  });
   const [selectedSingle, setSelectedSingle] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedGroup2, setSelectedGroup2] = useState(null);
@@ -50,6 +58,7 @@ const AssignTask = () => {
   } = useContext(SignContext);
   const cancel = () => {
     // location1=[];
+
     navigate("/assign-master");
   };
   const [accesslocation, setaccesslocation] = useState("");
@@ -493,11 +502,14 @@ const AssignTask = () => {
                                       onBlur={handleBlur}
                                       value={values.documentname}
                                     />
+                                     <ErrorMessage
+                                    name="documentname"
+                                    component="div"
+                                    className="text-danger"
+                                  />
                                   </div>
 
-                                  <p className="error text-danger">
-                                   
-                                  </p>
+                                 
                                 </Col>
                                 <Col sm={4}>
                                   <label
@@ -527,6 +539,11 @@ const AssignTask = () => {
           </option>
         )}
                                     </select>
+                                    <ErrorMessage
+                                      name="documentdepartmenttype"
+                                      component="div"
+                                      className="text-danger"
+                                    />
                                   </div>
                                   <p className="error text-danger">
                                     {errors.checkupType &&
@@ -565,6 +582,11 @@ const AssignTask = () => {
                                         </option>
                                       )}
                                     </select>
+                                    <ErrorMessage
+                                      name="tasktypes"
+                                      component="div"
+                                      className="text-danger"
+                                    />
                                   </div>
                                   <p className="error text-danger">
                                     {errors.checkupType &&
@@ -698,27 +720,31 @@ const AssignTask = () => {
                                         </label>
                                       </div>
                                     </Col>
-                                    {accesslocation!=="Yes"&&(
-                                    
-
-                                    <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
- <button
-    className="btn btn-success w-sm"
-    type="submit"
-    style={{ marginLeft: '-20px' }}
-  >
-Submit
-</button>
- <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "5px" }}
-                                      >
-                                        Cancel
-                                      </button>
-                                      </div>
-                                    )}
-                              
+                                    <Row
+                                      style={{
+                                        position: "relative",
+                                        bottom: "-195px",
+                                        zIndex: 99999999999999,
+                                      }}
+                                    >
+                                      {accesslocation !== "Yes" && (
+                                        <div className="text-end mb-3 pe-3">
+                                          <button
+                                            className="btn btn-success w-sm"
+                                            type="submit"
+                                          >
+                                            Update
+                                          </button>
+                                          <button
+                                            className="btn btn-danger w-sm"
+                                            onClick={cancel}
+                                            style={{ marginLeft: "5px" }}
+                                          >
+                                            Cancel
+                                          </button>
+                                        </div>
+                                      )}
+                                    </Row>
                                   </>
                                 )}
                                 <Col sm={8}>
@@ -736,7 +762,13 @@ Submit
                                       name="documentdescription"
                                       value={values.documentdescription}
                                       onChange={handleChange}
+                                      style={{ marginBottom: "60px" }}
                                     ></textarea>
+                                     <ErrorMessage
+                                        name="documentdescription"
+                                        component="div"
+                                        className="text-danger"
+                                      />
                                   </div>
                                 </Col>
                                 {type === "Form" && (
@@ -773,7 +805,7 @@ Submit
                                           );
                                         }}
                                       >
-                                        Submit
+                                        Update
                                       </button>
                                       <button
                                         className="btn btn-danger w-sm"
@@ -897,22 +929,24 @@ Submit
                                       />
                                     </div>
                                   </Col>
-                                  <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
- <button
-    className="btn btn-success w-sm"
-    type="submit"
-    style={{ marginLeft: '-20px' }}
-  >
-Submit
-</button>
- <button
+                                  <Row>
+                                    <div className="text-end mb-3 ms-3">
+                                      <button
+                                        className="btn btn-success w-sm"
+                                        type="submit"
+                                        style={{ marginLeft: "200px" }}
+                                      >
+                                        Update
+                                      </button>
+                                      <button
                                         className="btn btn-danger w-sm"
                                         onClick={cancel}
                                         style={{ marginLeft: "5px" }}
                                       >
                                         Cancel
                                       </button>
-                                      </div>
+                                    </div>
+                                  </Row>
                                 </Row>
                               </div>
                             </div>

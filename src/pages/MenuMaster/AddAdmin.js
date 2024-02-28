@@ -171,6 +171,7 @@ const handleImageChange = (e) => {
                 onSubmit={(values, { resetForm }) => {
                   console.log("image",values.image);
                   values.image=image;
+                  
 
                   //name,email,password,location,departmentGroup,departmentType,Role,status,image
           AddAdmin1(values.name,values.email,values.password,values.location,values.departmentGroup,values.departmentType,values.Role,values.status,values.image);

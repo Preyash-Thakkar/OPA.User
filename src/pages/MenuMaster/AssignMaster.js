@@ -32,6 +32,7 @@ import {
 const AssignMaster = () => {
   const navigate=useNavigate();
   
+  
   const id=localStorage.getItem("DepartmentTypeID");
   console.log(id)
   const { GetallAssignTask,DeleteAssignTask } = useContext(SignContext);

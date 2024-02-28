@@ -1718,12 +1718,14 @@ console.log(res.data);
                                         value={typeid1.formlink}
                                       />
                                     </div>
+                                    <Row style={{ position: 'relative', bottom: '-85px',justifyContent: 'flex-end', display: 'flex', marginRight:'-950px'  }}>
                                     {accesslocation==="No"&&(
-                                    <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
+                                      
+                                      <div className="text-end mb-3 ms-3 d-flex justify-content-end">
  <button
     className="btn btn-success w-sm"
     type="submit"
-    style={{ marginLeft: '-20px' }}
+    style={{ marginLeft: '50px' }}
   >
 Update
 </button>
@@ -1736,8 +1738,7 @@ Update
                                       </button>
                                       </div>
                                 )}
-
-                                    {/* <p className="error text-danger"></p> */}
+                                </Row>
                                   </Col>
                                 )}
                                 {type1 === "Data" && (
@@ -1819,22 +1820,23 @@ Update
                                         </p>
                                       </Col>
                                     )}
-                                    <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
- <button
-    className="btn btn-success w-sm"
-    type="submit"
-    style={{ marginLeft: '-20px' }}
+                                    <Row style={{ position: 'relative', bottom: '-155px', zIndex: 99999999999999 }}>
+                                   <div className="text-end mb-3 pe-3" >
+<button
+  className="btn btn-success w-sm"
+  type="submit"
   >
-Update
+  Update
 </button>
- <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "5px" }}
-                                      >
-                                        Cancel
-                                      </button>
-                                      </div>
+<button
+  className="btn btn-danger w-sm"
+  onClick={cancel}
+  style={{ marginLeft: '5px' }}
+>
+  Cancel
+</button>
+</div>
+</Row>
                                   </>
                                 )}
                                 <Col sm={8}>
@@ -1875,7 +1877,7 @@ Update
                                   <>
                                     
 
-                                    <div className="text-end mb-3 me-3">
+                                  <div className="text-end mb-3 me-3">
                                       <button
                                         className="btn btn-success w-sm"
                                         type="submit"
@@ -1893,13 +1895,13 @@ Update
                                         Update
                                       </button>
                                       <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "3px" }}
-                                      >
-                                        Cancel
-                                      </button>
-                                    </div>
+  className="btn btn-danger w-sm"
+  onClick={cancel}
+  style={{ marginLeft: '5px' }}
+>
+  Cancel
+</button>
+</div>
                                   </>
                                 )}
                               </Row>
@@ -2077,22 +2079,22 @@ Update
                                       <label className="me-2">Is Active</label>
                                     </div>
                                   </Col>
-                                  <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
- <button
-    className="btn btn-success w-sm"
-    type="submit"
-    style={{ marginLeft: '-20px' }}
+                                  <div className="text-end mb-3 pe-3" >
+<button
+  className="btn btn-success w-sm"
+  type="submit"
   >
-Update
+  Update
 </button>
- <button
-                                        className="btn btn-danger w-sm"
-                                        onClick={cancel}
-                                        style={{ marginLeft: "5px" }}
-                                      >
-                                        Cancel
-                                      </button>
-                                      </div>
+<button
+  className="btn btn-danger w-sm"
+  onClick={cancel}
+  style={{ marginLeft: '5px' }}
+>
+  Cancel
+</button>
+</div>
+
                                 </Row>
                               </div>
                             </div>
