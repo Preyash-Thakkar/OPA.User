@@ -251,7 +251,7 @@ const Login = () => {
        
 
       }else {
-        setError(res.msg);
+        setError("Please Enter Email & Password");
         // setTimeout(() => {
         //   setError("Please Enter the Correct Password");
         // }, 3000);
@@ -263,12 +263,12 @@ const Login = () => {
       // console.log("colled",code, error);
       if (code === "401") {
         setError("Invalid credentials. Please check your email and password.");
-      } else if (code === "403") {
+      } else if (code === "407") {
         setError(
-          "Access denied. You don't have permission to access this resource."
+          "Please Enter a Correct Password"
         );
       } else {
-        setError("An error occurred. Please try again later.");
+        setError("Please Enter Valid Credentials");
       }
       setButtnLoading(false);
 
@@ -335,6 +335,9 @@ const Login = () => {
                               handleChange(e);
                             }}
                           />
+                           {Error && !AdminInfo.email.match(/\.com$|\.net$/) ? (
+        <small className="text-danger">Invalid Email </small>
+      ) : null}
                         </div>
 
                         <div className="mb-3">
