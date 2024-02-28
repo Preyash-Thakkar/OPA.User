@@ -36,15 +36,20 @@ const AssignMaster = () => {
   console.log(id)
   const { GetallAssignTask,DeleteAssignTask } = useContext(SignContext);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalAssignTask, setOriginalAssignTask] = useState(null);
   const [task,settask]=useState(null);
+  const [paginatetask, setpaginateTask] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
   const getalltask = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`)
     console.log("kjgkjk5ky",res);
     settask(res.data);
     setOriginalAssignTask(res.data);
+    setpaginateTask(res.data);
 };
 
   useEffect(() => {
@@ -78,6 +83,27 @@ const AssignMaster = () => {
     console.log(">>>vaishalllllllllllllllllllll", id);
     navigate(`/edit-assigntask/${id}`);
   };
+  // const searchList = (e) => {
+  //   let inputVal = e.toLowerCase();
+  //   let filterData = originalAssignTask.filter(
+  //     (el) =>
+  //       el.documentname.toLowerCase().indexOf(inputVal) !== -1 ||
+  //       el.documentdepartmenttype.name.toLowerCase().indexOf(inputVal) !==
+  //         -1 ||
+  //       el.tasktypes.taskName.toLowerCase().indexOf(inputVal) !== -1 ||
+  //       el.documenttype.toLowerCase().indexOf(inputVal) !== -1 ||
+  //       el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+  //   );
+  //   settask(filterData);
+  // };
+  const handleViewDocument = (item) => {
+    setSelectedItem(item);
+    console.log("selected ",item )
+  };
+
+  const handleExampleClose = () => {
+    setSelectedItem(null);
+  };
   const searchList = (e) => {
     let inputVal = e.toLowerCase();
     let filterData = originalAssignTask.filter(
@@ -90,7 +116,12 @@ const AssignMaster = () => {
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
     );
     settask(filterData);
+    console.log(filterData)
   };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = task && task.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -161,9 +192,9 @@ const AssignMaster = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {task &&
-                            task.length > 0 &&
-                            task.map((type, index) => {
+                          {currentItems &&
+                            currentItems.length > 0 &&
+                            currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index+1}</td>
@@ -210,7 +241,19 @@ const AssignMaster = () => {
                                         </button>
                                       </div>
                                       
-                                      {/* <Example/> */}
+                                      <div className="flex-grow-1">
+                                        <button
+                                          type="button"
+                                          className="btn btn-primary btn-icon waves-effect waves-light"
+                                          onClick={() => handleViewDocument(type)}
+                                        >
+                                          {/* <i className="ri-eye-line"></i> */}
+                                          <Example
+                                        selectedItem={selectedItem}
+                                        handleClose={handleExampleClose}
+                                      />
+                                        </button>
+                                      </div>
                                       
                                     </div>
 
@@ -226,6 +269,39 @@ const AssignMaster = () => {
               </Card>
             </Col>
           </Row>
+          <nav>
+            <ul className="pagination">
+              {task && task.length > itemsPerPage && (
+                <>
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  {Array.from({ length: Math.ceil(task.length / itemsPerPage) }, (_, i) => i + 1).map(pageNumber => (
+                    <li key={pageNumber} className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}>
+                      <button onClick={() => paginate(pageNumber)} className="page-link">
+                        {pageNumber}
+                      </button>
+                    </li>
+                  ))}
+                  <li className={`page-item ${currentPage === Math.ceil(task.length / itemsPerPage) ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === Math.ceil(task.length / itemsPerPage)}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+          </nav>
         </Container>
       </div>
     </>

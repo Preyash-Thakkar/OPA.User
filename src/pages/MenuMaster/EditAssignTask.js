@@ -1819,6 +1819,22 @@ Update
                                         </p>
                                       </Col>
                                     )}
+                                    <div className="text-start mb-3 ms-3" style={{ paddingRight: '20px' , paddingTop: '40px' }}>
+ <button
+    className="btn btn-success w-sm"
+    type="submit"
+    style={{ marginLeft: '-20px' }}
+  >
+Update
+</button>
+ <button
+                                        className="btn btn-danger w-sm"
+                                        onClick={cancel}
+                                        style={{ marginLeft: "5px" }}
+                                      >
+                                        Cancel
+                                      </button>
+                                      </div>
                                   </>
                                 )}
                                 <Col sm={8}>
@@ -1839,9 +1855,7 @@ Update
                                     ></textarea>
                                   </div>
                                 </Col>
-                                {type === "Form" && (
-                                  <>
-                                    <Col sm={2}>
+                                <Col sm={2}>
                                       <div className="mt-3">
                                         <Input
                                           type="checkbox"
@@ -1857,6 +1871,9 @@ Update
                                         </label>
                                       </div>
                                     </Col>
+                                {type === "Form" && (
+                                  <>
+                                    
 
                                     <div className="text-end mb-3 me-3">
                                       <button
@@ -2053,9 +2070,9 @@ Update
                                         id="isActive"
                                         label="Is Active"
                                         name="isActive"
-                                        checked={values.isActive}
-                                        onChange={handleChange}
-                                        // onChange={(e) => settypeid1((prev) => ({ ...prev, isActive: e.target.checked }))}
+                                        checked={typeid1.isActive}
+                                        // onChange={handleChange}
+                                        onChange={(e) => settypeid1((prev) => ({ ...prev, isActive: e.target.checked }))}
                                       />
                                       <label className="me-2">Is Active</label>
                                     </div>

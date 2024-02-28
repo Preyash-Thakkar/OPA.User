@@ -44,6 +44,8 @@ const AddTaskMaster = () => {
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalAddtask, setOriginalAddTask] = useState(null);
   const [task, setTask] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   
   
@@ -102,7 +104,15 @@ const handleDeleteAddTask = async () => {
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
     );
     setTask(filterData);
+
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = task && task.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
   return (
     <>
     <ToastContainer closeButton={false} />
@@ -152,9 +162,9 @@ const handleDeleteAddTask = async () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {task &&
-                            task.length > 0 &&
-                            task.map((type, index) => {
+                          {currentItems &&
+                            currentItems.length > 0 &&
+                            currentItems.map((type, index) => {
                               {/* window.location.reload();    */}
                               return (
                                 <tr key={type._id}>
