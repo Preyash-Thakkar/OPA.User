@@ -174,7 +174,7 @@ const AssignMaster = () => {
                                   <td> {type.documenttype === ""
                                       ? "FormLink"
                                       : type.documenttype}</td>
-                                  <td> {type.departmentGroup === null
+                                  <td> {!type.departmentGroup.length
                                       ? "No"
                                       : "Yes"}</td>
 
