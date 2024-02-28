@@ -376,7 +376,7 @@ const AssignTask = () => {
           <Row>
             <Col lg={12}>
               <Formik
-                // validationSchema={schema}
+                validationSchema={validationSchema}
                 initialValues={{
                   documentname: "",
                   documentdepartmenttype: "",
@@ -805,7 +805,7 @@ const AssignTask = () => {
                                           );
                                         }}
                                       >
-                                        Update
+                                        Submit
                                       </button>
                                       <button
                                         className="btn btn-danger w-sm"
@@ -936,7 +936,7 @@ const AssignTask = () => {
                                         type="submit"
                                         style={{ marginLeft: "200px" }}
                                       >
-                                        Update
+                                        Submit
                                       </button>
                                       <button
                                         className="btn btn-danger w-sm"
