@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
-
+import '../MenuMaster/1.css'
 import {
   Button,
   Card,
@@ -28,7 +28,10 @@ import {
 
 const MenuMater = () => {
   const { GetallMenuMaster, DeleteMenuMaster } = useContext(SignContext);
-  const [menumaster, setmenumaster] = useState(null);
+  const [menumaster, setmenumaster] = useState([]);
+  const [originalMenuMaster, setOriginalMenuMaster] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
   const navigate = useNavigate();
   const getallmenumaster = async () => {
     const res = await GetallMenuMaster();
@@ -48,6 +51,22 @@ const MenuMater = () => {
   useEffect(() => {
     getallmenumaster();
   }, []);
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalMenuMaster.filter(
+      (el) =>
+        el.menuname.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.menugroup.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setmenumaster(filterData);
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = menumaster && menumaster.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
   return (
     <>
@@ -88,9 +107,7 @@ const MenuMater = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {menumaster &&
-                            menumaster.length > 0 &&
-                            menumaster.map((type, index) => {
+                          {currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index + 1}</td>
@@ -140,6 +157,41 @@ const MenuMater = () => {
               </Card>
             </Col>
           </Row>
+          <nav>
+            <ul className="pagination">
+              {menumaster && menumaster.length > itemsPerPage && (
+                <>
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Previous
+                    </button>
+                  </li>
+                  {Array.from({ length: Math.ceil(menumaster.length / itemsPerPage) }, (_, i) => {
+                    if (i < 10) {
+                      return (
+                        <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                          <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
+                        </li>
+                      );
+                    }
+                  })}
+                  <li className={`page-item ${currentPage === Math.ceil(menumaster.length / itemsPerPage) ? 'disabled' : ''}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === Math.ceil(menumaster.length / itemsPerPage)}
+                    >
+                      Next
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+          </nav>
         </Container>
       </div>
     </>

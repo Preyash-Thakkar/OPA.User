@@ -30,16 +30,18 @@ import SignContext from "../../contextAPI/Context/SignContext";
 
 const DepartmentType = () => {
   const navigate=useNavigate();
-  const [deptype,setdeptype]=useState(null);
+  const [deptype,setdeptype]=useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
-  const [originalDepType, setOriginalDepType] = useState(null);
+  const [originalDepType, setOriginalDepType] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
   const {GetallDepartmentType,deletetype} = useContext(SignContext);
   const getalldeptype = async () => {
     const response = await GetallDepartmentType();
-
-
+    console.log(">>>");
+    console.log(response.data);
     setOriginalDepType(response.data)
     setdeptype(response.data);
   };
@@ -66,7 +68,7 @@ const DepartmentType = () => {
         getalldeptype();
       } catch (error) {
         // Handle error if needed
-        // console.error("Error deleting department group:", error);
+        console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -75,7 +77,7 @@ const DepartmentType = () => {
   };
   
   const handleEdit=async(id)=>{
-
+    console.log(">>>id",id)
     navigate(`/edit-deptype/${id}`)
   }
 
@@ -90,7 +92,13 @@ const DepartmentType = () => {
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
     );
     setdeptype(filterData);
+    console.log(filterData)
   };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = deptype.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -134,9 +142,8 @@ const DepartmentType = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {deptype &&
-                            deptype.length > 0 &&
-                            deptype.map((type, index) => {
+                          {
+                            currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>DT:{index+1}</td>
@@ -182,6 +189,41 @@ const DepartmentType = () => {
                         </tbody>
                       </Table>
                     </div>
+                    <nav>
+                      <ul className="pagination">
+                        {deptype.length > itemsPerPage && (
+                          <>
+                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage - 1)}
+                                disabled={currentPage === 1}
+                              >
+                                Previous
+                              </button>
+                            </li>
+                            {Array.from({ length: Math.ceil(deptype.length / itemsPerPage) }, (_, i) => {
+                              if (i < 5) {
+                                return (
+                                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
+                                  </li>
+                                );
+                              }
+                            })}
+                            <li className={`page-item ${currentPage === Math.ceil(deptype.length / itemsPerPage) ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage + 1)}
+                                disabled={currentPage === Math.ceil(deptype.length / itemsPerPage)}
+                              >
+                                Next
+                              </button>
+                            </li>
+                          </>
+                        )}
+                      </ul>
+                    </nav>
                   </div>
                 </CardBody>
               </Card>

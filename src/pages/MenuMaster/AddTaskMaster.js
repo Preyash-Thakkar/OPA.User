@@ -43,7 +43,7 @@ const AddTaskMaster = () => {
   const [originalAddtask, setOriginalAddTask] = useState(null);
   const [task, setTask] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
 
   
   

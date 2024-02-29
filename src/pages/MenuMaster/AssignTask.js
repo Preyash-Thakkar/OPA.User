@@ -422,6 +422,11 @@ const AssignTask = () => {
                     en.push(type.newid);
                   });
                 }
+                 // console.log("en>>>>", en);
+                 if (document === "File Upload" && !file) {
+    toast.error("Please Upload a document");
+    return;
+  }
 
                   values.uploaddocument=file;
                   const res=addassigntask(values.documentname,values.documentdepartmenttype,values.tasktypes,values.documenttype,values.formlink,values.documentlink,values.uploaddocument,values.documentdescription,loc1,dg1,dt,er,en,values.isActive);
@@ -726,7 +731,7 @@ const AssignTask = () => {
                                             className="btn btn-success w-sm"
                                             type="submit"
                                           >
-                                            Update
+                                            Cancel
                                           </button>
                                           <button
                                             className="btn btn-danger w-sm"

@@ -34,23 +34,25 @@ const EmployeeRoles = () => {
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalEmployeeRole, setOriginalEmployeeRole] = useState(null);
-  const [employeerole,setemployeerole]=useState(null);
+  const [employeerole,setemployeerole]=useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
  
   const getemployerole=async()=>{
      const res=await GetallEmployeeRole(); 
-
+     console.log(res); 
      setOriginalEmployeeRole(res.data)
      setemployeerole(res.data);    
   }
   // const handleDelete=async(id)=>{
-  
+  //       console.log(">>id",id);
       
   //     const abc=window.confirm("Are you sure you want to delete");
   //     if(abc){
   //     const res= await DeleteEmployeeRole(id);
   //     getemployerole()
-  
+  //     console.log(res);
   //     }
   // }
   const handleDelete = (previewImage) => {
@@ -67,7 +69,7 @@ const EmployeeRoles = () => {
         getemployerole();
       } catch (error) {
         // Handle error if needed
-        // console.error("Error deleting department group:", error);
+        console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -76,7 +78,7 @@ const EmployeeRoles = () => {
   };
   
   const handleEdit=async(id)=>{
-
+         console.log(id);
          navigate( `/edit-employeerole/${id}`)
   }
   
@@ -85,21 +87,27 @@ const EmployeeRoles = () => {
   },[])
   const searchList = (e) => {
     let inputVal = e.toLowerCase();
-
+    console.log("Input Value:", inputVal); // Log input value for debugging
     let filterData = [];
     
     if (originalEmployeeRole) {
       filterData = originalEmployeeRole.filter((el) => {
         const lowerCaseName = el.name && el.name.toLowerCase();
-
+        console.log("Lowercase Name:", lowerCaseName); // Log lowercase name for debugging
         return (lowerCaseName && lowerCaseName.indexOf(inputVal) !== -1) ||
                (el.isActive && el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1);
       });
     }
     
-
+    console.log("Filtered Data:", filterData); // Log filtered data for debugging
     setemployeerole(filterData);
+
   };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = employeerole.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
     <ToastContainer closeButton={false} />
@@ -149,9 +157,8 @@ const EmployeeRoles = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {employeerole &&
-                            employeerole.length > 0 &&
-                            employeerole.map((type, index) => {
+                          {
+                            currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index+1}</td>
@@ -198,6 +205,41 @@ const EmployeeRoles = () => {
                         </tbody>
                       </Table>
                     </div>
+                    <nav>
+                      <ul className="pagination">
+                        {employeerole.length > itemsPerPage && (
+                          <>
+                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage - 1)}
+                                disabled={currentPage === 1}
+                              >
+                                Previous
+                              </button>
+                            </li>
+                            {Array.from({ length: Math.ceil(employeerole.length / itemsPerPage) }, (_, i) => {
+                              if (i < 5) {
+                                return (
+                                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
+                                  </li>
+                                );
+                              }
+                            })}
+                            <li className={`page-item ${currentPage === Math.ceil(employeerole.length / itemsPerPage) ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage + 1)}
+                                disabled={currentPage === Math.ceil(employeerole.length / itemsPerPage)}
+                              >
+                                Next
+                              </button>
+                            </li>
+                          </>
+                        )}
+                      </ul>
+                    </nav>
                   </div>
                 </CardBody>
               </Card>
