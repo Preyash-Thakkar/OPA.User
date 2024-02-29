@@ -36,13 +36,14 @@ const CommunityUpdateMaster = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
-  const [originalcommunityrequireddetails, setoriginalcommunityrequireddetails] = useState(null);
+  const [originalcommunityrequireddetails, setoriginalcommunityrequireddetails] = useState([]);
+  const [itemsPerPage] = useState(5);
   const { getReqCommDetails, DeleteCommunityMaster } = useContext(SignContext);
   
-
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [communityrequireddetails, setcommunityrequireddetails] =
-    useState(null);
+    useState([]);
 
 const id=localStorage.getItem("LocationID")
   const getreqcommdetails = async () => {
@@ -106,6 +107,11 @@ const id=localStorage.getItem("LocationID")
     );
     setcommunityrequireddetails(filterData);
   };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = communityrequireddetails.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -157,9 +163,7 @@ const id=localStorage.getItem("LocationID")
                           </tr>
                         </thead>
                         <tbody>
-                          {communityrequireddetails &&
-                            communityrequireddetails.length > 0 &&
-                            communityrequireddetails.map((type, index) => {
+                          {currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index + 1}</td>
@@ -218,6 +222,28 @@ const id=localStorage.getItem("LocationID")
                         </tbody>
                       </Table>
                     </div>
+                    <nav>
+                      <ul className="pagination">
+                        {Array.from(
+                          { length: Math.ceil(communityrequireddetails.length / itemsPerPage) },
+                          (_, i) => (
+                            <li
+                              key={i}
+                              className={`page-item ${
+                                currentPage === i + 1 ? "active" : ""
+                              }`}
+                            >
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(i + 1)}
+                              >
+                                {i + 1}
+                              </button>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </nav>
                   </div>
                 </CardBody>
               </Card>
