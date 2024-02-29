@@ -49,7 +49,7 @@ const UserProfile = () => {
     e.preventDefault();
     getspecificuser(id);
     const res = await updateUser(AdminInfo, id);
-    console.log("newwww",res);
+    // console.log("newwww",res);
     if (res.success) {
       setSuccess(res.msg);
       setTimeout(() => {
@@ -66,9 +66,9 @@ const UserProfile = () => {
     const res = await getSpecificUser(id);
     if (res.success) {
       setAdminInfo(res);
-      console.log("This is the message",res);
+      // console.log("This is the message",res);
     } else {
-      console.log("Hiii",res.msg);
+      // console.log("Hiii",res.msg);
     }
   };
 

@@ -31,9 +31,8 @@ const EditDepGrp = () => {
   });
  
   const gettingid=async()=>{
-     console.log("hello");
+
       const res= await EditDepGrp(id);
-      console.log(res);
       setgrp(res.data);
       
     
@@ -43,7 +42,7 @@ const EditDepGrp = () => {
     navigate('/department-group')
   }
   useEffect(() => {
-    console.log(grp);
+
   }, [grp]);
   useEffect(()=>{
     gettingid();
@@ -67,7 +66,6 @@ const EditDepGrp = () => {
                   grp
                 }
                 onSubmit={(values, { resetForm }) => {
-                    console.log(">>>",id,grp.name,grp.isActive)
                    const res=setEditDepGrpValues(id,grp.name,grp.isActive);
                    if(res)
                    {

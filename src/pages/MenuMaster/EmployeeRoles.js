@@ -39,18 +39,18 @@ const EmployeeRoles = () => {
  
   const getemployerole=async()=>{
      const res=await GetallEmployeeRole(); 
-     console.log(res); 
+
      setOriginalEmployeeRole(res.data)
      setemployeerole(res.data);    
   }
   // const handleDelete=async(id)=>{
-  //       console.log(">>id",id);
+  
       
   //     const abc=window.confirm("Are you sure you want to delete");
   //     if(abc){
   //     const res= await DeleteEmployeeRole(id);
   //     getemployerole()
-  //     console.log(res);
+  
   //     }
   // }
   const handleDelete = (previewImage) => {
@@ -67,7 +67,7 @@ const EmployeeRoles = () => {
         getemployerole();
       } catch (error) {
         // Handle error if needed
-        console.error("Error deleting department group:", error);
+        // console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -76,7 +76,7 @@ const EmployeeRoles = () => {
   };
   
   const handleEdit=async(id)=>{
-         console.log(id);
+
          navigate( `/edit-employeerole/${id}`)
   }
   
@@ -85,19 +85,19 @@ const EmployeeRoles = () => {
   },[])
   const searchList = (e) => {
     let inputVal = e.toLowerCase();
-    console.log("Input Value:", inputVal); // Log input value for debugging
+
     let filterData = [];
     
     if (originalEmployeeRole) {
       filterData = originalEmployeeRole.filter((el) => {
         const lowerCaseName = el.name && el.name.toLowerCase();
-        console.log("Lowercase Name:", lowerCaseName); // Log lowercase name for debugging
+
         return (lowerCaseName && lowerCaseName.indexOf(inputVal) !== -1) ||
                (el.isActive && el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1);
       });
     }
     
-    console.log("Filtered Data:", filterData); // Log filtered data for debugging
+
     setemployeerole(filterData);
   };
   return (

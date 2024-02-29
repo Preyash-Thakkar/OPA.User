@@ -32,7 +32,7 @@ const MenuMater = () => {
   const navigate = useNavigate();
   const getallmenumaster = async () => {
     const res = await GetallMenuMaster();
-    console.log(res);
+
     setmenumaster(res.data);
   };
   const handleDelete = async (id) => {

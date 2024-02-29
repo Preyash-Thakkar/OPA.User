@@ -38,8 +38,8 @@ const DepartmentType = () => {
   const {GetallDepartmentType,deletetype} = useContext(SignContext);
   const getalldeptype = async () => {
     const response = await GetallDepartmentType();
-    console.log(">>>");
-    console.log(response.data);
+
+
     setOriginalDepType(response.data)
     setdeptype(response.data);
   };
@@ -66,7 +66,7 @@ const DepartmentType = () => {
         getalldeptype();
       } catch (error) {
         // Handle error if needed
-        console.error("Error deleting department group:", error);
+        // console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -75,7 +75,7 @@ const DepartmentType = () => {
   };
   
   const handleEdit=async(id)=>{
-    console.log(">>>id",id)
+
     navigate(`/edit-deptype/${id}`)
   }
 

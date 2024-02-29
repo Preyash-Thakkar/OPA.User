@@ -42,7 +42,7 @@ const [allimage, setallImage] = useState(null);
         const departmentGroupResponse = await GetallDepartmentGroup();
         setDepartmentGroups(departmentGroupResponse.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     };
 
@@ -106,10 +106,10 @@ const [allimage, setallImage] = useState(null);
           try{
           const RoleResponse = await GetRoles();
            const res=setRoles(RoleResponse);
-           console.log("roles are",RoleResponse.data);
+          //  console.log("roles are",RoleResponse.data);
           }
        catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }}
 
     roleload();
@@ -123,15 +123,15 @@ const [allimage, setallImage] = useState(null);
 const AddAdmin1=async(name,email,image,password,departmentGroup,departmentType,location,Role,status)=>{
   //uploadimage=profilePhoto;
   const response=await addadmin(name,email,image,password,departmentGroup,departmentType,location,Role,status);
-  console.log(">>> image is",image);
-  console.log(">>>name",name);
-   //console.log(">>>message",message);
-  console.log("response",response);
+  // console.log(">>> image is",image);
+  // console.log(">>>name",name);
+  //  //console.log(">>>message",message);
+  // console.log("response",response);
 }   
 const handleImageChange = (e) => {
     //setImage(e.target.files[0]);
     const file = e.target.files[0];
-  console.log(file);
+  // console.log(file);
   setImage(file);
   };    
     
@@ -169,7 +169,7 @@ const handleImageChange = (e) => {
                   }
                 }
                 onSubmit={(values, { resetForm }) => {
-                  console.log("image",values.image);
+                  // console.log("image",values.image);
                   values.image=image;
                   
 

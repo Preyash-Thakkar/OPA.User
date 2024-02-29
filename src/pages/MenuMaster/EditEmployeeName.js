@@ -31,9 +31,8 @@ const EditEmployeeName = () => {
     
     const gettingempname=async (id)=>{
       const res=await GetEmployeeNameIdForEditing(id);
-      console.log(res);
       settypeid1(res.data)
-      console.log("Hiiidfsdjbf",typeid1)
+
       
     }
     useEffect(() => {
@@ -42,7 +41,7 @@ const EditEmployeeName = () => {
     useEffect(()=>{
         gettingempname(id);
     },[])
-    // console.log("Testing",typeid1.departmentGroup.name);
+
   return (
     <>
       <UiContent />
@@ -62,8 +61,8 @@ const EditEmployeeName = () => {
                 }
                 onSubmit={(values, { resetForm }) => {
                     const res=setEditEmployeeNameValues(id,typeid1.departmentGroup._id,typeid1.departmentType._id,typeid1.employeeRole._id,typeid1.name,typeid1.isActive)
-                    console.log("Yesss",res);
                     if(res){
+
                         navigate('/employee-master');
                     }
                     resetForm();

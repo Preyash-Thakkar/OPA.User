@@ -33,14 +33,13 @@ const baseURL = `${process.env.REACT_APP_BASE_URL}`;
 
 const CommunityUpdateMaster = () => {
   const navigate = useNavigate();
-  console.log("SingContext working : ", SignContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalcommunityrequireddetails, setoriginalcommunityrequireddetails] = useState(null);
   const { getReqCommDetails, DeleteCommunityMaster } = useContext(SignContext);
-  console.log("useContext : ", getReqCommDetails, DeleteCommunityMaster);
-  // console.log("test1,", getReqCommDetails);
+  
+
 
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState(null);
@@ -48,11 +47,11 @@ const CommunityUpdateMaster = () => {
 const id=localStorage.getItem("LocationID")
   const getreqcommdetails = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
-    console.log("jfjfijefjekf", res);
+
     setcommunityrequireddetails(res.data);
     setoriginalcommunityrequireddetails(res.data)
   };
-  console.log(">>>", communityrequireddetails);
+
 
   // const handleDelete = async (id) => {
   //   console.log(id);
@@ -78,7 +77,7 @@ const id=localStorage.getItem("LocationID")
         getreqcommdetails();
       } catch (error) {
         // Handle error if needed
-        console.error("Error deleting department group:", error);
+        // console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -86,7 +85,7 @@ const id=localStorage.getItem("LocationID")
     }
   };
   const handleEdit = async (id) => {
-    console.log(">>>>>", id);
+
     navigate(`/edit-communitymaster/${id}`);
   };
 

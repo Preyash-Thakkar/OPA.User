@@ -19,10 +19,10 @@ const AddLocation = () => {
   const { addLocation,GetallLocation } = useContext(SignContext);
   const addlocation = async (values) => {
     
-    console.log(">>>>>>>>>>>>>>>>>>>>>", values);
+    // console.log(">>>>>>>>>>>>>>>>>>>>>", values);
     const response = await addLocation(values);
 
-    console.log(response);
+    // console.log(response);
   };
   const validationSchema = Yup.object().shape({
     name:Yup.string().required("Location is required")

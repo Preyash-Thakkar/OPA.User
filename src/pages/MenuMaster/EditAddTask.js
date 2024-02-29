@@ -37,7 +37,7 @@ const EditAddTask = () => {
     const res = await GetAddTaskById(id);
     settask(res.data);
 
-    console.log(res);
+
   };
   const getalldtype = async () => {
 
@@ -47,22 +47,21 @@ const EditAddTask = () => {
   // const departmentId = "65b0ebc59d84e445fc900f18";
       // Make API call to get department data by ID for editing
       const response = await GetDepTypeByIdForEditing(departmentId);
-      console.log("Dtype", response);
-      console.log("Department",response.data);
+
       setdepartmentype(response.data);
   
       // Set the department type in state
       // setdepartmentype(response.data);
     } catch (error) {
       // Handle error
-      console.error('Error fetching department type for editing:', error);
+      // console.error('Error fetching department type for editing:', error);
     }
   };
   const cancel=()=>{
     navigate('/add-taskmaster')
   }
   useEffect(() => {
-    console.log(task);
+
     // console.log(task.departmentType.name)
   }, [task]);
   useEffect(() => {

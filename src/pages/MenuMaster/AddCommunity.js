@@ -47,10 +47,10 @@ const addcommunitymaster=async(name,message,uploadimage,loc1,departmentgroup,dep
   //uploadimage=profilePhoto;
   
   const response=await addCommMaster(name,message,uploadimage,loc1,departmentgroup,departmenttype,employeerole,employeename,isActive);
-  console.log(">>> image is",uploadimage);
-  console.log(">>>name",name);
-   console.log(">>>message",message);
-  console.log("response",response);
+  // console.log(">>> image is",uploadimage);
+  // console.log(">>>name",name);
+  //  console.log(">>>message",message);
+  // console.log("response",response);
 }
 const getrequiredcommdetails=async()=>{
   const res=await getReqCommDetails();
@@ -78,12 +78,12 @@ const getrequiredcommdetails=async()=>{
 
   useEffect(() => {
     
-    console.log(uniqueDepartmentTypes);
+    // console.log(uniqueDepartmentTypes);
   }, [uniqueDepartmentTypes]);
   useEffect(() => {
-    console.log(uniqueEmployeeRoles);
+    // console.log(uniqueEmployeeRoles);
   }, [uniqueEmployeeRoles]);useEffect(() => {
-    console.log(uniqueEmployeeRoles);
+    // console.log(uniqueEmployeeRoles);
   }, [uniqueEmployeeNames]);
 
   /*const handleImageChange = (e) => {
@@ -133,7 +133,7 @@ const getrequiredcommdetails=async()=>{
       new_empId:item._id
     }));
     setemprole(names);
-    console.log(names)
+    // console.log(names)
   } 
    const getempname=async()=>{
     const response=await GetallEmployeeName();
@@ -144,13 +144,13 @@ const getrequiredcommdetails=async()=>{
       main_id:item._id
     }))
     setempname(names);
-    console.log(names)
+    // console.log(names)
   }
 
   function handleMulti(selectedMulti) {
     setselectedMulti(selectedMulti);
     
-    console.log(">>>>vaishal",selectedMulti);
+    // console.log(">>>>vaishal",selectedMulti);
     let selectedValues = [];
     for (let i = 0; i < selectedMulti.length; i++) {
       const selectempId = selectedMulti[i].id;
@@ -172,16 +172,16 @@ const getrequiredcommdetails=async()=>{
     }
     setUniqueDepartmentTypes(selectedValues);
 
-    console.log(uniqueDepartmentTypes);
+    // console.log(uniqueDepartmentTypes);
     
   //  console.log(selectedMulti);
   }
 
   function handleMulti1(selectedMulti1) {
-    console.log("hello");
-    console.log(selectedMulti1)
+    // console.log("hello");
+    // console.log(selectedMulti1)
     setselectedMulti1(selectedMulti1);
-    console.log("vaishal11",selectedMulti1);
+    // console.log("vaishal11",selectedMulti1);
    let selectedempValues = [];
    for (let i = 0; i < selectedMulti1.length; i++) {
      const selectId = selectedMulti1[i].new_Id;
@@ -207,14 +207,14 @@ const getrequiredcommdetails=async()=>{
  }
  const handlePhotoChange = (e) => {
   const file = e.target.files[0];
-  console.log(file);
+  // console.log(file);
   setProfilePhoto(file);
 };
  function handleMulti4(selectedMulti4) {
   
    setselectedMulti4(selectedMulti4);
   
-console.log("hii",selectedMulti4)
+// console.log("hii",selectedMulti4)
 
   }
   function handleMulti2(selectedMulti2) {
@@ -244,7 +244,7 @@ console.log("hii",selectedMulti4)
       }
     }
   setuniqueEmployeeNames(selectedempNames);
-  console.log(selectedempNames)
+  // console.log(selectedempNames)
 
   }
   useEffect(() => {
@@ -299,7 +299,7 @@ console.log("hii",selectedMulti4)
                 }
                 onSubmit={(values, { resetForm }) => {
                     // addCheckupDetails(values);
-                    console.log(">>>",values.name)
+                    // console.log(">>>",values.name)
                     let loc1=[];
                     let dg1=[];
                     let dt=[];
@@ -308,7 +308,7 @@ console.log("hii",selectedMulti4)
                     
 
                     
-                    console.log(">>>",selectedMulti2);
+                    // console.log(">>>",selectedMulti2);
                     
                      selectedMulti2.map((type)=>{
                          loc1.push(type.id);
@@ -329,10 +329,10 @@ console.log("hii",selectedMulti4)
                         en.push(type.main_Id);
                       
                      });
-                     console.log("dg1",dg1);    
-                     console.log("en",en);
+                    //  console.log("dg1",dg1);    
+                    //  console.log("en",en);
                      values.uploadimage=profilePhoto; 
-                     console.log("image to upload is",values.uploadimage);              
+                    //  console.log("image to upload is",values.uploadimage);              
                     const response=addcommunitymaster(values.name,values.message,values.uploadimage,loc1,dg1,dt,er,en,values.isActive);
                     if(response){
                       getrequiredcommdetails();

@@ -39,8 +39,8 @@ const DepartmentGroup = () => {
   const navigate=useNavigate();
   const getdepgroup = async () => {
     const response = await GetallDepartmentGroup();
-    console.log(">>>");
-    console.log(response.data);
+
+
     setOriginalDepgroup(response.data);
     setDepgroup(response.data);
   };
@@ -66,7 +66,7 @@ const DepartmentGroup = () => {
         getdepgroup();
       } catch (error) {
         // Handle error if needed
-        console.error("Error deleting department group:", error);
+        // console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -74,7 +74,7 @@ const DepartmentGroup = () => {
     }
   };
   const handleEdit=(id)=>{
-      console.log("edit>>>",id);
+
 
       navigate(`/edit_dggroup/${id}`);
   }

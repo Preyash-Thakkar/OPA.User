@@ -31,13 +31,13 @@ const AdminUser = () => {
   const [adminData, setAdminData] = useState(null);
   const [allimage, setallImage] = useState(null);
    const handleDelete=async(id)=>{
-        console.log(">>id",id);
+
       
       const abc=window.confirm("Are you sure you want to delete");
       if(abc){
       const res= await Deleteadmin(id);
       getAdmin()
-      console.log(res);
+
       }
   }
   function getImage() {
@@ -53,14 +53,13 @@ const AdminUser = () => {
   const getAdmin = async () => {
     try {
       const res = await GetallAdminname();
-      console.log(res);
+
       setAdminData(res.data);
     } catch (error) {
-      console.error('Error fetching admin data:', error);
+      // console.error('Error fetching admin data:', error);
     }
   };
     const handleEdit=async(id)=>{
-         console.log(id);
          navigate( `/edit-admin/${id}`)
   }
 

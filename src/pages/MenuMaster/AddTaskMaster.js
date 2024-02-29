@@ -33,8 +33,6 @@ const id = localStorage.getItem("DepartmentTypeID");
 
 
 
-console.log(id);
-
 const AddTaskMaster = () => {
 
   const navigate=useNavigate();
@@ -52,8 +50,8 @@ const AddTaskMaster = () => {
   const gettask = async () => {
     // window.location.reload();
     const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/addtask/getallspecifictaskbydtype/${id}`);
-    console.log(">>>");
-    console.log(response.data);
+
+
     setTask(response.data);
     setOriginalAddTask(response.data);
   };
@@ -78,7 +76,7 @@ const handleDeleteAddTask = async () => {
       gettask();
     } catch (error) {
       // Handle error if needed
-      console.error("Error deleting department group:", error);
+      // console.error("Error deleting department group:", error);
     } finally {
       setIsDeletebuttonLoading(false);
       setDeleteModal(false);
@@ -87,7 +85,7 @@ const handleDeleteAddTask = async () => {
 };
 
  const handleEdit=async(id)=>{
-  console.log(">>>id",id)
+
   navigate(`/edit-task/${id}`)
 }
   useEffect(() => {

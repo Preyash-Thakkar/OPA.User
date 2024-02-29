@@ -28,7 +28,7 @@ const AddDepType = () => {
   const getdepgroup = async () => {
     const response = await GetallDepartmentGroup();
 
-    console.log(response.data);
+    // console.log(response.data);
     setDepgroup(response.data);
   };
   const getdeptype=async(values)=>{
@@ -37,11 +37,11 @@ const AddDepType = () => {
 
   }
   const adddeptype = async (values) => {
-    console.log(">>>>>> dep type")
-    console.log(values);
+    // console.log(">>>>>> dep type")
+    // console.log(values);
     const response = await addDepType(values);
 
-    console.log(response);
+    // console.log(response);
   };
   const cancel=()=>{
     navigate('/department-type')

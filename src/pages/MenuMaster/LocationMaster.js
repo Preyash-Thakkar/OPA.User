@@ -30,7 +30,7 @@ const LocationMaster = () => {
   const[loc,setloc]=useState("")
   const getlocation=async()=>{
        const res=await GetallLocation();
-       console.log(res);
+
        setloc(res.data);
   }
   const handleDelete=async(id)=>{

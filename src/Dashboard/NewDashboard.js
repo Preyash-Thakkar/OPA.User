@@ -51,23 +51,23 @@ const NewDashboard = () => {
 
   const getreqcommdetails = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
-    console.log("jfjfijefjekf", res);
+    // console.log("jfjfijefjekf", res);
     setcommunityrequireddetails(res.data);
   };
   const getreqassigntask = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntask`);
-    console.log("jfjfijefjekf", res);
+    // console.log("jfjfijefjekf", res);
     setassigntask(res.assigncount)
   };
   const getreqadmincount = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/getadmins`);
-    console.log("jfjfijefjekf", res);
+    // console.log("jfjfijefjekf", res);
     setadmin(res.adminCount)
   };
   const getrolesresponsibility=async()=>{
     const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/rolesresponsibilities/getRolesResponsibilities`)
     setrolesresponsibility(res.rolesResponsibilitiesCount);
-console.log(res.rolesResponsibilitiesCount);
+// console.log(res.rolesResponsibilitiesCount);
   }
 
   const getcomdetails=async()=>{

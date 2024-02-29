@@ -50,10 +50,10 @@ const Editadmin = () => {
       try{
       const RoleResponse = await GetRoles();
        const res=setRoles(RoleResponse);
-       console.log("roles are",RoleResponse.data);
+
       }
    catch (error) {
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
   }}
 
 roleload();
@@ -68,17 +68,17 @@ roleload();
       depTypeId
     );
    const res= setEmployeeRoles(empRoleResponse.data);
-   console.log("vaishal",res);
+
   };
    const handleImageChange = (e) => {
     //setImage(e.target.files[0]);
      const file = e.target.files[0];
-  console.log(file);
+
   setImage(file); 
    };    
     const gettingadmin=async (id)=>{
       const res=await GetUserRoleByIdForEditing(id);
-      console.log(res);
+
       settypeid1(res.data)
       
     }
@@ -91,7 +91,7 @@ roleload();
         const departmentGroupResponse = await GetallDepartmentGroup();
         setDepartmentGroups(departmentGroupResponse.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     };
 
@@ -125,11 +125,8 @@ roleload();
                      typeid1
                     }
                 onSubmit={(values, { resetForm }) => {
-                  console.log("type id",typeid1);
-                  console.log("location",typeid1.location);
-                  console.log("values",values);
                   typeid1.image=image;
-                  console.log("image uploaded in edit is",values.image);
+
 
                   const res=setEditUserRoleValues(id,typeid1.name,typeid1.email,typeid1.password,typeid1.image,typeid1.location._id,typeid1.departmentGroup._id,typeid1.departmentType._id,typeid1.roles._id,typeid1.status)
                     if(res){
