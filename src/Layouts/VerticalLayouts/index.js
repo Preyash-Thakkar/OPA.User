@@ -306,6 +306,12 @@
 // };
 
 // export default withRouter(withTranslation()(VerticalLayout));
+import { AiOutlineDashboard } from "react-icons/ai";
+import { AiFillAppstore } from "react-icons/ai";
+import { RiPagesLine } from "react-icons/ri";
+import { RiAccountCircleLine } from "react-icons/ri";
+import { IoFileTrayFullOutline } from "react-icons/io5";
+import { FaPencilAlt } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -516,7 +522,7 @@ const VerticalLayout = (props) => {
       {isdashboard ? (
         <li className="nav-item">
           <Link className="nav-link menu-link" to="/dashboard">
-            <span data-key="t-apps"> Dashboard </span>
+            <span data-key="t-apps"><AiOutlineDashboard className="fs-4"/> Dashboard </span>
           </Link>
         </li>) : (null)}
 
@@ -529,7 +535,7 @@ const VerticalLayout = (props) => {
             setLocationSetup(!locationSetup);
           }}
         >
-          <span data-key="t-apps"> Setup </span>
+          <span data-key="t-apps"><AiFillAppstore></AiFillAppstore> Setup </span>
         </Link>
         <Collapse
           className="menu-dropdown"
@@ -569,7 +575,7 @@ const VerticalLayout = (props) => {
             setCategory(!category);
           }}
         >
-          <span data-key="t-apps">  Master</span>
+          <span data-key="t-apps"><RiPagesLine></RiPagesLine>  Master</span>
         </Link>
         <Collapse
           className="menu-dropdown"
@@ -603,7 +609,7 @@ const VerticalLayout = (props) => {
             setproduct(!product);
           }}
         >
-          <span data-key="t-apps"> Department Master </span>
+          <span data-key="t-apps"><RiAccountCircleLine></RiAccountCircleLine> Department Master </span>
         </Link>
         <Collapse
           className="menu-dropdown"
@@ -655,7 +661,7 @@ const VerticalLayout = (props) => {
             setSubs(!subs);
           }}
         >
-          <span data-key="t-apps"> Task Master </span>
+          <span data-key="t-apps"><IoFileTrayFullOutline></IoFileTrayFullOutline> Task Master </span>
         </Link>
         <Collapse
           className="menu-dropdown"
@@ -685,7 +691,7 @@ const VerticalLayout = (props) => {
       {iscms ? (
         <li className="nav-item">
           <Link className="nav-link menu-link" to="/dashboard">
-            <span data-key="t-apps">CMS </span>
+            <span data-key="t-apps"><FaPencilAlt></FaPencilAlt>CMS </span>
           </Link>
         </li>) : (null)}
 
