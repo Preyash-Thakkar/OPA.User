@@ -82,7 +82,8 @@ const getrequiredcommdetails=async()=>{
   }, [uniqueDepartmentTypes]);
   useEffect(() => {
     // console.log(uniqueEmployeeRoles);
-  }, [uniqueEmployeeRoles]);useEffect(() => {
+  }, [uniqueEmployeeRoles]);
+  useEffect(() => {
     // console.log(uniqueEmployeeRoles);
   }, [uniqueEmployeeNames]);
 
@@ -139,9 +140,11 @@ const getrequiredcommdetails=async()=>{
   };
   
   // Call the function with the departmentGroupId from localStorage
-  getdepgroup(departmentGroupId);
+  // getdepgroup(departmentGroupId);
   
-  
+  useEffect(() => {
+    getdepgroup(departmentGroupId);
+  }, []);
   const getdeptype = async () => {
     const response = await GetallDepartmentType();
     //  console.log("res>>",response);
