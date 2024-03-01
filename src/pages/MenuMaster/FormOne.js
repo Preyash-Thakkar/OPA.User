@@ -44,6 +44,12 @@ function Example({ selectedItem, handleClose }) {
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>Assigned By</td>
+                        <td>
+                          {selectedItem ? selectedItem.assignedby : "Admin"}
+                        </td>
+                      </tr>
                       <tr>
                         <td>Task Name</td>
                         <td>

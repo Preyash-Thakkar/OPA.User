@@ -173,6 +173,9 @@ const AssignMaster = () => {
                             <th scope="col">
                               <br />
                               ID
+                            </th>                            <th scope="col">
+                              <br />
+                            Assigned By
                             </th>
                             <th scope="col">
                               Document
@@ -198,6 +201,7 @@ const AssignMaster = () => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index+1}</td>
+                                  <td>{type.assignedby}</td>
                                   <td>{type.documentname}</td>
                                   
                                   <td>{type.documentdepartmenttype.name}</td>
