@@ -41,7 +41,7 @@ const AddCommunity = () => {
   });
   
   
-  const { GetallDepartmentGroup, GetallLocation, GetallDepartmentType,GetallEmployeeRole,GetallEmployeeName,addCommMaster,getReqCommDetails } =useContext(SignContext);
+  const { EditDepGrp, GetallLocation, GetallDepartmentType,GetallEmployeeRole,GetallEmployeeName,addCommMaster,getReqCommDetails } =useContext(SignContext);
 
 const addcommunitymaster=async(name,message,uploadimage,loc1,departmentgroup,departmenttype,employeerole,employeename,isActive)=>{
   //uploadimage=profilePhoto;
@@ -100,18 +100,48 @@ const getrequiredcommdetails=async()=>{
     }));
     setloc(names);
   };
-
-  const getdepgroup = async () => {
-    const response = await GetallDepartmentGroup();
-
-    const names = response.data.map((item) => ({
-      value: item._id,
-      label: item.name,
-      id: item._id,
-
-    }));
-    setdep(names);
+  const departmentGroupId = localStorage.getItem('DepartmentGroupID');
+  console.log("dgggg", departmentGroupId);
+  
+  const getdepgroup = async (departmentGroupId) => {
+    try {
+      if (!departmentGroupId) {
+        console.error("Invalid DepartmentGroupID in localStorage");
+        return;
+      }
+  
+      const response = await EditDepGrp(departmentGroupId);
+      console.log("groupppp", response.data.name);
+      const name = {
+        value: response.data._id,
+        label: response.data.name,
+        id: response.data._id,
+        
+      };
+      setdep([name]);
+      // Check if the response has data property
+      if (response && response.data && response.data.success) {
+        const departmentGroup = response.data;
+  
+        // const name = {
+        //   value: response.data._id,
+        //   label: response.data.name,
+        //   id: response.data._id,
+        // };
+  
+        // setdep([name]);
+      } else {
+        // console.error("Error fetching department group:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching department group:", error);
+    }
   };
+  
+  // Call the function with the departmentGroupId from localStorage
+  getdepgroup(departmentGroupId);
+  
+  
   const getdeptype = async () => {
     const response = await GetallDepartmentType();
     //  console.log("res>>",response);
