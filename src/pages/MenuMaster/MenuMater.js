@@ -5,7 +5,9 @@ import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
 import SignContext from "../../contextAPI/Context/SignContext";
+import DeleteModal from "../../common/DeleteModal";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import '../MenuMaster/1.css'
 import {
   Button,
@@ -29,8 +31,11 @@ import {
 const MenuMater = () => {
   const { GetallMenuMaster, DeleteMenuMaster } = useContext(SignContext);
   const [menumaster, setmenumaster] = useState([]);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [originalMenuMaster, setOriginalMenuMaster] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [itemsPerPage] = useState(5);
   const navigate = useNavigate();
   const getallmenumaster = async () => {
@@ -38,13 +43,35 @@ const MenuMater = () => {
 
     setmenumaster(res.data);
   };
-  const handleDelete = async (id) => {
-    const abc1 = window.confirm("Are you sure you want to delete?");
-    if (abc1) {
-      const res = await DeleteMenuMaster(id);
-      getallmenumaster();
+  // const handleDelete = async (id) => {
+  //   const abc1 = window.confirm("Are you sure you want to delete?");
+  //   if (abc1) {
+  //     const res = await DeleteMenuMaster(id);
+  //     getallmenumaster();
+  //   }
+  // };
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
+  const handleDeleteAddTask = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
+  
+      try {
+        await DeleteMenuMaster(selectedForUpdate);
+        getallmenumaster();
+      } catch (error) {
+        // Handle error if needed
+        // console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
     }
   };
+  
+  
   const handleEdit = async (id) => {
     navigate(`/edit-menu/${id}`);
   };
@@ -70,6 +97,13 @@ const MenuMater = () => {
 
   return (
     <>
+    <ToastContainer closeButton={false} />
+      <DeleteModal
+        show={deleteModal}
+        isLoading={isDeletebuttonLoading}
+        onDeleteClick={() => handleDeleteAddTask()}
+        onCloseClick={() => setDeleteModal(false)}
+      />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
@@ -129,7 +163,7 @@ const MenuMater = () => {
                                       <div className="flex-shrink-0">
                                         <button
                                           type="button"
-                                          className="btn btn-danger btn-icon waves-effect waves-light"
+                                          className="btn btn-success btn-icon waves-effect waves-light"
                                           // onClick={() => handleEdit(type._id)}
                                         >
                                           <i className="ri-pencil-fill"></i>
@@ -138,8 +172,8 @@ const MenuMater = () => {
                                       <div className="flex-grow-1">
                                         <button
                                           type="button"
-                                          className="btn btn-success btn-icon waves-effect waves-light"
-                                          // onClick={() => handleDelete(type._id)}
+                                          className="btn btn-danger btn-icon waves-effect waves-light"
+                                          onClick={() => handleDelete(type._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>
