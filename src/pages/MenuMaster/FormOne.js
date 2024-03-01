@@ -87,7 +87,12 @@ function Example({ selectedItem, handleClose }) {
                       </tr>
                       <tr>
                         <td>Document Link</td>
-                        <td>{selectedItem.formlink ? selectedItem.formlink : "N/A"}</td>
+                        <td>
+  <a href={selectedItem ? `https://www.${selectedItem.formlink}` : "http://www.google.com"} target="_blank">
+    {selectedItem ? selectedItem.formlink : "N/A"}
+  </a>
+</td>
+
                       </tr>
                       <tr>
                         <td>
