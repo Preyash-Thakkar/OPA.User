@@ -174,9 +174,11 @@ const Login = () => {
       //  const response = await axios.get('')
         // If the selected role is User, hit the /user/authentication endpoint
         let apiEndpoint = `${process.env.REACT_APP_BASE_URL}/user/authentication`;
-      
+ 
       const res = await axios.post(apiEndpoint, AdminInfo);
-        if (res.success) {
+      console.log();
+        if (res.success && res.isActive===true) {
+          
           
           localStorage.removeItem("loggedIn", true);
         localStorage.removeItem("authToken", res.token);
@@ -250,7 +252,10 @@ const Login = () => {
         const count = window.location.reload();
        
 
-      }else {
+      } else if(res.success&&res.isActive===false){
+        setError("You are Not Allowed to Access")
+      }
+      else {
         setError("Please Enter Email & Password");
         // setTimeout(() => {
         //   setError("Please Enter the Correct Password");
