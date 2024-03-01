@@ -136,8 +136,8 @@ import EditAssignTask from "../pages/MenuMaster/EditAssignTask";
 
 // import customerNew from "../pages/Ecommerce/EcommerceCustomers/customerNew";
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <NewDashboard /> },
-  { path: "/subdashboard", component: <SubDashboard /> },
+  { path: "/dashboard", component:<SignState> <NewDashboard /></SignState> },
+  { path: "/subdashboard", component: <SignState><SubDashboard /></SignState> },
   {
     path: "/menumaster",
     component: (

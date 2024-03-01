@@ -1081,7 +1081,17 @@ export const SignState = (props) => {
       console.error("Error during API call:", error);
     }
   };
-
+  const GetallDepartmentTypefordashboard = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/departmenttype/newgetalldeptype`,
+        {}
+      );
+      return response;
+    } catch (error) {
+      return { success: false, msg: "server Error" };
+    }
+  };
   return (
     <SignContext.Provider
       value={{
@@ -1160,7 +1170,8 @@ export const SignState = (props) => {
         GetSpecificAssignTaskByDeptId,
         setEditAssignTask,
         setEditAddTaskValues,
-        DeleteAssignTask
+        DeleteAssignTask,
+        GetallDepartmentTypefordashboard
       }}
     >
       {props.children}
