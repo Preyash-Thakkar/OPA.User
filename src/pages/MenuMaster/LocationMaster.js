@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/brands/slack.png";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -27,11 +29,16 @@ import {
 const LocationMaster = () => {
   const navigate=useNavigate();
   const {GetallLocation,DeleteLocation}=useContext(SignContext);
-  const[loc,setloc]=useState("")
+  const [loc, setLoc] = useState([]);
+  const [pagloc,setpageloc]=useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Update to display 10 records per page
+  const [totalPages, setTotalPages] = useState(1);
+  // const[loc,setloc]=useState("")
   const getlocation=async()=>{
        const res=await GetallLocation();
-       console.log(res);
-       setloc(res.data);
+
+       setLoc(res.data);
   }
   const handleDelete=async(id)=>{
     const abc=window.confirm("Are you sure you want to delete");
@@ -51,6 +58,10 @@ const LocationMaster = () => {
   useEffect(()=>{
          getlocation();
   },[])
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = loc.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
       <UiContent />
@@ -138,6 +149,33 @@ const LocationMaster = () => {
                         </tbody>
                       </Table>
                     </div>
+                    <nav>
+                      <ul className="pagination">
+                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(currentPage - 1)}
+                            disabled={currentPage === 1}
+                          >
+                            Previous
+                          </button>
+                        </li>
+                        {Array.from({ length: totalPages }, (_, i) => (
+                          <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                            <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
+                          </li>
+                        ))}
+                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                          <button
+                            className="page-link"
+                            onClick={() => paginate(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
                 </CardBody>
               </Card>

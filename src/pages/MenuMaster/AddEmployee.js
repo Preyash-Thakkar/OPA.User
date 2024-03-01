@@ -42,16 +42,16 @@ const AddEmployee = () => {
   }
   const getdeptype = async (id) => {
     const res = await GetDepTypeById(id);
-    console.log(">>>>final", res);
+    // console.log(">>>>final", res);
     setdtype(res.data);
     
     
-    console.log("hello>>>",res.data[0].departmentGroup._id)
+    // console.log("hello>>>",res.data[0].departmentGroup._id)
     setaa(res.data[0].departmentGroup._id);
   };
   const handleDepGrp = (e) => {
     let depgrpid = e.target.value;
-    console.log(depgrpid);
+    // console.log(depgrpid);
     
     if(depgrpid){
     getdeptype(depgrpid);
@@ -61,8 +61,8 @@ const AddEmployee = () => {
    
   };
   const getemployeerole = async (id,s) => {
-    console.log(s);
-    console.log(id);
+    // console.log(s);
+    // console.log(id);
     const res = await GetEmployeeRoleById(s,id);
     setemployeerole(res.data);
   };
@@ -89,7 +89,7 @@ const AddEmployee = () => {
         const res = await GetallLocation();
         setloc(res.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
       }
     };
 
@@ -100,24 +100,24 @@ const AddEmployee = () => {
     try {
       const res = await GetallDepartmentGroup();
       setgrp(res.data);
-      console.log(grp);
+      // console.log(grp);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
   const addEmployeeName1 = async (values) => {
     const response = await addEmployeeName(values);
 
-    console.log(response);
+    // console.log(response);
   };
   useEffect(() => {
     fetchData1();
   }, []);
   useEffect(() => {
-    console.log(grp);
+    // console.log(grp);
   }, [grp]);
   useEffect(() => {
-    console.log(loc);
+    // console.log(loc);
   }, [loc]);
   return (
     <>
@@ -146,8 +146,8 @@ const AddEmployee = () => {
                   }
                 }
                 onSubmit={(values, { resetForm }) => {
-                    console.log("hello");
-                    console.log(">>>>>",values);
+                    // console.log("hello");
+                    // console.log(">>>>>",values);
                     const res=addEmployeeName1(values);
                     if(res){
                       getallemployeename();

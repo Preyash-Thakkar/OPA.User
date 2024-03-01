@@ -92,15 +92,14 @@ const AssignTask = () => {
     // const departmentId = "65b0ebc59d84e445fc900f18";
         // Make API call to get department data by ID for editing
         const response = await GetDepTypeByIdForEditing(departmentId);
-        console.log("Dtype", response);
-        console.log("Department",response.data);
+    
         setdepartmenttype(response.data);
     
         // Set the department type in state
         // setdepartmentype(response.data);
       } catch (error) {
         // Handle error
-        console.error('Error fetching department type for editing:', error);
+        // console.error('Error fetching department type for editing:', error);
       }
       
    
@@ -142,24 +141,20 @@ const AssignTask = () => {
     }
     setUniqueDepartmentTypes(selectedValues);
 
-    // console.log(">>>", uniqueDepartmentTypes.length);
-
-    //  console.log(selectedMulti);
   }
 
   function handleMulti1(selectedMulti1) {
-    // console.log("hello");
-    // console.log(selectedMulti1);
+
     setselectedMulti1(selectedMulti1);
 
     let selectedempValues = [];
     for (let i = 0; i < selectedMulti1.length; i++) {
       const selectId = selectedMulti1[i].new_Id;
-      //  console.log(selectId)
+
 
       for (let j = 0; j < emprole.length; j++) {
         const employeetype = emprole[j];
-        // console.log(employeetype);
+
 
         if (employeetype && employeetype.id === selectId) {
           selectedempValues.push({
@@ -174,11 +169,11 @@ const AssignTask = () => {
     setUniqueEmployeeRoles(selectedempValues);
   }
   function handleMulti4(selectedMulti4) {
-    console.log(selectedMulti4);
+
     setselectedMulti4(selectedMulti4);
   }
   function handleMulti2(selectedMulti2) {
-    // console.log("vaishal", selectedMulti2);
+
     setselectedMulti2(selectedMulti2);
   }
 
@@ -202,16 +197,16 @@ const AssignTask = () => {
       }
     }
     setuniqueEmployeeNames(selectedempNames);
-    // console.log(selectedempNames);
+
   }
   const gettingtasktype = async (id) => {
     const res = await GetSpecificTaskByDepartmentGroup(id);
-    //  console.log(res);
+    
     settasktype(res.data);
   };
   const getdeptype = async () => {
     const response = await GetallDepartmentType();
-    //  console.log("res>>",response);
+
     const names = response.data.map((item) => ({
       value: item._id,
       label: item.name,
@@ -222,23 +217,23 @@ const AssignTask = () => {
   };
   const handlefile = (e) => {
     const file = e.target.files[0];
-    console.log(file);
+
     setfile(file);
   };
   const handleTaskChange = async (e) => {
     let taskid = e.target.value;
-    // console.log(">>>>", taskid);
+    
     const res = await GetAddTaskById(taskid);
-    // console.log(">>>>", res.data);
+    
     setaccesslocation(res.data.accessLocation);
     
     settype(res.data.taskType);
 
-    // console.log(">>>>>>>>>>>>>", res.data.accessLocation);
+    
   };
   const handleDepType = (e) => {
     let deptypeid = e.target.value;
-    console.log(">>>>>>>>>>>>>>>>>>>", deptypeid);
+
     gettingtasktype(deptypeid);
   };
   const getdepgroup = async () => {
@@ -254,8 +249,7 @@ const AssignTask = () => {
   const id=localStorage.getItem("DepartmentTypeID");
 
   const addassigntask = async (documentname,documentdepartmenttype,tasktypes,documenttype,formlink,documentlink,uploaddocument,documentdescription,locationSchema,departmentGroup,departmentType,employeeRole,employeeName,isActive) => {
-    console.log(">>>>", documentlink);
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",locationSchema,departmentGroup,departmentType,employeeRole,employeeName);
+    
     
     const res = await addAssignTaskmaster(
       documentname,
@@ -275,7 +269,7 @@ const AssignTask = () => {
     );
   
       
-    console.log(">>", res);
+
   };
   const addassigntask1 = async (
     values,
@@ -304,7 +298,7 @@ const AssignTask = () => {
   };
   const handle1 = (e) => {
     let deptypeid = e.target.value;
-    // console.log(deptypeid);
+
     setdocument(deptypeid);
   };
   const getloc = async () => {
@@ -326,11 +320,11 @@ const AssignTask = () => {
       new_empId: item._id,
     }));
     setemprole(names);
-    // console.log(names);
+    
   };
   const getempname = async () => {
     const response = await GetallEmployeeName();
-    console.log(">>>>>", response);
+
     const names = response.data.map((item) => ({
       value: item._id,
       label: item.name,
@@ -338,17 +332,17 @@ const AssignTask = () => {
       newid: item._id,
     }));
     setempname(names);
-    console.log(names);
+
   };
   useEffect(() => {
-    // console.log(accesslocation);
+    
   }, [accesslocation]);
   useEffect(() => {
-    // console.log("type>>>>>>", type);
+
   }, [type]);
 
   useEffect(() => {
-    // console.log("document>>>>>>", document);
+    
   }, [document]);
   useEffect(() => {
     getalldtype();
@@ -399,7 +393,7 @@ const AssignTask = () => {
                   let dt = [];
                   let er = [];
                   let en = [];
-                  console.log("employeename>>>>>", selectedMulti4);
+
                   if(selectedMulti2){
                     selectedMulti2.map((type) => {
                     loc1.push(type.id);
@@ -428,8 +422,12 @@ const AssignTask = () => {
                     en.push(type.newid);
                   });
                 }
-                  // console.log("en>>>>", en);
-                  console.log("values",values);
+                 // console.log("en>>>>", en);
+                 if (document === "File Upload" && !file) {
+    toast.error("Please Upload a document");
+    return;
+  }
+
                   values.uploaddocument=file;
                   const res=addassigntask(values.documentname,values.documentdepartmenttype,values.tasktypes,values.documenttype,values.formlink,values.documentlink,values.uploaddocument,values.documentdescription,loc1,dg1,dt,er,en,values.isActive);
                   // if(!values.uploaddocument){
@@ -733,7 +731,7 @@ const AssignTask = () => {
                                             className="btn btn-success w-sm"
                                             type="submit"
                                           >
-                                            Update
+                                            Cancel
                                           </button>
                                           <button
                                             className="btn btn-danger w-sm"

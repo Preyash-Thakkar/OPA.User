@@ -30,11 +30,13 @@ import {
 
 const DepartmentGroup = () => {
   const { GetallDepartmentGroup ,deletegrp } = useContext(SignContext);
-  const [depgroup, setDepgroup] = useState(null);
+  const [depgroup, setDepgroup] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalDepgroup, setOriginalDepgroup] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); 
   // const [itemsPerPage] = useState(3);
   const navigate=useNavigate();
   const getdepgroup = async () => {
@@ -90,6 +92,11 @@ const DepartmentGroup = () => {
     );
     setDepgroup(filterData);
   };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = depgroup.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -136,9 +143,8 @@ const DepartmentGroup = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {depgroup &&
-                            depgroup.length > 0 &&
-                            depgroup.map((type, index) => {
+                          {
+                            currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>DG:{index+1}</td>
@@ -182,6 +188,41 @@ const DepartmentGroup = () => {
                         </tbody>
                       </Table>
                     </div>
+                    <nav>
+                      <ul className="pagination">
+                        {depgroup.length > itemsPerPage && (
+                          <>
+                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage - 1)}
+                                disabled={currentPage === 1}
+                              >
+                                Previous
+                              </button>
+                            </li>
+                            {Array.from({ length: Math.ceil(depgroup.length / itemsPerPage) }, (_, i) => {
+                              if (i < 5) {
+                                return (
+                                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
+                                  </li>
+                                );
+                              }
+                            })}
+                            <li className={`page-item ${currentPage === Math.ceil(depgroup.length / itemsPerPage) ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage + 1)}
+                                disabled={currentPage === Math.ceil(depgroup.length / itemsPerPage)}
+                              >
+                                Next
+                              </button>
+                            </li>
+                          </>
+                        )}
+                      </ul>
+                    </nav>
                   </div>
                 </CardBody>
               </Card>

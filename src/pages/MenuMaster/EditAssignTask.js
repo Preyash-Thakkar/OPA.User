@@ -1156,15 +1156,14 @@ const EditAssignTask = () => {
     // const departmentId = "65b0ebc59d84e445fc900f18";
         // Make API call to get department data by ID for editing
         const response = await GetDepTypeByIdForEditing(departmentId);
-        console.log("Dtype", response);
-        console.log("Department",response.data);
+
         setdepartmenttype(response.data);
     
         // Set the department type in state
         // setdepartmentype(response.data);
       } catch (error) {
         // Handle error
-        console.error('Error fetching department type for editing:', error);
+        // console.error('Error fetching department type for editing:', error);
       }
       
    
@@ -1214,11 +1213,10 @@ const EditAssignTask = () => {
     let selectedempValues = [];
     for (let i = 0; i < selectedMulti1.length; i++) {
       const selectId = selectedMulti1[i].new_Id;
-      //  console.log(selectId)
+
 
       for (let j = 0; j < emprole.length; j++) {
         const employeetype = emprole[j];
-        // console.log(employeetype);
 
         if (employeetype && employeetype.id === selectId) {
           selectedempValues.push({
@@ -1233,11 +1231,11 @@ const EditAssignTask = () => {
     setUniqueEmployeeRoles(selectedempValues);
   }
   function handleMulti4(selectedMulti4) {
-    console.log(selectedMulti4);
+
     setselectedMulti4(selectedMulti4);
   }
   function handleMulti2(selectedMulti2) {
-    // console.log("vaishal", selectedMulti2);
+
     setselectedMulti2(selectedMulti2);
   }
 
@@ -1263,20 +1261,18 @@ const EditAssignTask = () => {
     setuniqueEmployeeNames(selectedempNames);
   }
   const gettingtasktype = async (id) => {
-    console.log("get task type id", assigntask?.documentdepartmenttype?._id);
     const res = await GetSpecificAssignTaskByDeptId(
       assigntask?.documentdepartmenttype?._id
     );
-     console.log(res);
+
     let typearr = res.data.map((f) => f.tasktypes);
-    console.log("task is ", typearr);
     settasktype(typearr);
 
-    // console.log("This is task type", res.data[0].tasktypes.name);
+
   };
   const getdeptype = async () => {
     const response = await GetallDepartmentType();
-    //  console.log("res>>",response);
+
     const names = response.data.map((item) => ({
       value: item._id,
       label: item.name,
@@ -1288,18 +1284,16 @@ const EditAssignTask = () => {
   const handleTaskChange = async (e) => {
     let taskid = e.target.value;
 
-    // // console.log(">>>>", taskid);
+
     const res = await GetAddTaskById(taskid);
-    // // console.log(">>>>", res.data);
+
     setaccesslocation(res.data.accessLocation);
     settype(res.data.taskType);
-    // // console.log(">>>>>>>>>>>>>", res.data.accessLocation);
     setdocument(res.data.uploaddocument);
-    console.log("Image",res.data.uploaddocument)
   };
   const handleDepType = (e) => {
     let deptypeid = e.target.value;
-    // console.log(">>>>>>>>>>>>>>>>>>>", deptypeid);
+
     gettingtasktype(deptvalueid);
   };
   const getdepgroup = async () => {
@@ -1313,8 +1307,8 @@ const EditAssignTask = () => {
     setdep(names);
   };
   const addassigntask = async (values, loc1, dg1, dt, er, en) => {
-    console.log(">>>>", values.documentlink);
-    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", values,loc1,dg1,dt,er,en);
+
+
     const res = await addAssignTaskmaster(
       values.documentname,
       values.documentdepartmenttype,
@@ -1331,7 +1325,7 @@ const EditAssignTask = () => {
       en,
       values.isActive
     );
-    console.log(">>", res);
+    
   };
   const addassigntask1 = async (
     values,
@@ -1360,7 +1354,7 @@ const EditAssignTask = () => {
   };
   const handle1 = (e) => {
     let deptypeid = e.target.value;
-    // console.log(deptypeid);
+
     setdocument(deptypeid);
   };
   const getloc = async () => {
@@ -1382,30 +1376,29 @@ const EditAssignTask = () => {
       new_empId: item._id,
     }));
     setemprole(names);
-    // console.log(names);
+
   };
   const getassigntask1 = async () => {
     const res = await GetSpecificAssignTaskById(id);
-    console.log("This is res", res);
+
     setassigntask(res.data);
     const newloc = res.data.locationSchema;
-    console.log(newloc);
     const newdepgrp = res.data.departmentGroup;
     const newdeptype = res.data.departmentType;
     const newemprole = res.data.employeeRole;
     const newempname = res.data.employeeName;
 
-    console.log("Resfggggggg", res.data);
+
     setdeptvalueid(res.data.documentdepartmenttype._id);
-    console.log(">>>>>>>>>", res.data.locationSchema);
+
     settaskvaluetype(res.data.tasktypes._id);
 
     const restype = await GetAddTaskById(res.data.tasktypes._id);
-    console.log("response", restype);
+
     setaccesslocation(restype.data.accessLocation);
     settype1(restype.data.taskType);
     setdocument(res.data.documenttype);
-    console.log("Image",res.data.documenttype)
+
     let loc = [];
     let dg = [];
     let dt = [];
@@ -1449,12 +1442,7 @@ const EditAssignTask = () => {
         label: type.name,
       });
     });
-    console.log("Location", loc);
-    console.log("Department Group", dg);
-    console.log("dt", dt);
-    console.log("er", er);
-    console.log("en", en);
-console.log(res.data);
+
     settypeid1({
       documentname: res.data.documentname,
       documentdepartmenttype: res.data.documentdepartmenttype,
@@ -1472,11 +1460,11 @@ console.log(res.data);
       isActive: res.data.isActive,
     });
 
-    console.log("THis is my data", typeid1);
+
   };
   const getempname = async () => {
     const response = await GetallEmployeeName();
-    console.log(">>>>>", response);
+
     const names = response.data.map((item) => ({
       value: item._id,
       label: item.name,
@@ -1484,7 +1472,7 @@ console.log(res.data);
       newid: item._id,
     }));
     setempname(names);
-    console.log(names);
+
   };
   const cancel = () => {
     // location1=[];
@@ -1493,12 +1481,12 @@ console.log(res.data);
 
  
   useEffect(() => {
-    // console.log(accesslocation);
+    
   }, [accesslocation]);
   useEffect(() => {
-    // console.log(accesslocation);
+    
     settaskvaluetype(assigntask?.tasktypes?._id);
-    console.log("Niceee", taskvaluetype);
+
   }, []);
 
   useEffect(() => {
@@ -1533,15 +1521,15 @@ console.log(res.data);
                   typeid1
                 }
                 onSubmit={async(values, { resetForm }) => {
-                  console.log(typeid1.locationSchema);
+
        
                   const locationSchemaValues = typeid1.locationSchema ? typeid1.locationSchema.map(item => item.value) : [];
-                  console.log(locationSchemaValues);
+
   const departmentGroupValues = typeid1.departmentGroup ? typeid1.departmentGroup.map(item => item.value) : [];
   const departmentTypeValues = typeid1.departmentType ? typeid1.departmentType.map(item => item.value) : [];
   const employeeRoleValues = typeid1.employeeRole ? typeid1.employeeRole.map(item => item.value) : [];
   const employeeNameValues = typeid1.employeeName ? typeid1.employeeName.map(item => item.value) : [];
-                  console.log("helooooooooo",typeid1.documentname);
+
                   //  console.log(typeid1.documentname);
                   const response =await setEditAssignTask(
                     id,
@@ -1567,7 +1555,7 @@ console.log(res.data);
                 );
                 
                   if (response) {
-                    console.log("THis is the form link",response.formlink)
+
                     GetSpecificAssignTaskByDeptId();
                     navigate("/assign-master");
                     

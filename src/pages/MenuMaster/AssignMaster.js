@@ -34,7 +34,7 @@ const AssignMaster = () => {
   
   
   const id=localStorage.getItem("DepartmentTypeID");
-  console.log(id)
+
   const { GetallAssignTask,DeleteAssignTask } = useContext(SignContext);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -47,7 +47,7 @@ const AssignMaster = () => {
   const [itemsPerPage] = useState(10);
   const getalltask = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`)
-    console.log("kjgkjk5ky",res);
+
     settask(res.data);
     setOriginalAssignTask(res.data);
     setpaginateTask(res.data);
@@ -57,7 +57,6 @@ const AssignMaster = () => {
     getalltask();
   }, []);
   useEffect(() => {
-    console.log(">>>>>",task)
   }, [task]);
   const handleDelete = (previewImage) => {
     setselectedForUpdate(previewImage);
@@ -73,7 +72,7 @@ const AssignMaster = () => {
         getalltask();
       } catch (error) {
         // Handle error if needed
-        console.error("Error deleting department group:", error);
+        // console.error("Error deleting department group:", error);
       } finally {
         setIsDeletebuttonLoading(false);
         setDeleteModal(false);
@@ -81,7 +80,7 @@ const AssignMaster = () => {
     }
   };
   const handleEdit = async (id) => {
-    console.log(">>>vaishalllllllllllllllllllll", id);
+
     navigate(`/edit-assigntask/${id}`);
   };
   // const searchList = (e) => {
@@ -99,7 +98,7 @@ const AssignMaster = () => {
   // };
   const handleViewDocument = (item) => {
     setSelectedItem(item);
-    console.log("selected ",item )
+
   };
 
   const handleExampleClose = () => {
@@ -117,7 +116,7 @@ const AssignMaster = () => {
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
     );
     settask(filterData);
-    console.log(filterData)
+
   };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -227,7 +226,7 @@ const AssignMaster = () => {
                                         <button
                                           type="button"
                                           className="btn btn-success btn-icon waves-effect waves-light"
-                                          onClick={() => handleEdit(type._id)}
+                                          // onClick={() => handleEdit(type._id)}
                                         >
                                           <i className="ri-pencil-fill"></i>
                                         </button>

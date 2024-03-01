@@ -52,15 +52,14 @@ const EditCommunityUpdateMaster = () => {
       });
       const getreqcommdetails=async()=>{
         const res=await getReqCommDetails(); 
-        console.log("THis is nowww",res); 
+
         setcommunityrequireddetails(res.data);    
      }
     const gettingcommunitymastername=async (id)=>{
       try{
         const res = await GetCommunityNameIdForEditing(id);
 
-        console.log("Hiii Bosss",res);
-        console.log(res.data)
+
         let loc=[];
         let dg=[];
         let dt=[];
@@ -73,7 +72,7 @@ const EditCommunityUpdateMaster = () => {
 
           });
         }
-        console.log("Hello",loc);
+
         for(let i=0;i<res.data.departmentGroup.length;i++){
           dg.push({
             value:res.data.departmentGroup[i]._id,
@@ -81,7 +80,7 @@ const EditCommunityUpdateMaster = () => {
 
           });
         }
-        console.log(dg)
+
         for(let i=0;i<res.data.departmentType.length;i++){
           dt.push({
             value:res.data.departmentType[i]._id,
@@ -89,7 +88,7 @@ const EditCommunityUpdateMaster = () => {
 
           });
         }
-        console.log(dt)
+
         for(let i=0;i<res.data.employeeRole.length;i++){
           er.push({
             value:res.data.employeeRole[i]._id,
@@ -97,7 +96,7 @@ const EditCommunityUpdateMaster = () => {
 
           });
         }
-        console.log(er)
+
         for(let i=0;i<res.data.employeeName.length;i++){
           en.push({
             value:res.data.employeeName[i]._id,
@@ -105,9 +104,9 @@ const EditCommunityUpdateMaster = () => {
 
           });
         }
-        console.log(en)
 
-        // console.log(res.data.locationSchema);
+
+
           settypeid1({
             name:res.data.name,
             uploadimage:res.data.uploadimage,
@@ -121,11 +120,11 @@ const EditCommunityUpdateMaster = () => {
 
           });
 
-      console.log("hiiasas",typeid1);
-      // console.log("hiasdasdasdiass",locationSchema);
+
+
       }
       catch(error){
-        console.log("Error Fetching Community Details",error.message);
+        // console.log("Error Fetching Community Details",error.message);
       }
       
     
@@ -155,12 +154,12 @@ const EditCommunityUpdateMaster = () => {
   
     useEffect(() => {
       
-      console.log(uniqueDepartmentTypes);
+
     }, [uniqueDepartmentTypes]);
     useEffect(() => {
-      console.log(uniqueEmployeeRoles);
+
     }, [uniqueEmployeeRoles]);useEffect(() => {
-      console.log(uniqueEmployeeRoles);
+
     }, [uniqueEmployeeNames]);
   
     /*const handleImageChange = (e) => {
@@ -170,7 +169,7 @@ const EditCommunityUpdateMaster = () => {
     const handleImageChange = (e) => {
       //setImage(e.target.files[0]);
        const file = e.target.files[0];
-    console.log("This is the file description",file);
+
     setImage(file); 
      };    
     const getloc = async () => {
@@ -197,7 +196,7 @@ const EditCommunityUpdateMaster = () => {
     };
     const getdeptype = async () => {
       const response = await GetallDepartmentType();
-      //  console.log("res>>",response);
+      
       const names = response.data.map((item) => ({
         value: item._id,
         label: item.name,
@@ -216,7 +215,7 @@ const EditCommunityUpdateMaster = () => {
         new_empId:item._id
       }));
       setemprole(names);
-      console.log(names)
+
     } 
      const getempname=async()=>{
       const response=await GetallEmployeeName();
@@ -227,13 +226,13 @@ const EditCommunityUpdateMaster = () => {
         main_id:item._id
       }))
       setempname(names);
-      console.log(names)
+
     }
   
     function handleMulti(selectedMulti) {
       setselectedMulti(selectedMulti);
       
-      console.log(">>>>vaishal",selectedMulti);
+
       let selectedValues = [];
       for (let i = 0; i < selectedMulti.length; i++) {
         const selectempId = selectedMulti[i].id;
@@ -255,24 +254,23 @@ const EditCommunityUpdateMaster = () => {
       }
       setUniqueDepartmentTypes(selectedValues);
   
-      console.log(uniqueDepartmentTypes);
+
       
-    //  console.log(selectedMulti);
+    
     }
   
     function handleMulti1(selectedMulti1) {
-      console.log("hello");
-      console.log(selectedMulti1)
+
       setselectedMulti1(selectedMulti1);
-      console.log("vaishal11",selectedMulti1);
+
      let selectedempValues = [];
      for (let i = 0; i < selectedMulti1.length; i++) {
        const selectId = selectedMulti1[i].new_Id;
-      //  console.log(selectId)
+
   
        for (let j = 0; j < emprole.length; j++) {
          const employeetype = emprole[j];
-         // console.log(employeetype);
+         
   
          if (employeetype && employeetype.id === selectId) {
            selectedempValues.push({
@@ -290,14 +288,14 @@ const EditCommunityUpdateMaster = () => {
    }
   //  const handlePhotoChange = (e) => {
   //   const file = e.target.files[0];
-  //   console.log(file);
+
   //   setProfilePhoto(file);
   // };
    function handleMulti4(selectedMulti4) {
     
      setselectedMulti4(selectedMulti4);
     
-  console.log("hii",selectedMulti4)
+
   
     }
     function handleMulti2(selectedMulti2) {
@@ -327,7 +325,7 @@ const EditCommunityUpdateMaster = () => {
         }
       }
     setuniqueEmployeeNames(selectedempNames);
-    console.log(selectedempNames)
+
   
     }
     useEffect(() => {
@@ -339,16 +337,16 @@ const EditCommunityUpdateMaster = () => {
     }, []);
   
     useEffect(() => {
-      // console.log(dep);
+      
     }, [dep]); 
     useEffect(() => {
-      // console.log("departmenttype>>", dtype);
+
     }, [dtype]);
     useEffect(() => {
-      // console.log(emprole);
+
     }, [emprole]);
       useEffect(() => {
-      // console.log(emprole);
+
     }, [empname]);
     
     const [selectedlocation, setlocationValues] = useState([]);
@@ -364,9 +362,8 @@ const EditCommunityUpdateMaster = () => {
     }, [typeid1.locationSchema]); 
    
 
-// console.log("This is the location value",locationSchema);
  
-    // console.log("Testing",typeid1.departmentGroup.name);
+
   return (
     <>
       <UiContent />
@@ -388,8 +385,8 @@ const EditCommunityUpdateMaster = () => {
                 onSubmit={(values, { resetForm }) => {
                     typeid1.uploadimage=image;
                   const response=setEditCommunityMasterName(id,typeid1.name,typeid1.message,typeid1.uploadimage,typeid1.locationSchema,typeid1.departmentGroup,typeid1.departmentType,typeid1.employeeRole,typeid1.employeeName,typeid1.isActive)
-                  // console.log("Locationhdshsdhdh ",typeid1.locationSchema.value);
-                  console.log("This is    ",response);
+
+
                   if(response){
                     getreqcommdetails();
                     navigate('/community-update');

@@ -22,10 +22,10 @@ const AddDepGroup = () => {
     name: Yup.string().required("department group is required"),
   });
   const addDepartmentGroup = async (values) => {
-    console.log(values);
+    // console.log(values);
     const response = await addDepGroup(values);
 
-    console.log(response);
+    // console.log(response);
   };
   const cancel=()=>{
     navigate('/department-group')
@@ -49,7 +49,7 @@ const AddDepGroup = () => {
                   isActive: true,
                 }}
                 onSubmit={(values, { resetForm }) => {
-                  console.log(">>>", values);
+                  // console.log(">>>", values);
                   const res=addDepartmentGroup(values);
                   // resetForm();
                   if(res){

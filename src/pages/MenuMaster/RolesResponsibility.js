@@ -78,10 +78,9 @@ const AddRoles = () => {
           },
         }
       );
-      console.log("response 123456", response.data);
       // Additional actions based on success (e.g., navigate or show a success message)
     } catch (error) {
-      console.error("Error submitting form", error.response.data);
+      // console.error("Error submitting form", error.response.data);
       // Handle errors (e.g., show error message)
     }
   };
@@ -109,18 +108,18 @@ const AddRoles = () => {
   const [uniqueEmployeeNames, setuniqueEmployeeNames] = useState([]);
 
   useEffect(() => {
-    console.log(uniqueDepartmentTypes);
+
   }, [uniqueDepartmentTypes]);
   useEffect(() => {
-    console.log(uniqueEmployeeRoles);
+
   }, [uniqueEmployeeRoles]);
   useEffect(() => {
-    console.log(uniqueEmployeeRoles);
+
   }, [uniqueEmployeeNames]);
 
   /*const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    console.log(e.target.files[0]);
+    
   };  */
   const getloc = async () => {
     const response = await GetallLocation();
@@ -145,7 +144,7 @@ const AddRoles = () => {
   };
   const getdeptype = async () => {
     const response = await GetallDepartmentType();
-    //  console.log("res>>",response);
+
     const names = response.data.map((item) => ({
       value: item._id,
       label: item.name,
@@ -164,7 +163,7 @@ const AddRoles = () => {
       new_empId: item._id,
     }));
     setemprole(names);
-    console.log(names);
+
   };
   const getempname = async () => {
     const response = await GetallEmployeeName();
@@ -175,13 +174,13 @@ const AddRoles = () => {
       main_id: item._id,
     }));
     setempname(names);
-    console.log(names);
+
   };
 
   function handleMulti(selectedMulti) {
     setselectedMulti(selectedMulti);
 
-    console.log(">>>>vaishal", selectedMulti);
+
     let selectedValues = [];
     for (let i = 0; i < selectedMulti.length; i++) {
       const selectempId = selectedMulti[i].id;
@@ -201,24 +200,23 @@ const AddRoles = () => {
     }
     setUniqueDepartmentTypes(selectedValues);
 
-    console.log(uniqueDepartmentTypes);
 
-    //  console.log(selectedMulti);
+
+    
   }
 
   function handleMulti1(selectedMulti1) {
-    console.log("hello");
-    console.log(selectedMulti1);
+
     setselectedMulti1(selectedMulti1);
-    console.log("vaishal11", selectedMulti1);
+
     let selectedempValues = [];
     for (let i = 0; i < selectedMulti1.length; i++) {
       const selectId = selectedMulti1[i].new_Id;
-      //  console.log(selectId)
+      
 
       for (let j = 0; j < emprole.length; j++) {
         const employeetype = emprole[j];
-        // console.log(employeetype);
+
 
         if (employeetype && employeetype.id === selectId) {
           selectedempValues.push({
@@ -234,13 +232,13 @@ const AddRoles = () => {
   }
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
+
     setProfilePhoto(file);
   };
   function handleMulti4(selectedMulti4) {
     setselectedMulti4(selectedMulti4);
 
-    console.log("hii", selectedMulti4);
+
   }
   function handleMulti2(selectedMulti2) {
     setselectedMulti2(selectedMulti2);
@@ -266,7 +264,7 @@ const AddRoles = () => {
       }
     }
     setuniqueEmployeeNames(selectedempNames);
-    console.log(selectedempNames);
+
   }
   useEffect(() => {
     getdepgroup();
@@ -279,16 +277,16 @@ const AddRoles = () => {
     navigate("/roles-responsibilty");
   };
   useEffect(() => {
-    // console.log(dep);
+    
   }, [dep]);
   useEffect(() => {
-    // console.log("departmenttype>>", dtype);
+    
   }, [dtype]);
   useEffect(() => {
-    // console.log(emprole);
+    
   }, [emprole]);
   useEffect(() => {
-    // console.log(emprole);
+    
   }, [empname]);
 
   return (
@@ -315,14 +313,14 @@ const AddRoles = () => {
                 }}
                 onSubmit={(values) => {
                   // addCheckupDetails(values);
-                  console.log("form values", values.locationSchema);
+
                   let loc1 = [];
                   let dg1 = [];
                   let dt = [];
                   let er = [];
                   let en = [];
 
-                  console.log(">>>", selectedMulti2);
+
 
                   selectedMulti2.map((type) => {
                     loc1.push(type.id);
@@ -341,8 +339,7 @@ const AddRoles = () => {
                     //  en.push(empname.main_id);
                     en.push(type.main_Id);
                   });
-                  console.log("dg1", dg1);
-                  console.log("en", en);
+            
 
                   const response = addcommunitymaster(
                     loc1,

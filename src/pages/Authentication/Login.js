@@ -63,14 +63,14 @@ const Login = () => {
   const [buttnLoading, setButtnLoading] = useState(false);
 
   const handleGoogleSuccess = async (response) => {
-    console.log("Nenenen", response);
+    // console.log("Nenenen", response);
    
     try {
       const serverResponse = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/google-login-authentication`, {
         email: response.profileObj.email,
       });
-      console.log("Hii", serverResponse.success);
-      console.log(serverResponse);
+      // console.log("Hii", serverResponse.success);
+      // console.log(serverResponse);
 
       if (serverResponse.success === true) {
         const currentTimestamp = new Date();
@@ -140,18 +140,18 @@ const Login = () => {
         window.location.reload();
       } else {
         // Handle the case where the server response indicates failure
-        console.error('Error during Google login:', serverResponse.data.message);
+        // console.error('Error during Google login:', serverResponse.data.message);
         alert("Please Enter a Valid Email Id")
       }
     } catch (error) {
-      console.error('Error during Google login:', error);
+      // console.error('Error during Google login:', error);
       alert("Please Enter a Valid Email Id");
     }
 
   };
 
   const handleGoogleFailure = (error) => {
-    console.error('Google login failure:', error);
+    // console.error('Google login failure:', error);
 
   };
 
@@ -283,7 +283,7 @@ const Login = () => {
     }
   };
   useEffect(()=>{
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",others)
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",others)
  },[others])
   document.title = "OPA | Login";
   return (

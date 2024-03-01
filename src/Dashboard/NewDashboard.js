@@ -58,6 +58,7 @@ const NewDashboard = () => {
   const getreqcommdetails = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
 
+
     
     console.log("jfjfijefjekf", res.data);
 
@@ -82,6 +83,7 @@ const NewDashboard = () => {
       `${process.env.REACT_APP_BASE_URL}/rolesresponsibilities/getRolesResponsibilities`
     );
     setrolesresponsibility(res.rolesResponsibilitiesCount);
+
     console.log(res.rolesResponsibilitiesCount);
   };
 

@@ -28,12 +28,12 @@ const AddEmployeeRoles = () => {
   const getdepgroup = async () => {
     const response = await GetallDepartmentGroup();
 
-    console.log(response.data);
+    // console.log(response.data);
     setDepgroup(response.data);
   };
   const getdeptype = async (id) => {
     const res = await GetDepTypeById(id);
-    console.log(">>>>final",res);
+    // console.log(">>>>final",res);
     setDepTypeByGroup(res.data);
   };
   const handleDepGrp = (e) => {
@@ -47,7 +47,7 @@ const AddEmployeeRoles = () => {
   const addemployeerole = async (values) => {
     const response = await addEmployeeRole(values);
 
-    console.log(response);
+    // console.log(response);
   };
   const cancel=()=>{
     navigate('/employee-roles')

@@ -13,7 +13,7 @@ const AddMenu = () => {
   const addMenudata = async (values) => {
     const response = await addMenu(values);
 
-    console.log(response);
+    // console.log(response);
   };
   const cancel=()=>{
     navigate('/menumaster')

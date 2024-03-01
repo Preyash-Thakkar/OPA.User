@@ -34,11 +34,13 @@ import { useNavigate } from "react-router-dom";
 const EmployeeMaster = () => {
   const navigate=useNavigate();
   const {GetallEmployeeName,DeleteEmployeeName}=useContext(SignContext)
-  const [employeename,setemployeename]=useState(null);
+  const [employeename,setemployeename]=useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
   const [originalEmployeeMaster, setOriginalEmployeeMaster] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
  const id=localStorage.getItem("DepartmentTypeID");
  console.log(id);
   const getemployeename=async()=>{
@@ -95,6 +97,12 @@ const searchList = (e) => {
   );
   setemployeename(filterData);
 };
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = employeename.slice(indexOfFirstItem, indexOfLastItem);
+
+const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -144,9 +152,8 @@ const searchList = (e) => {
                           </tr>
                         </thead>
                         <tbody>
-                          {employeename &&
-                            employeename.length > 0 &&
-                            employeename.map((type, index) => {
+                          {
+                            currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index+1}</td>
@@ -195,6 +202,28 @@ const searchList = (e) => {
                         </tbody>
                       </Table>
                     </div>
+                    <nav>
+                      <ul className="pagination">
+                        {Array.from(
+                          { length: Math.ceil(employeename.length / itemsPerPage) },
+                          (_, i) => (
+                            <li
+                              key={i}
+                              className={`page-item ${
+                                currentPage === i + 1 ? "active" : ""
+                              }`}
+                            >
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(i + 1)}
+                              >
+                                {i + 1}
+                              </button>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </nav>
                   </div>
                 </CardBody>
               </Card>
