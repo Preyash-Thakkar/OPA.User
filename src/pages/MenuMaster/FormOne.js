@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Col, Row, Table } from "reactstrap";
-
+import { Link } from 'react-router-dom';
 function Example({ selectedItem, handleClose }) {
   const [eyeshow, setEyeshow] = useState(null);
 
@@ -18,17 +18,17 @@ function Example({ selectedItem, handleClose }) {
       </div>
 
       <Modal
-        size="xl"
+        size="l"
         show={eyeshow}
         onHide={() => setEyeshow(false)}
         animation={false}
       >
         <Modal.Header closeButton>
-          <h5>Task Detail of HR Policy</h5>
+          <h4>Task Detail of HR Policy</h4>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col lg={6} md={12}>
+          
+            <Col lg={12} md={6}>
               <div className="live-preview">
                 <div className="table-responsive">
                   <Table className="align-middle table-nowrap mb-0">
@@ -74,6 +74,8 @@ function Example({ selectedItem, handleClose }) {
                             {selectedItem ? (
                               <a
                                 href={`${process.env.REACT_APP_BASE_URL}/${selectedItem.uploaddocument}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
                               >
                                 View Document
                               </a>
@@ -85,7 +87,7 @@ function Example({ selectedItem, handleClose }) {
                       </tr>
                       <tr>
                         <td>Document Link</td>
-                        <td>{selectedItem ? selectedItem.formlink : "N/A"}</td>
+                        <td>{selectedItem.formlink ? selectedItem.formlink : "N/A"}</td>
                       </tr>
                       <tr>
                         <td>
@@ -103,57 +105,8 @@ function Example({ selectedItem, handleClose }) {
                 </div>
               </div>
             </Col>
-            <Col lg={6} md={12}>
-              <div className="live-preview">
-                <div className="table-responsive">
-                  {/* <Table className="align-middle table-nowrap mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th scope="col" colSpan={2} style={{ textAlign: "center" }}>
-                          Task Access
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Location</td>
-                        <td>{selectedItem ? selectedItem.locationSchema : "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Department
-                          <br></br>Group
-                        </td>
-                        <td>{selectedItem ? selectedItem.departmentgroup : "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>Employee Roles</td>
-                        <td>{selectedItem ? selectedItem.employeeroles : "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Employee
-                          <br></br> Access
-                        </td>
-                        <td>{selectedItem ? selectedItem.employeeaccess : "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Employee
-                          <br></br>Roles
-                        </td>
-                        <td>N/A</td>
-                      </tr>
-                      <tr>
-                        <td>Status</td>
-                        <td>{selectedItem && selectedItem.isActive ? "Active" : "Inactive"}</td>
-                      </tr>
-                    </tbody>
-                  </Table> */}
-                </div>
-              </div>
-            </Col>
-          </Row>
+           
+        
         </Modal.Body>
       </Modal>
     </React.Fragment>
