@@ -29,7 +29,7 @@ import {
 } from "reactstrap";
 
 const DepartmentGroup = () => {
-  const { GetallDepartmentGroup ,deletegrp } = useContext(SignContext);
+  const { GetallDepartmentGroup ,deletegrp,EditDepGrp } = useContext(SignContext);
   const [depgroup, setDepgroup] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
@@ -38,9 +38,10 @@ const DepartmentGroup = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); 
   // const [itemsPerPage] = useState(3);
+  const id=localStorage.getItem("DepartmentGroupID")
   const navigate=useNavigate();
   const getdepgroup = async () => {
-    const response = await GetallDepartmentGroup();
+    const response = await EditDepGrp(id);
     console.log(">>>");
     console.log(response.data);
     setOriginalDepgroup(response.data);
@@ -83,20 +84,21 @@ const DepartmentGroup = () => {
   useEffect(() => {
     getdepgroup();
   }, []);
-  const searchList = (e) => {
-    let inputVal = e.toLowerCase();
-    let filterData = originalDepgroup.filter(
-      (el) =>
-        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
-        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
-    );
-    setDepgroup(filterData);
-  };
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = depgroup.slice(indexOfFirstItem, indexOfLastItem);
+  console.log(depgroup)
+  // const searchList = (e) => {
+  //   let inputVal = e.toLowerCase();
+  //   let filterData = originalDepgroup.filter(
+  //     (el) =>
+  //       el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+  //       el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+  //   );
+  //   setDepgroup(filterData);
+  // };
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = depgroup&&depgroup.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -129,7 +131,7 @@ const DepartmentGroup = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
-                  <SearchComponent searchList={searchList}  />
+                  {/* <SearchComponent searchList={searchList}  /> */}
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
@@ -144,13 +146,11 @@ const DepartmentGroup = () => {
                         </thead>
                         <tbody>
                           {
-                            currentItems.map((type, index) => {
-                              return (
-                                <tr key={type._id}>
-                                  <td>DG:{index+1}</td>
-                                  <td>{type.name}</td>
+                                <tr>
+                                  <td>{1}</td>
+                                  <td>{depgroup.name}</td>
                                   <td>
-                                    {type.isActive ? (
+                                    {depgroup.isActive ? (
                                       <span className="badge bg-success">
                                         Active
                                       </span>
@@ -175,7 +175,7 @@ const DepartmentGroup = () => {
                                         <button
                                           type="button"
                                           className="btn btn-danger btn-icon waves-effect waves-light"
-                                          // onClick={() => handleDelete(type._id)}
+                                          onClick={() => handleDelete(depgroup._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>
@@ -183,13 +183,13 @@ const DepartmentGroup = () => {
                                     </div>
                                   </td>
                                 </tr>
-                              );
-                            })}
+                              
+                            }
                         </tbody>
                       </Table>
                     </div>
                     <nav>
-                      <ul className="pagination">
+                      {/* <ul className="pagination">
                         {depgroup.length > itemsPerPage && (
                           <>
                             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -221,7 +221,7 @@ const DepartmentGroup = () => {
                             </li>
                           </>
                         )}
-                      </ul>
+                      </ul> */}
                     </nav>
                   </div>
                 </CardBody>

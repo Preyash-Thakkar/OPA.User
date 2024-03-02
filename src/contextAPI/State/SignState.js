@@ -511,7 +511,7 @@ export const SignState = (props) => {
   };
   const EditDepGrp = async (id) => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/departmentgroup/getdepartmentbyid/${id}`
       );
       return response;
