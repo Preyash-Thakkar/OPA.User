@@ -60,6 +60,7 @@ return response;
 
   };
   const cancel=()=>{
+    GetallAddTask();
     navigate('/add-taskmaster')
   }
   useEffect(() => {
@@ -94,6 +95,7 @@ return response;
                 onSubmit={(values, { resetForm }) => {
                     const res=addDetails(values);
                     if(res){
+                      GetallAddTask();
                       GetallAddTask();
                       navigate('/add-taskmaster');
                     }
