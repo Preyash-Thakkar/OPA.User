@@ -46,14 +46,7 @@ const DepartmentType = () => {
     setdeptype(response.data);
   };
 
-  // const handleDelete=async(id)=>{
-  //   const abc=window.confirm('Are you sure you want to delete')
-  //   if(abc){
-  //   const res=await deletetype(id);
-  //   getalldeptype();
-  //     }    
-  //   console.log(">>",id)
-  // }
+
   const handleDelete = (previewImage) => {
     setselectedForUpdate(previewImage);
     setDeleteModal(true);
