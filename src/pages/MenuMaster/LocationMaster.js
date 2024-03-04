@@ -32,7 +32,7 @@ const LocationMaster = () => {
   const [loc, setLoc] = useState([]);
   const [pagloc,setpageloc]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Update to display 10 records per page
+  const [itemsPerPage] = useState(10); // Update to display 10 records per page
   const [totalPages, setTotalPages] = useState(1);
   // const[loc,setloc]=useState("")
   const getlocation=async()=>{
@@ -61,6 +61,7 @@ const LocationMaster = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = loc.slice(indexOfFirstItem, indexOfLastItem);
+  console.log(loc)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
@@ -101,9 +102,8 @@ const LocationMaster = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {loc &&
-                            loc.length > 0 &&
-                            loc.map((type, index) => {
+                          {
+                            currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
                                   <td>{index+1}</td>
@@ -151,29 +151,37 @@ const LocationMaster = () => {
                     </div>
                     <nav>
                       <ul className="pagination">
-                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                          <button
-                            className="page-link"
-                            onClick={() => paginate(currentPage - 1)}
-                            disabled={currentPage === 1}
-                          >
-                            Previous
-                          </button>
-                        </li>
-                        {Array.from({ length: totalPages }, (_, i) => (
-                          <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-                            <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
-                          </li>
-                        ))}
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                          <button
-                            className="page-link"
-                            onClick={() => paginate(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                          >
-                            Next
-                          </button>
-                        </li>
+                        {loc.length > itemsPerPage && (
+                          <>
+                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage - 1)}
+                                disabled={currentPage === 1}
+                              >
+                                Previous
+                              </button>
+                            </li>
+                            {Array.from({ length: Math.ceil(loc.length / itemsPerPage) }, (_, i) => {
+                              if (i < 5) {
+                                return (
+                                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
+                                  </li>
+                                );
+                              }
+                            })}
+                            <li className={`page-item ${currentPage === Math.ceil(loc.length / itemsPerPage) ? 'disabled' : ''}`}>
+                              <button
+                                className="page-link"
+                                onClick={() => paginate(currentPage + 1)}
+                                disabled={currentPage === Math.ceil(loc.length / itemsPerPage)}
+                              >
+                                Next
+                              </button>
+                            </li>
+                          </>
+                        )}
                       </ul>
                     </nav>
                   </div>
