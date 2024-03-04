@@ -79,10 +79,10 @@ const Settings = () => {
     const res = await changeUserPassword(AdminInfo, token);
     // console.log(res);
     if (res.success) {
-      window.location.reload();
-      setTimeout(() => {
-        setSuccess(res.msg);
-      }, 2000);
+      // window.location.reload();
+      setSuccess(res.msg);
+      navigate("/login");
+
     } else {
       setError(res.msg);
       setTimeout(() => {
