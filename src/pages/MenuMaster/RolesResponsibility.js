@@ -311,7 +311,7 @@ const AddRoles = () => {
                   employeeName: [],
                   isActive: true,
                 }}
-                onSubmit={(values) => {
+                onSubmit={(values, { resetForm }) => {
                   // addCheckupDetails(values);
 
                   let loc1 = [];
@@ -351,10 +351,10 @@ const AddRoles = () => {
                   );
                   if (response) {
                     getrequiredcommdetails();
-                    // navigate("/roles-responsibility");
+                    navigate("/roles-responsibility");
                   }
 
-                  // resetForm();
+                  resetForm();
                 }}
               >
                 {({

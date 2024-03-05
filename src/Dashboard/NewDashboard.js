@@ -38,6 +38,7 @@ const NewDashboard = () => {
   document.title = "Dashboard";
   //const getReqCommDetails = useContext(SignContext)
   const id = localStorage.getItem("LocationID");
+  console.log(typeof id);
 
   //const { id } = useParams();
   const {

@@ -72,24 +72,38 @@ function Example({ selectedItem, handleClose }) {
                         <td>
                           <td>
                             {selectedItem ? (
-                              <a
-                                href={`${process.env.REACT_APP_BASE_URL}/${selectedItem.uploaddocument}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                View Document
-                              </a>
-                            ) : (
-                              "N/A"
-                            )}
+  selectedItem.uploaddocument ? (
+    <a
+      href={`${process.env.REACT_APP_BASE_URL}/${selectedItem.uploaddocument}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View Document
+    </a>
+  ) : (
+    "N/A"
+  )
+) : (
+  "N/A"
+)}
+
                           </td>
                         </td>
                       </tr>
                       <tr>
-                        <td>Document Link</td>
+                        <td>Form Link</td>
                         <td>
   <a href={selectedItem ? `https://www.${selectedItem.formlink}` : "http://www.google.com"} target="_blank">
     {selectedItem ? selectedItem.formlink : "N/A"}
+  </a>
+</td>
+
+                      </tr>
+                      <tr>
+                        <td>Document Link</td>
+                        <td>
+  <a href={selectedItem ? `https://www.${selectedItem.documentlink}.com` : "http://www.google.com"} target="_blank">
+    {selectedItem ? selectedItem.documentlink : "N/A"}
   </a>
 </td>
 
