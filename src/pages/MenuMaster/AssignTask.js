@@ -731,7 +731,7 @@ const AssignTask = () => {
                                             className="btn btn-success w-sm"
                                             type="submit"
                                           >
-                                            Cancel
+                                            Submit
                                           </button>
                                           <button
                                             className="btn btn-danger w-sm"

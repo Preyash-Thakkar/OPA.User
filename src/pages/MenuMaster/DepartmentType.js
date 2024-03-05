@@ -37,9 +37,10 @@ const DepartmentType = () => {
   const [originalDepType, setOriginalDepType] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const {GetallDepartmentType,deletetype} = useContext(SignContext);
+  const {GetallDepartmentType,deletetype,GetDepTypeByIdForEditing} = useContext(SignContext);
+  const id=localStorage.getItem("DepartmentTypeID")
   const getalldeptype = async () => {
-    const response = await GetallDepartmentType();
+    const response = await GetDepTypeByIdForEditing(id);
     console.log(">>>");
     console.log(response.data);
     setOriginalDepType(response.data)
@@ -77,21 +78,21 @@ const DepartmentType = () => {
   useEffect(() => {
     getalldeptype();
   }, []);
-  const searchList = (e) => {
-    let inputVal = e.toLowerCase();
-    let filterData = originalDepType.filter(
-      (el) =>
-        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
-        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
-    );
-    setdeptype(filterData);
-    console.log(filterData)
-  };
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = deptype.slice(indexOfFirstItem, indexOfLastItem);
+  // const searchList = (e) => {
+  //   let inputVal = e.toLowerCase();
+  //   let filterData = originalDepType.filter(
+  //     (el) =>
+  //       el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+  //       el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+  //   );
+  //   setdeptype(filterData);
+  //   console.log(filterData)
+  // };
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = deptype.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -121,30 +122,29 @@ const DepartmentType = () => {
                 </div>
                 <CardBody>
                   <div className="live-preview">
-                  <SearchComponent searchList={searchList}  />
+                  {/* <SearchComponent searchList={searchList}  /> */}
                     <div className="table-responsive">
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
                           <tr>
                             <th scope="col">ID</th>
 
-                            <th scope="col">Department Group Name</th>
                             <th scope="col">Department Type Name</th>
+                            {/* <th scope="col">Department Type Name</th> */}
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {
-                            currentItems.map((type, index) => {
-                              return (
-                                <tr key={type._id}>
-                                  <td>DT:{index+1}</td>
-                                  <td>{type.departmentGroup.name}</td>
-                                  <td>{type.name}</td>
+                          
+                                <tr>
+                                  <td>DT:{1}</td>
+                                  {/* <td>{type.departmentGroup.name}</td> */}
+                                  <td>{deptype.name}</td>
                                   
                                   <td>
-                                    {type.isActive ? (
+                                    {deptype.isActive ? (
                                       <span className="badge bg-success">
                                         Active
                                       </span>
@@ -177,13 +177,13 @@ const DepartmentType = () => {
                                     </div>
                                   </td>
                                 </tr>
-                              );
-                            })}
+                          }   
+                            
                         </tbody>
                       </Table>
                     </div>
                     <nav>
-                      <ul className="pagination">
+                      {/* <ul className="pagination">
                         {deptype.length > itemsPerPage && (
                           <>
                             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -215,7 +215,7 @@ const DepartmentType = () => {
                             </li>
                           </>
                         )}
-                      </ul>
+                      </ul> */}
                     </nav>
                   </div>
                 </CardBody>

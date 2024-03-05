@@ -45,10 +45,10 @@ const CommunityUpdateMaster = () => {
   const [communityrequireddetails, setcommunityrequireddetails] =
     useState([]);
 
-const id=localStorage.getItem("LocationID")
+const id=localStorage.getItem("EmployeeNameID")
   const getreqcommdetails = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
-
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebynames/${id}`);
+console.log(res.data)
     setcommunityrequireddetails(res.data);
     setoriginalcommunityrequireddetails(res.data)
   };
