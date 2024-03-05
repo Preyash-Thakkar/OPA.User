@@ -13,6 +13,7 @@ import { FaShoppingBag } from "react-icons/fa";
 import FeatherIcon from "feather-icons-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../Dashboard/dashboard.css";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -38,8 +39,7 @@ const NewDashboard = () => {
   document.title = "Dashboard";
   //const getReqCommDetails = useContext(SignContext)
   const id = localStorage.getItem("LocationID");
-  console.log(typeof id);
-
+  const navigate=useNavigate();
   //const { id } = useParams();
   const {
     GetallDepartmentType,
@@ -56,6 +56,7 @@ const NewDashboard = () => {
   const [commsg, setcommmsg] = useState(null);
   const [deptype, setdeptype] = useState([]);
   const [tasklength, settasklength] = useState(null);
+  const [response, setresponse] = useState(null);
   const getreqcommdetails = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
 
@@ -96,7 +97,7 @@ const NewDashboard = () => {
   };
   const gettaskdetails = async () => {
     const res = await axios.get(
-     ` ${process.env.REACT_APP_BASE_URL}/addtask/getalltask`
+     `${process.env.REACT_APP_BASE_URL}/addtask/getalltask`
     );
     setaddtask(res.formTasksCount);
   };
@@ -111,6 +112,102 @@ const NewDashboard = () => {
     console.log("number", res);
 
     settasklength(res.data.length);
+  };
+  const userID = localStorage.getItem("EmployeeNameID");
+  let cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, "");
+
+  // console.log("AdminID", typeof userID);
+  const getPinnedItem = async () => {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`
+    );
+    console.log("pinneditems", res.data[0]);
+    setresponse(res.data[0]);
+  };
+  useEffect(() => {
+    getPinnedItem();
+  }, [cleanedUserID]);
+  const schema = {
+    "Add Task": response?.AddTask,
+    "Roles Responsibility": response?.RolesResponsibility,
+    "Admin User": response?.AdminUser,
+    "Assign Master": response?.AssignMaster,
+    "Community Update Master": response?.CommunityUpdateMaster,
+    Dashboard: response?.Dashboard,
+    "Department Group": response?.DepartmentGroup,
+    "Department Type": response?.DepartmentType,
+    "Employee Role": response?.EmployeeRole,
+    "Employee Master": response?.Employeemaster,
+    "Location Master": response?.LocationMaster,
+    "Menu Master": response?.MenuMaster,
+  };
+  const trueKeys = Object.keys(schema).filter((key) => schema[key]);
+  const handleRedirect = (field) => {
+    // You can customize the URL or route based on your needs
+    console.log(field);
+    if (field === "Dashboard") {
+      navigate("/dashboard");
+    }
+    if (field === "AddTask") {
+      navigate("/add-taskmaster");
+    }
+    if (field === "Assign Master") {
+      navigate("/assign-master");
+    }
+    if (field === "Community Update Master") {
+      navigate("/community-update");
+    }
+    if (field === "Department Group") {
+      navigate("/department-group");
+    }
+    if (field === "Department Type") {
+      navigate("/department-type");
+    }
+    if (field === "Employee Role") {
+      navigate("/employee-roles");
+    }
+    if (field === "Employee Master") {
+      navigate("/employee-master");
+    }
+    if (field === "Location Master") {
+      navigate("/location-master");
+    }
+    if (field === "Menu Master") {
+      navigate("/menumaster");
+    }
+    if (field === "Roles Responsibility") {
+      navigate("/roles-responsibilty");
+    }
+    if (field === "Admin User") {
+      navigate("/admin-user");
+    }
+
+    // Define route mappings for each field
+    const routeMappings = {
+      AddTask: "/add-task",
+      AssignMaster: "/assign-master",
+      CommunityUpdateMaster: "/community-update-master",
+      // Dashboard: '/dashboard',
+      DepartmentGroup: "/department-group",
+      DepartmentType: "/department-type",
+      EmployeeRole: "/employee-role",
+      Employeemaster: "/employee-master",
+      LocationMaster: "/location-master",
+      MenuMaster: "/menu-master",
+      // Add more mappings as needed
+    };
+
+    // Check if the field is true and has a corresponding route
+    if (field && routeMappings[field]) {
+      // Redirect to the corresponding route
+      // console.log(Redirecting to `${routeMappings[field]}`);
+      // Example using React Router's useNavigate hook
+      // navigate(routeMappings[field]);
+    } else {
+      // Handle default case or display a message
+      console.log("Invalid field or no valid route found for redirection");
+      // Handle default case or display a message to the user
+    }
   };
   useEffect(() => {
     console.log(">>>", deptype);
@@ -238,6 +335,52 @@ const NewDashboard = () => {
               </Card>
             </Col>
           </Row>
+
+         <Row>
+            <Col lg={4}>
+              <div style={{ display: "flex" }}>
+                <div>
+                  <img
+                    src={
+                      "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                    }
+                    style={{
+                      width: "50px",
+                      marginRight: "10px",
+                    }}
+                  />
+                </div>
+                <div style={{ fontSize: "22px", marginTop: "10px" }}>
+                  Pinned Items
+                </div>
+              </div>
+            </Col>
+        </Row>
+          
+          <Row>
+            {trueKeys.map((field) => (
+              <Col key={field} sm={3} onClick={() => handleRedirect(field)}>
+                <Card
+                  className="card-animate card-custom card-res"
+                  style={{ borderRadius: "15px" }}
+                >
+                  <CardBody>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <p
+                          className="fw-semibold new-class fs-16 mb-0"
+                          style={{ textAlign: "center" }}
+                        >
+                          {field}
+                        </p>
+                      </div>
+                      
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            ))}
+          </Row>
           {/* vaishal */}
 
           {/* <Row>
@@ -312,8 +455,7 @@ const NewDashboard = () => {
                               <br />
                               <br />
                               <h2 className="mt-1 ff-secondary fs-14 myClass">
-                              
-                                <b><h2>{type.taskLength}</h2></b>
+                                {type.taskLength}
                               </h2>
                               <h2
                                 className="mt-1 ff-secondary fs-14"
