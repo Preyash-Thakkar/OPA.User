@@ -45,6 +45,8 @@ const AssignMaster = () => {
   const [paginatetask, setpaginateTask] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [isChecked, setIsChecked] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([])
   const getalltask = async () => {
     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyDeptid/${id}`)
 
@@ -122,6 +124,49 @@ const AssignMaster = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = task && task.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const userID= localStorage.getItem("EmployeeNameID");
+  const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+  useEffect(() => {
+    // Assuming you fetch pinned items and set it to the state
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`);
+        setPinnedItems(response.data);
+  
+        // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+        if (response.data.length > 0) {
+          setIsChecked(response.data[0].AssignMaster);
+        }
+      } catch (error) {
+        console.error('Error fetching pinned items:', error);
+      }
+    };
+    fetchData();
+  }, [cleanedUserID]);
+
+  const handleCheckboxChange = async (event) => {
+    const checked = event.target.checked; // Get the new checked state directly from the event
+    setIsChecked(checked);
+
+    const userID = localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+    // Assuming this is the ID you want to update
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/pin/updateAssignMaster/${cleanedUserID}`, {
+        AssignMaster: checked, // Use the new checked state here for AssignTask
+      });
+
+      console.log('Updated AssignTask:', response.data);
+      // Optionally, you might want to handle the response or trigger further actions
+
+    } catch (error) {
+      console.error('Error updating AssignTask:', error.response ? error.response.data : error.message);
+      setIsChecked(!checked); // Revert the checkbox state in case of an error
+      // Optionally, you might want to show an error message to the user
+    }
+  };
+
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -138,6 +183,37 @@ const AssignMaster = () => {
           <Row>
             <Col xl={12}>
               <Card>
+              <div>
+                      <input
+                        style={{
+                          visibility: "visible",
+                          width: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          zIndex: "1111",
+                          position: "absolute",
+                          marginLeft: "2px",
+                          width: "40px",
+                          height: "40px",
+                          opacity: "0",
+                        }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                    </div>
                 {/* <div className="d-flex">
                   <PreviewCardHeader title="User Detail" />
                   <button className="btn btn-primary float-end mt-3 mb-2 " type="submit" style={{marginLeft:'880px'}} >Add Admin User</button>

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import DeleteModal from "../../common/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import SearchComponent from "../../common/SearchComponent";
+import axios from 'axios';
 import {
   Button,
   Card,
@@ -37,6 +38,8 @@ const DepartmentGroup = () => {
   const [originalDepgroup, setOriginalDepgroup] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); 
+  const [isChecked, setIsChecked] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([])
   // const [itemsPerPage] = useState(3);
   const id=localStorage.getItem("DepartmentGroupID")
   const navigate=useNavigate();
@@ -99,6 +102,48 @@ const DepartmentGroup = () => {
   // const currentItems = depgroup&&depgroup.slice(indexOfFirstItem, indexOfLastItem);
 
   // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const userID= localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+    useEffect(() => {
+      // Assuming you fetch pinned items and set it to the state
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`);
+          setPinnedItems(response.data);
+    
+          // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+          if (response.data.length > 0) {
+            setIsChecked(response.data[0].DepartmentGroup);
+          }
+        } catch (error) {
+          console.error('Error fetching pinned items:', error);
+        }
+      };
+      fetchData();
+    }, [cleanedUserID]);
+    
+    const handleCheckboxChange = async (event) => {
+      const checked = event.target.checked; // Get the new checked state directly from the event
+      setIsChecked(checked);
+    
+      const userID = localStorage.getItem("EmployeeNameID");
+      const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+    
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/pin/updateDepartmentGrp/${cleanedUserID}`, {
+          DepartmentGroup: checked,
+        });
+    
+        console.log('Updated DepartmentGroup:', response.data);
+        // Optionally, you might want to refetch your department groups list here to reflect the changes
+      } catch (error) {
+        console.error('Error updating DepartmentGroup:', error.response ? error.response.data : error.message);
+        setIsChecked(!checked); // Revert the checkbox state in case of an error
+      }
+    };
+    
+
+
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -133,6 +178,37 @@ const DepartmentGroup = () => {
                   <div className="live-preview">
                   {/* <SearchComponent searchList={searchList}  /> */}
                     <div className="table-responsive">
+                    <div>
+                      <input
+                        style={{
+                          visibility: "visible",
+                          width: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          zIndex: "1111",
+                          position: "absolute",
+                          marginLeft: "2px",
+                          width: "40px",
+                          height: "40px",
+                          opacity: "0",
+                        }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                    </div>
                       <Table className="align-middle table-nowrap mb-0">
                         <thead className="table-light">
                           <tr>

@@ -44,7 +44,8 @@ const AddTaskMaster = () => {
   const [task, setTask] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-
+  const [isChecked, setIsChecked] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([]);
   
   
   const gettask = async () => {
@@ -83,9 +84,7 @@ const handleDeleteAddTask = async () => {
     }
   }
 };
-
  const handleEdit=async(id)=>{
-
   navigate(`/edit-task/${id}`)
 }
   useEffect(() => {
@@ -102,7 +101,6 @@ const handleDeleteAddTask = async () => {
         el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
     );
     setTask(filterData);
-
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -110,6 +108,56 @@ const handleDeleteAddTask = async () => {
   const currentItems = task && task.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  
+  const userID = localStorage.getItem("EmployeeNameID");
+  const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, "");
+  useEffect(() => {
+    // Assuming you fetch pinned items and set it to the state
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`
+        );
+        setPinnedItems(response.data);
+
+        // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+        if (response.data.length > 0) {
+          setIsChecked(response.data[0].AddTask);
+        }
+      } catch (error) {
+        console.error("Error fetching pinned items:", error);
+      }
+    };
+    fetchData();
+  }, [cleanedUserID]);
+
+  const handleCheckboxChange = async (event) => {
+    const checked = event.target.checked; // Get the new checked state directly from the event
+    setIsChecked(checked);
+
+    const userID = localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, "");
+    // Assuming this is the ID you want to update
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/pin/updateAddTask/${cleanedUserID}`,
+        {
+          AddTask: checked, // Use the new checked state here for AddTask
+        }
+      );
+
+      console.log("Updated AddTask:", response.data);
+      // Optionally, you might want to handle the response or trigger further actions
+    } catch (error) {
+      console.error(
+        "Error updating AddTask:",
+        error.response ? error.response.data : error.message
+      );
+      setIsChecked(!checked); // Revert the checkbox state in case of an error
+      // Optionally, you might want to show an error message to the user
+    }
+  };
 
   return (
     <>
@@ -135,6 +183,37 @@ const handleDeleteAddTask = async () => {
 
                 <div className="d-flex flex-wrap justify-content-between align-items-center">
                   <PreviewCardHeader title="Add Task" />
+                  <div>
+                    <input
+                      style={{
+                        visibility: "visible",
+                        width: "40px",
+                        marginRight: "10px",
+                        cursor: "pointer",
+                        zIndex: "1111",
+                        position: "absolute",
+                        marginLeft: "2px",
+                        width: "40px",
+                        height: "40px",
+                        opacity: "0",
+                      }}
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
+                    />
+                    <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                  </div>
                   <div className="mt-3 mb-2">
                     <Link to='/add-task'><button className="btn btn-primary" type="submit" style={{marginRight:'9px'}}>
                       Add Task
