@@ -312,7 +312,8 @@ const NewDashboard = () => {
                               <br />
                               <br />
                               <h2 className="mt-1 ff-secondary fs-14 myClass">
-                                {type.taskLength}
+                              
+                                <b><h2>{type.taskLength}</h2></b>
                               </h2>
                               <h2
                                 className="mt-1 ff-secondary fs-14"
