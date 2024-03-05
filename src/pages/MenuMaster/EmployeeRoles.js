@@ -7,6 +7,7 @@ import logo from "../../assets/images/brands/slack.png";
 import DeleteModal from "../../common/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import SearchComponent from "../../common/SearchComponent";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -37,14 +38,22 @@ const EmployeeRoles = () => {
   const [employeerole,setemployeerole]=useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-
+  const id=localStorage.getItem("DepartmentTypeID");
+  console.log("DeartmentType",id);
  
+  // const getemployerole=async()=>{
+  //    const res=await GetallEmployeeRole(); 
+  //    console.log(res); 
+  //    setOriginalEmployeeRole(res.data)
+  //    setemployeerole(res.data);    
+  // }
   const getemployerole=async()=>{
-     const res=await GetallEmployeeRole(); 
-     console.log(res); 
-     setOriginalEmployeeRole(res.data)
-     setemployeerole(res.data);    
-  }
+    const res=await axios.get(`${process.env.REACT_APP_BASE_URL}/employeerole/getEmployeeRolesByDType/${id}`)
+    console.log("This is it",res); 
+    setemployeerole(res.data);    
+    console.log("Hiii",res.data);
+    setOriginalEmployeeRole(res.data);
+ }
   // const handleDelete=async(id)=>{
   //       console.log(">>id",id);
       
