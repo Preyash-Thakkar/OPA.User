@@ -433,7 +433,7 @@ const VerticalLayout = (props) => {
     if (assignmaster === 'false') {
       setisassignmaster(false);
     }
-    locationmaster = localStorage.getItem('LocationMaster');
+    locationmaster = localStorage.getItem('LocationSchema');
     if (locationmaster === 'false') {
       setislocationmaster(false);
     }
