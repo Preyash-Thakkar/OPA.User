@@ -56,7 +56,7 @@ const EditLocation = () => {
       <div className="page-content">
         <Container fluid>
           <BreadCrumb
-            grandParent="Setup"
+            grandParent="Location Master"
             parent="Company Master"
             child="Add-Company"
           />
