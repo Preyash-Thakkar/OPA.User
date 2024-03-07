@@ -34,6 +34,8 @@ const EmployeeRoles = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([]);
   const [originalEmployeeRole, setOriginalEmployeeRole] = useState(null);
   const [employeerole,setemployeerole]=useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -101,10 +103,12 @@ const EmployeeRoles = () => {
     
     if (originalEmployeeRole) {
       filterData = originalEmployeeRole.filter((el) => {
-        const lowerCaseName = el.name && el.name.toLowerCase();
+        const lowerCaseName = el.EmployeeRole && el.EmployeeRole.toLowerCase();
+        const lowerCaseGroup = el.departmentGroup.name && el.departmentGroup.name.toLowerCase();
         console.log("Lowercase Name:", lowerCaseName); // Log lowercase name for debugging
         return (lowerCaseName && lowerCaseName.indexOf(inputVal) !== -1) ||
-               (el.isActive && el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1);
+               (el.isActive && el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1)||
+               (lowerCaseGroup && lowerCaseGroup.toString().toLowerCase().indexOf(inputVal) !== -1);
       });
     }
     
@@ -115,6 +119,54 @@ const EmployeeRoles = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = employeerole.slice(indexOfFirstItem, indexOfLastItem);
+  const userID = localStorage.getItem("EmployeeNameID");
+  const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, "");
+  useEffect(() => {
+    // Assuming you fetch pinned items and set it to the state
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`
+        );
+        setPinnedItems(response.data);
+
+        // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+        if (response.data.length > 0) {
+          setIsChecked(response.data[0].EmployeeRole);
+        }
+      } catch (error) {
+        console.error("Error fetching pinned items:", error);
+      }
+    };
+    fetchData();
+  }, [cleanedUserID]);
+
+  const handleCheckboxChange = async (event) => {
+    const checked = event.target.checked; // Get the new checked state directly from the event
+    setIsChecked(checked);
+
+    const userID = localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, "");
+    // Assuming this is the ID you want to update
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/pin/updateEmployeeRole/${cleanedUserID}`,
+        {
+          EmployeeRole: checked, // Use the new checked state here for EmployeeRole
+        }
+      );
+
+      console.log("Updated EmployeeRole:", response.data);
+      // Optionally, you might want to handle the response or trigger further actions
+    } catch (error) {
+      console.error(
+        "Error updating EmployeeRole:",
+        error.response ? error.response.data : error.message
+      );
+      setIsChecked(!checked); // Revert the checkbox state in case of an error
+      // Optionally, you might want to show an error message to the user
+    }
+  };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
@@ -129,40 +181,80 @@ const EmployeeRoles = () => {
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
-          <BreadCrumb title="Form Validation" pageTitle="Forms" />
+        <div className="row">
+  <div className="col-12">
+    <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+    <h4 className="mb-0">Department Type</h4>
+      <div className="d-flex align-items-center" style={{marginLeft:"820px"}}>
+     
 
+        <div>
+                      <input
+                        style={{
+                          visibility: "visible",
+                          width: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          zIndex: "1111",
+                          position: "absolute",
+                         
+                          width: "40px",
+                          height: "40px",
+                          opacity: "0",
+                        }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                    
+                    </div>
+       
+      </div>
+      <div className="page-title-right">
+        <div className="form-check d-inline-block mb-0">
+          <input className="form-check-input" type="checkbox" id="formCheck1" style={{ visibility: 'hidden' }} />
+          {/* <label className="form-check-label" htmlFor="formCheck1">
+            <img src="pin.png" style={{ width: '40px', marginRight: '10px' }} />
+          </label> */}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
           <Row>
             <Col xl={12}>
               <Card>
-                <div className="d-flex flex-wrap justify-content-between align-items-center">
-                  <PreviewCardHeader title="Employee Role " />
-                  <div className="mt-3 mb-2">
-                    {/* <Link to="/add-employeerole">
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        style={{ marginRight: "9px" }}
-                      >
-                        Add Employee Role
-                      </button>
-                      
-                    </Link> */}
-                  </div>
-                </div>
+              <div class="card-header align-items-center d-flex card-body">
+                                    <h4 class="card-title mb-0 flex-grow-1">Employee Role Details</h4>  </div>
+                                    <br />
+                                    <br />
+                                    <br />
                 <CardBody>
                   <div className="live-preview">
                   <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
-                      <Table className="align-middle table-nowrap mb-0">
+                      <Table className="align-middle table-nowrap mb-0 table-with-border">
                         <thead className="table-light">
                           <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>ID</th>
 
-                            <th scope="col">Department Group Name</th>
-                            <th scope="col">Department Type Name</th>
-                            <th scope="col">Employee Role</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Department Group Name</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Department Type Name</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Employee Role</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Status</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -170,12 +262,12 @@ const EmployeeRoles = () => {
                             currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
-                                  <td>{index+1}</td>
-                                  <td>{type.departmentGroup.name}</td>
-                                  <td>{type.departmentType.name}</td>
-                                  <td>{type.EmployeeRole}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{index+1}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{type.departmentGroup.name}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{type.departmentType.name}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{type.EmployeeRole}</td>
                                   
-                                  <td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>
                                     {type.isActive ? (
                                       <span className="badge bg-success">
                                         Active
@@ -186,7 +278,7 @@ const EmployeeRoles = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td>
+                                  <td style={{ borderRight: '1px solid lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
                                     <div className="d-flex gap-2 align-items-center">
                                       <div className="flex-shrink-0">
                                         <button
@@ -201,7 +293,7 @@ const EmployeeRoles = () => {
                                         <button
                                           type="button"
                                           className="btn btn-danger btn-icon waves-effect waves-light"
-                                          // onClick={() => handleDelete(type._id)}
+                                          onClick={() => handleDelete(employeerole._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>

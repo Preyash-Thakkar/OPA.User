@@ -2,6 +2,9 @@ import React,{useState,useEffect,useContext} from "react";
 import BreadCrumb from "../../Components/Common/BreadCrumb";
 import UiContent from "../../Components/Common/UiContent";
 import PreviewCardHeader from "../../Components/Common/PreviewCardHeader";
+
+
+import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import DeleteModal from "../../common/DeleteModal";
@@ -34,13 +37,32 @@ import { useNavigate } from "react-router-dom";
 const EmployeeMaster = () => {
   const navigate=useNavigate();
   const {GetallEmployeeName,DeleteEmployeeName}=useContext(SignContext)
-  const [employeename,setemployeename]=useState([]);
+  // const [employeename,setemployeename]=useState([]);
+  // const [deleteModal, setDeleteModal] = useState(false);
+  // const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  // const [isChecked, setIsChecked] = useState(false);
+  // const [pinnedItems, setPinnedItems] = useState([])
+  // const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  // const [originalEmployeeMaster, setOriginalEmployeeMaster] = useState(null);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [itemsPerPage] = useState(5);
+  const [employeename, setemployeename] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedForUpdate, setselectedForUpdate] = useState(null);
   const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
-  const [originalEmployeeMaster, setOriginalEmployeeMaster] = useState(null);
+  const [originalEmployeeMaster, setOriginalEmployeeMaster] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [pageNo, setPageNo] = useState(0);
+  const [perPage, setPerPage] = useState(10);
   const [itemsPerPage] = useState(5);
+  const [column, setcolumn] = useState();
+  const [sortDirection, setsortDirection] = useState();
+  const [BGForm, setBGForm] = useState([]);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([])
  const id=localStorage.getItem("DepartmentTypeID");
  console.log(id);
   const getemployeename=async()=>{
@@ -49,6 +71,8 @@ const EmployeeMaster = () => {
      setemployeename(res.data);    
      console.log("Hiii",res.data);
      setOriginalEmployeeMaster(res.data);
+     setBGForm(res.data);
+     console.log(res.data)
   }
   // const handleDelete=async(id)=>{
   //  const confirm=window.confirm("Are U sure You want to delete this page");
@@ -90,18 +114,195 @@ const EmployeeMaster = () => {
 },[])
 const searchList = (e) => {
   let inputVal = e.toLowerCase();
+  console.log(originalEmployeeMaster)
   let filterData = originalEmployeeMaster.filter(
     (el) =>
-      el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+      el.employeeRole.EmployeeRole.toLowerCase().indexOf(inputVal) !== -1 ||
+      el.name.toString().toLowerCase().indexOf(inputVal) !== -1||
+      el.departmentType.name.toString().toLowerCase().indexOf(inputVal) !== -1||
       el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
   );
   setemployeename(filterData);
+   setBGForm(filterData);
+   console.log(filterData)
+   setTotalRows(filterData.length)
 };
 const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-const currentItems = employeename.slice(indexOfFirstItem, indexOfLastItem);
+// const currentItems = employeename.slice(indexOfFirstItem, indexOfLastItem);
 
 const paginate = (pageNumber) => setCurrentPage(pageNumber);
+const userID= localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+    useEffect(() => {
+      // Assuming you fetch pinned items and set it to the state
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`);
+          setPinnedItems(response.data);
+    
+          // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+          if (response.data.length > 0) {
+            setIsChecked(response.data[0].Employeemaster);
+          }
+        } catch (error) {
+          console.error('Error fetching pinned items:', error);
+        }
+      };
+      fetchData();
+    }, [cleanedUserID]);
+
+  const handleCheckboxChange = async (event) => {
+    const checked = event.target.checked; // Get the new checked state directly from the event
+    setIsChecked(checked);
+
+    const userID = localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+    // Assuming this is the ID you want to update
+    try {
+        const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/pin/updateEmployeemaster/${cleanedUserID}`, {
+            Employeemaster: checked, // Use the new checked state here for Employeemaster
+        });
+
+        console.log('Updated Employeemaster:', response.data);
+        // Optionally, you might want to handle the response or trigger further actions
+
+    } catch (error) {
+        console.error('Error updating Employeemaster:', error.response ? error.response.data : error.message);
+        setIsChecked(!checked); // Revert the checkbox state in case of an error
+        // Optionally, you might want to show an error message to the user
+    }
+};
+const fetchname = async () => {
+  try {
+    setLoading(true);
+    let skip = (pageNo - 1) * perPage;
+    if (skip < 0) {
+      skip = 0;
+    }
+
+   
+    const defaultColumn = "employeeName"; 
+    const defaultSortDirection = "asc"; 
+const newid=localStorage.getItem("DepartmentGroupID")
+    const response = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/employeename/listemployeenamespec/${newid}`,
+      {
+        skip: skip,
+        per_page: perPage,
+        sorton: column || defaultColumn, // Use column or defaultColumn if column is undefined
+        sortdir: sortDirection || defaultSortDirection, // Use sortDirection or defaultSortDirection if sortDirection is undefined
+        match: "",
+      }
+    );
+
+    console.log("Response:", response);
+
+    console.log(Array.isArray(response));
+
+    if (Array.isArray(response)) {
+      setLoading(false);
+
+      // Extract data for the current page
+      const startIndex = skip;
+      const endIndex = startIndex + perPage;
+      const paginatedData = response.slice(startIndex, endIndex);
+
+      // setBGForm(paginatedData);
+      // setTotalRows(response.length);
+    } else {
+      // Handle non-200 status code or non-array data
+      console.error("Invalid response:", response);
+      setLoading(false);
+    }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    setLoading(false);
+  }
+};
+const handlePageChange = (page) => {
+  setPageNo(page);
+};
+const handleSort = (column, sortDirection) => {
+  setcolumn(column.sortField);
+  setsortDirection(sortDirection);
+};
+
+const handlePerRowsChange = async (newPerPage, page) => {
+  // setPageNo(page);
+  setPerPage(newPerPage);
+};
+const columns = [
+  {
+    name: 'ID',
+    selector: (_, index) => `${index + 1}`,
+    sortable: true,
+    style: {
+      fontWeight: 'bold',
+    },
+    className: 'table-light',
+  },
+  {
+    name: 'Employee Name',
+    selector: (row) => row.name,
+    sortable: true,
+  },
+  {
+    name: 'Department Group Name',
+    selector: (row) => row.departmentGroup.name,
+    sortable: true,
+  },
+  {
+    name: 'Department Type Name',
+    selector: (row) => row.departmentType.name,
+    sortable: true,
+  },
+  {
+    name: 'Employee Role',
+    selector: (row) => row.employeeRole.EmployeeRole,
+    sortable: true,
+  },
+  {
+    name: 'Status',
+    selector: (row) => row.isActive,
+    sortable: true,
+    cell: (row) => (
+      row.isActive ? <span className="badge bg-success">Active</span> : <span className="badge bg-danger">Inactive</span>
+    ),
+  },
+
+  {
+    name: 'Actions',
+    cell: (row) => (
+      <div className="d-flex gap-2 align-items-center">
+        <div className="flex-shrink-0">
+          <button
+            type="button"
+            className="btn btn-success btn-icon waves-effect waves-light"
+            onClick={() => handleEdit(row._id)}
+          >
+            <i className="ri-pencil-fill"></i>
+          </button>
+        </div>
+        <div className="flex-grow-1">
+          <button
+            type="button"
+            className="btn btn-danger btn-icon waves-effect waves-light"
+            onClick={() => handleDelete(row._id)}
+          >
+            <i className="ri-delete-bin-5-line"></i>
+          </button>
+        </div>
+      </div>
+    ),
+  },
+];
+useEffect(() => {
+  fetchname();
+}, [pageNo, perPage, column, sortDirection,]);
+useEffect(() => {
+  fetchname();
+}, [currentPage, itemsPerPage, column, sortDirection]);
 
   return (
     <><ToastContainer closeButton={false} />
@@ -114,95 +315,73 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
-          <BreadCrumb title="Form Validation" pageTitle="Forms" />
+        <div className="row">
+  <div className="col-12">
+    <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+    <h4 className="mb-0">Employee Name</h4>
+      <div className="d-flex align-items-center" style={{marginLeft:"820px"}}>
+     
 
+        <div>
+                      <input
+                        style={{
+                          visibility: "visible",
+                          width: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          zIndex: "1111",
+                          position: "absolute",
+                         
+                          width: "40px",
+                          height: "40px",
+                          opacity: "0",
+                        }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                    
+                    </div>
+       
+      </div>
+      <div className="page-title-right">
+        <div className="form-check d-inline-block mb-0">
+          <input className="form-check-input" type="checkbox" id="formCheck1" style={{ visibility: 'hidden' }} />
+          {/* <label className="form-check-label" htmlFor="formCheck1">
+            <img src="pin.png" style={{ width: '40px', marginRight: '10px' }} />
+          </label> */}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
           <Row>
             <Col xl={12}>
               <Card>
-                <div className="d-flex flex-wrap justify-content-between align-items-center">
-                  <PreviewCardHeader title="Employee Master" />
-                  <div className="mt-3 mb-2">
-                    {/* <Link to="/add-employee">
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        style={{ marginRight: "9px" }}
-                      >
-                        Add Employee
-                      </button>
-                    </Link> */}
-                  </div>
-                </div>
+              <div class="card-header align-items-center d-flex card-body">
+                                    <h4 class="card-title mb-0 flex-grow-1">Employee Name Details</h4>  </div>
+                                    <br />
+                                    <br />
+                                    <br />
                 <CardBody>
                   <div className="live-preview">
                   <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
-                      <Table className="align-middle table-nowrap mb-0">
-                        <thead className="table-light">
-                          <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Employee Name</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Department Group Name</th>
-                            <th scope="col">Department Type Name</th>
-                            <th scope="col">Employee Role</th>
-                           
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {
-                            currentItems.map((type, index) => {
-                              return (
-                                <tr key={type._id}>
-                                  <td>{index+1}</td>
-                                  <td>{type.name}</td>
-                                  <td>{type.location.name}</td>
-                                  <td>{type.departmentGroup.name}</td>
-                                  <td>{type.departmentType.name}</td>
-                                  <td>{type.employeeRole.EmployeeRole}</td>
-                                  
-                                  <td>
-                                    {type.isActive ? (
-                                      <span className="badge bg-success">
-                                        Active
-                                      </span>
-                                    ) : (
-                                      <span className="badge bg-danger">
-                                        InActive
-                                      </span>
-                                    )}
-                                  </td>
-                                  <td>
-                                    <div className="d-flex gap-2 align-items-center">
-                                      <div className="flex-shrink-0">
-                                        <button
-                                          type="button"
-                                          className="btn btn-success btn-icon waves-effect waves-light"
-                                          // onClick={()=>handleEdit(type._id)}
-                                        >
-                                          <i className="ri-pencil-fill"></i>
-                                        </button>
-                                      </div>
-                                      <div className="flex-grow-1">
-                                        <button
-                                          type="button"
-                                          className="btn btn-danger btn-icon waves-effect waves-light"
-                                          // onClick={() => handleDelete(type._id)}
-                                        >
-                                          <i className="ri-delete-bin-5-line"></i>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                        </tbody>
-                      </Table>
+                     
                     </div>
-                    <nav>
+                    {/* <nav>
                       <ul className="pagination">
                         {Array.from(
                           { length: Math.ceil(employeename.length / itemsPerPage) },
@@ -223,8 +402,25 @@ const paginate = (pageNumber) => setCurrentPage(pageNumber);
                           )
                         )}
                       </ul>
-                    </nav>
-                  </div>
+                    {/* </nav> */}
+                    <DataTable className= "align-middle table-nowrap mb-0 table-with-border heading"
+                      columns={columns}
+                      data={BGForm}
+                      progressPending={loading}
+                      sortServer
+                      pagination
+                      paginationServer
+                      paginationDefaultPage={currentPage}
+                      paginationTotalRows={totalRows}
+                      paginationRowsPerPageOptions={[10, 20, 50, 100, totalRows]}
+                      onChangeRowsPerPage={handlePerRowsChange}
+                      onChangePage={
+                       handlePageChange
+                        
+                      }
+                      onSort={handleSort}
+                    />
+                  </div> 
                 </CardBody>
               </Card>
             </Col>

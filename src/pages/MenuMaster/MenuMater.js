@@ -9,6 +9,7 @@ import DeleteModal from "../../common/DeleteModal";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import '../MenuMaster/1.css'
+import SearchComponent from "../../common/SearchComponent";
 import {
   Button,
   Card,
@@ -107,47 +108,55 @@ const MenuMater = () => {
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
-          <BreadCrumb title="Form Validation" pageTitle="Forms" />
+        <div className="row">
+  <div className="col-12">
+    <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+       <div className="d-flex align-items-center">
+        <h4 className="mb-0">Menu Master</h4>
+      </div> 
+      <div className="page-title-right">
+        <div className="form-check d-inline-block mb-0">
+          <input className="form-check-input" type="checkbox" id="formCheck1" style={{ visibility: 'hidden' }} />
+          {/* <label className="form-check-label" htmlFor="formCheck1">
+            <img src="pin.png" style={{ width: '40px', marginRight: '10px' }} />
+          </label> */}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
           <Row>
             <Col xl={12}>
               <Card>
-                <div className="d-flex flex-wrap justify-content-between align-items-center">
-                  <PreviewCardHeader title="Menu Detail" />
-                  <div className="mt-3 mb-2">
-                    {/* <Link to="/add-menu">
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        style={{ marginRight: "9px" }}
-                      >
-                        Add Menu
-                      </button>
-                    </Link> */}
-                  </div>
-                </div>
+              <div class="card-header align-items-center d-flex card-body">
+                                    <h4 class="card-title mb-0 flex-grow-1">Menu Details</h4>  </div>
+                                    <br />
+                                    <br />
+                                    <br />
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList}/>
                     <div className="table-responsive">
-                      <Table className="align-middle table-nowrap mb-0">
+                      <Table className="align-middle table-nowrap mb-0 table-with-border">
                         <thead className="table-light">
                           <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Menu Group </th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray'}}>ID</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray'}}>Name</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray'}}>Menu Group </th>
 
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray'}}>Status</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray'}}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {currentItems.map((type, index) => {
                               return (
                                 <tr key={type._id}>
-                                  <td>{index + 1}</td>
-                                  <td>{type.menuname}</td>
-                                  <td>{type.menugroup}</td>
-                                  <td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{index + 1}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{type.menuname}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{type.menugroup}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>
                                     {type.isActive ? (
                                       <span className="badge bg-success">
                                         Active
@@ -158,7 +167,7 @@ const MenuMater = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td>
+                                  <td style={{ borderRight: '1px solid lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
                                     <div className="d-flex gap-2 align-items-center">
                                       <div className="flex-shrink-0">
                                         <button

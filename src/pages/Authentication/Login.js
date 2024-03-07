@@ -310,8 +310,8 @@ const Login = () => {
 
             <Row className="justify-content-center">
               <Col md={8} lg={6} xl={5}>
-                <Card className="mt-4">
-                  <CardBody className="p-4">
+                <Card className="mt-4 bg-white">
+                  <CardBody className="p-4 bg-white">
                     <div className="text-center mt-2">
                       <h5 className="text-primary">Welcome Back !</h5>
                       <p className="text-muted">

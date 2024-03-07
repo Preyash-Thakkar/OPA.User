@@ -7,7 +7,9 @@ import logo from "../../assets/images/brands/slack.png";
 import SignContext from "../../contextAPI/Context/SignContext";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import DeleteModal from "../../common/DeleteModal";
 import SearchComponent from "../../common/SearchComponent";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -28,27 +30,53 @@ import {
 } from "reactstrap";
 const LocationMaster = () => {
   const navigate=useNavigate();
-  const {GetallLocation,DeleteLocation}=useContext(SignContext);
+  const {GetallLocation,DeleteLocation,GetLocationById}=useContext(SignContext);
   const [loc, setLoc] = useState([]);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [pagloc,setpageloc]=useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // Update to display 10 records per page
+  const [selectedForUpdate, setselectedForUpdate] = useState(null);
+  const [itemsPerPage] = useState(5); // Update to display 10 records per page
+  const [isDeletebuttonLoading, setIsDeletebuttonLoading] = useState(false);
+  const [originalLocation, setOriginalLocation] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [pinnedItems, setPinnedItems] = useState([]);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
   // const[loc,setloc]=useState("")
+  const id=localStorage.getItem("LocationID")
+
   const getlocation=async()=>{
-       const res=await GetallLocation();
+       const res=await GetLocationById(id);
 
        setLoc(res.data);
+       setOriginalLocation(res.data);
+       const totalPagesCount = Math.ceil(res.data.length / itemsPerPage);
+       // console.log(totalPagesCount);
+       setpageloc(res.data.length);
+       setTotalPages(totalPagesCount);
   }
-  const handleDelete=async(id)=>{
-    const abc=window.confirm("Are you sure you want to delete");
-    if(abc){
-    const res1=await DeleteLocation(id);
-    getlocation();
-    }
+  const handleDelete = (previewImage) => {
+    setselectedForUpdate(previewImage);
+    setDeleteModal(true);
+  };
 
-    
-  }
+  const handleDeleteLocation = async () => {
+    if (selectedForUpdate) {
+      setIsDeletebuttonLoading(true);
+
+      try {
+        await DeleteLocation(selectedForUpdate);
+        GetallLocation();
+      } catch (error) {
+        // Handle error if needed
+        // console.error("Error deleting department group:", error);
+      } finally {
+        setIsDeletebuttonLoading(false);
+        setDeleteModal(false);
+      }
+    }
+  };
   const handleEdit=async(id)=>{
       
     navigate(`/edit-location/${id}`)
@@ -58,60 +86,170 @@ const LocationMaster = () => {
   useEffect(()=>{
          getlocation();
   },[])
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalLocation.filter(
+      (el) =>
+        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setLoc(filterData);
+    // console.log(filterData);
+  };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = loc.slice(indexOfFirstItem, indexOfLastItem);
+  // const currentItems = loc.slice(indexOfFirstItem, indexOfLastItem);
   console.log(loc)
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const userID = localStorage.getItem("EmployeeNameID");
+  const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+  useEffect(() => {
+    // Assuming you fetch pinned items and set it to the state
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`
+        );
+        setPinnedItems(response.data);
+
+        // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+        if (response.data.length > 0) {
+          setIsChecked(response.data[0].CommunityUpdateMaster);
+        }
+      } catch (error) {
+        console.error("Error fetching pinned items:", error);
+      }
+    };
+    fetchData();
+  }, [cleanedUserID]);
+
+  const handleCheckboxChange = async (event) => {
+    const checked = event.target.checked;
+    console.log(checked) // Get the new checked state directly from the event
+    setIsChecked(checked);
+
+    const userID = localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, "");
+    // Assuming this is the ID you want to update
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/pin/updateLocationMaster/${cleanedUserID}`,
+        {
+          LocationMaster: checked, // Use the new checked state here for CommunityUpdateMaster
+        }
+      );
+
+      console.log("Updated CommunityUpdateMaster:", response.data);
+      // Optionally, you might want to handle the response or trigger further actions
+    } catch (error) {
+      console.error(
+        "Error updating CommunityUpdateMaster:",
+        error.response ? error.response.data : error.message
+      );
+      setIsChecked(!checked); // Revert the checkbox state in case of an error
+      // Optionally, you might want to show an error message to the user
+    }
+  };
   return (
     <>
+    <ToastContainer closeButton={false} />
+      <DeleteModal
+        show={deleteModal}
+        isLoading={isDeletebuttonLoading}
+        onDeleteClick={() => handleDeleteLocation()}
+        onCloseClick={() => setDeleteModal(false)}
+      />
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
-          <BreadCrumb title="Form Validation" pageTitle="Forms" />
+        <div className="row">
+  <div className="col-12">
+    <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+    <h4 className="mb-0">Location Master</h4>
+      <div className="d-flex align-items-center" style={{marginLeft:"810px"}}>
+     
+
+        <div>
+                      <input
+                        style={{
+                          visibility: "visible",
+                          width: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          zIndex: "1111",
+                          position: "absolute",
+                         
+                          width: "40px",
+                          height: "40px",
+                          opacity: "0",
+                        }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                    
+                    </div>
+        
+      </div>
+      <div className="page-title-right">
+        <div className="form-check d-inline-block mb-0">
+          <input className="form-check-input" type="checkbox" id="formCheck1" style={{ visibility: 'hidden' }} />
+          {/* <label className="form-check-label" htmlFor="formCheck1">
+            <img src="pin.png" style={{ width: '40px', marginRight: '10px' }} />
+          </label> */}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
           <Row>
             <Col xl={12}>
               <Card>
-                <div className="d-flex flex-wrap justify-content-between align-items-center">
-                  <PreviewCardHeader title="Location Detail" />
-                  <div className="mt-3 mb-2">
-                    {/* <Link to="/add-location">
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        style={{ marginRight: "9px" }}
-                      >
-                        Add Location
-                      </button>
-                    </Link> */}
-                  </div>
-                </div>
+              <div class="card-header align-items-center d-flex card-body">
+                                    <h4 class="card-title mb-0 flex-grow-1">Location Details</h4>  </div>
+                                    <br />
+                                    <br />
+                                    <br />
                 <CardBody>
                   <div className="live-preview">
+                  <SearchComponent searchList={searchList} />
                     <div className="table-responsive">
-                      <Table className="align-middle table-nowrap mb-0">
+                      <Table className="align-middle table-nowrap mb-0 table-with-border">
                         <thead className="table-light">
                           <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>ID</th>
 
-                            <th scope="col">Location Name</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Location Name</th>
                             
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Status</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray' }}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {
-                            currentItems.map((type, index) => {
-                              return (
-                                <tr key={type._id}>
-                                  <td>{index+1}</td>
+                        
+                          
+                                <tr >
+                                  <td style={{borderRight: '1px solid lightgray'}}>{1}</td>
                                   
-                                  <td>{type.name}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{loc.name}</td>
                                   
-                                  <td>
-                                    {type.isActive ? (
+                                  <td style={{borderRight: '1px solid lightgray'}}>
+                                    {loc.isActive ? (
                                       <span className="badge bg-success">
                                         Active
                                       </span>
@@ -121,7 +259,7 @@ const LocationMaster = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td>
+                                  <td style={{ borderRight: '1px solid lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
                                     <div className="d-flex gap-2 align-items-center">
                                       <div className="flex-shrink-0">
                                         <button
@@ -136,7 +274,7 @@ const LocationMaster = () => {
                                         <button
                                           type="button"
                                           className="btn btn-danger btn-icon waves-effect waves-light"
-                                          // onClick={() => handleDelete(type._id)}
+                                          onClick={() => handleDelete(loc._id)}
                                         >
                                           <i className="ri-delete-bin-5-line"></i>
                                         </button>
@@ -144,8 +282,8 @@ const LocationMaster = () => {
                                     </div>
                                   </td>
                                 </tr>
-                              );
-                            })}
+                              
+                            }
                         </tbody>
                       </Table>
                     </div>

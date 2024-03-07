@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import DeleteModal from "../../common/DeleteModal";
 import { ToastContainer } from "react-toastify";
 import SearchComponent from "../../common/SearchComponent";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -37,6 +38,9 @@ const DepartmentGroup = () => {
   const [originalDepgroup, setOriginalDepgroup] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); 
+  const [currentItems, setCurrentItems] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([])
   // const [itemsPerPage] = useState(3);
   const id=localStorage.getItem("DepartmentGroupID")
   const navigate=useNavigate();
@@ -85,20 +89,60 @@ const DepartmentGroup = () => {
     getdepgroup();
   }, []);
   console.log(depgroup)
-  // const searchList = (e) => {
-  //   let inputVal = e.toLowerCase();
-  //   let filterData = originalDepgroup.filter(
-  //     (el) =>
-  //       el.name.toLowerCase().indexOf(inputVal) !== -1 ||
-  //       el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
-  //   );
-  //   setDepgroup(filterData);
-  // };
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = depgroup&&depgroup.slice(indexOfFirstItem, indexOfLastItem);
+  const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+    let filterData = originalDepgroup.filter(
+      (el) =>
+        el.name.toLowerCase().indexOf(inputVal) !== -1 ||
+        el.isActive.toString().toLowerCase().indexOf(inputVal) !== -1
+    );
+    setDepgroup(filterData);
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = depgroup.slice(indexOfFirstItem, indexOfLastItem);
+  const userID= localStorage.getItem("EmployeeNameID");
+  const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+  useEffect(() => {
+    // Assuming you fetch pinned items and set it to the state
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`);
+        setPinnedItems(response.data);
+  
+        // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+        if (response.data.length > 0) {
+          setIsChecked(response.data[0].DepartmentGroup);
+        }
+      } catch (error) {
+        console.error('Error fetching pinned items:', error);
+      }
+    };
+    fetchData();
+  }, [cleanedUserID]);
+  
+  const handleCheckboxChange = async (event) => {
+    const checked = event.target.checked; // Get the new checked state directly from the event
+    setIsChecked(checked);
+  
+    const userID = localStorage.getItem("EmployeeNameID");
+    const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+  
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/pin/updateDepartmentGrp/${cleanedUserID}`, {
+        DepartmentGroup: checked,
+      });
+  
+      console.log('Updated DepartmentGroup:', response.data);
+      // Optionally, you might want to refetch your department groups list here to reflect the changes
+    } catch (error) {
+      console.error('Error updating DepartmentGroup:', error.response ? error.response.data : error.message);
+      setIsChecked(!checked); // Revert the checkbox state in case of an error
+    }
+  };
 
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <><ToastContainer closeButton={false} />
     <DeleteModal
@@ -110,46 +154,89 @@ const DepartmentGroup = () => {
       <UiContent />
       <div className="page-content">
         <Container fluid={true}>
-          <BreadCrumb title="Form Validation" pageTitle="Forms" />
+         <div className="row">
+  <div className="col-12">
+    <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+    <h4 className="mb-0">Department Group</h4>
+      <div className="d-flex align-items-center" style={{marginLeft:"770px"}}>
+     
+
+        <div>
+                      <input
+                        style={{
+                          visibility: "visible",
+                          width: "40px",
+                          marginRight: "10px",
+                          cursor: "pointer",
+                          zIndex: "1111",
+                          position: "absolute",
+                         
+                          width: "40px",
+                          height: "40px",
+                          opacity: "0",
+                        }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleCheckboxChange}
+                      />
+                      <label>
+                      <img
+                        src={
+                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                        }
+                        style={{
+                          width: "40px",
+                          marginRight: "10px",
+                          opacity: isChecked ? "1" : "0.4",
+                        }}
+                      />
+                    </label>
+                    
+                    </div>
+
+      </div>
+      <div className="page-title-right">
+        <div className="form-check d-inline-block mb-0">
+          <input className="form-check-input" type="checkbox" id="formCheck1" style={{ visibility: 'hidden' }} />
+          {/* <label className="form-check-label" htmlFor="formCheck1">
+            <img src="pin.png" style={{ width: '40px', marginRight: '10px' }} />
+          </label> */}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
           <Row>
             <Col xl={12}>
               <Card>
-                <div className="d-flex flex-wrap justify-content-between align-items-center">
-                  <PreviewCardHeader title="Depatment Group" />
-                  <div className="mt-3 mb-2">
-                    {/* <Link to="/add-dgroup">
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        style={{ marginRight: "9px" }}
-                      >
-                        Add Department Group
-                      </button>
-                    </Link> */}
-                  </div>
-                </div>
+              <div class="card-header align-items-center d-flex card-body">
+                                    <h4 class="card-title mb-0 flex-grow-1">Deparment Group Details</h4>  </div>
+                                    <br />
+                                    <br />
+                                    <br />
+               
                 <CardBody>
                   <div className="live-preview">
-                  {/* <SearchComponent searchList={searchList}  /> */}
+                  <SearchComponent searchList={searchList}  />
                     <div className="table-responsive">
-                      <Table className="align-middle table-nowrap mb-0">
+                      <Table className="align-middle table-nowrap mb-0 table-with-border">
                         <thead className="table-light">
-                          <tr>
-                            <th scope="col">ID</th>
+                          <tr style={{marginLeft:"10px"}}>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray',marginLeft:"5px" }}>ID</th>
 
-                            <th scope="col">Department Group Name</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray',marginLeft:"5px" }}>Department Group Name</th>
 
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray',marginLeft:"5px" }}>Status</th>
+                            <th scope="col" style={{ backgroundColor: '#185abc', color: 'white',borderRight: '1px solid lightgray',marginLeft:"5px" }}>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           {
                                 <tr>
-                                  <td>{1}</td>
-                                  <td>{depgroup.name}</td>
-                                  <td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{1}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>{depgroup.name}</td>
+                                  <td style={{borderRight: '1px solid lightgray'}}>
                                     {depgroup.isActive ? (
                                       <span className="badge bg-success">
                                         Active
@@ -160,7 +247,7 @@ const DepartmentGroup = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td>
+                                  <td style={{ borderRight: '1px solid lightgray', display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
                                     <div className="d-flex gap-2 align-items-center">
                                       <div className="flex-shrink-0">
                                         <button

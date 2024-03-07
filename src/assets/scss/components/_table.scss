@@ -45,7 +45,14 @@
         border-top-width: $table-border-width;
     }
 }
-
+.heading {
+    column{
+        &:name{
+            background-color: red;
+        }
+    }
+   
+}
 @each $color,
 $value in $theme-colors {
     .border-#{$color} {
@@ -98,7 +105,8 @@ $value in $theme-colors {
 
 [data-layout-mode="dark"] {
     .table-light {
-        background-color: var(--#{$variable-prefix}light);
+        // background-color: var(--#{$variable-prefix}light);
+        background-color: #185abc;
         color: var(--#{$variable-prefix}body-color);
         th,td {
             background-color: var(--#{$variable-prefix}light);

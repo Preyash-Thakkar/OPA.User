@@ -269,10 +269,13 @@ button{
         }
     }
 }
-
-.kVrXuC, .dwPlXY, .gKbhqU, .iSAVrt{
+.iSAVrt{
+    color: white !important;
+}
+.kVrXuC, .dwPlXY, .gKbhqU{
     background-color: $table-bg !important;
     color: $table-color !important;
+   
 }
 
 .fyrdjl{
@@ -286,10 +289,13 @@ button{
 }
 
 .iSAVrt{
-    background-color: var(--#{$prefix}card-bg-custom) !important;
-    border-bottom-color: $table-border-color !important;
+    background-color: #185abc !important;
+    // background-color: var(--#{$prefix}card-bg-custom) !important;
+    // border-bottom-color: $table-border-color !important;
 }
 
 .dwPlXY:not(:last-of-type){
-    border-bottom-color: $table-border-color !important;
+    
+    // border-bottom-color: $table-border-color !important;
+    border-bottom-color: 1px solid #d3d3d3 !important;
 }

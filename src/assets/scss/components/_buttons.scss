@@ -226,7 +226,7 @@ $value in $theme-colors {
     .btn-check:focus+.btn-outline-light,
     .btn-check:focus+.btn-soft-light,
     .btn-soft-light:focus {
-        color: var(--#{$prefix}dark);
+        color: #185abc;
         background-color: rgba(var(--#{$prefix}light-rgb), 0.75);
         border-color: rgba(var(--#{$prefix}light-rgb), 0.75);
     }
