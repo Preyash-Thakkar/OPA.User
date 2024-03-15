@@ -98,9 +98,7 @@ const handleDeleteAddTask = async () => {
     }
   }
 };
-
  const handleEdit=async(id)=>{
-
   navigate(`/edit-task/${id}`)
 }
   useEffect(() => {

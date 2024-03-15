@@ -368,12 +368,12 @@ const id=localStorage.getItem("EmployeeNameID")
   };
 
   useEffect(() => {
-    // Set a delay for the execution
-    const timer = setTimeout(() => {
+  
+    
       getreqcommdetails();
-    }, 5000); // Delay the execution for 5000 milliseconds (5 seconds)
+  
 
-    return () => clearTimeout(timer);
+
   }, []);
   const searchList = (e) => {
     let inputVal = e.toLowerCase();
@@ -522,6 +522,9 @@ const newid=localStorage.getItem("EmployeeNameID")
       name: "Image",
       selector: (row) => renderImage(row.uploadimage),
       sortable: true,
+      style:{
+        padding:"10px"
+      }
     },
     {
       name: "Community Name",

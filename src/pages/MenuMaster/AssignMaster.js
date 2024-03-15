@@ -479,6 +479,8 @@ const AssignMaster = () => {
   const [BGForm, setBGForm] = useState([]);
    const [currentItems, setCurrentItems] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
+  // const [isChecked, setIsChecked] = useState(false);
+  // const [pinnedItems, setPinnedItems] = useState([])
   const getalltask = async () => {
     const res = await axios.get(
       `${process.env.REACT_APP_BASE_URL}/assigntask/getassigntaskbyemployeeid/${id}`
@@ -560,6 +562,7 @@ const AssignMaster = () => {
  // const currentItems = task && task.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const userID= localStorage.getItem("EmployeeNameID");
   const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
   useEffect(() => {
@@ -567,6 +570,48 @@ const AssignMaster = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`);
+        setPinnedItems(response.data);
+  
+        // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
+        if (response.data.length > 0) {
+          setIsChecked(response.data[0].AssignMaster);
+        }
+      } catch (error) {
+        console.error('Error fetching pinned items:', error);
+      }
+    };
+    fetchData();
+  }, [cleanedUserID]);
+
+  // const handleCheckboxChange = async (event) => {
+  //   const checked = event.target.checked; // Get the new checked state directly from the event
+  //   setIsChecked(checked);
+
+  //   const userID = localStorage.getItem("EmployeeNameID");
+  //   const cleanedUserID = userID.trim().replace(/^["']+|["']+$/g, '');
+  //   // Assuming this is the ID you want to update
+  //   try {
+  //     const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/pin/updateAssignMaster/${cleanedUserID}`, {
+  //       AssignMaster: checked, // Use the new checked state here for AssignTask
+  //     });
+
+  //     console.log('Updated AssignTask:', response.data);
+  //     // Optionally, you might want to handle the response or trigger further actions
+
+  //   } catch (error) {
+  //     console.error('Error updating AssignTask:', error.response ? error.response.data : error.message);
+  //     setIsChecked(!checked); // Revert the checkbox state in case of an error
+  //     // Optionally, you might want to show an error message to the user
+  //   }
+  // };
+
+  const userID1= localStorage.getItem("EmployeeNameID");
+  const cleanedUserID1 = userID1.trim().replace(/^["']+|["']+$/g, '');
+  useEffect(() => {
+    // Assuming you fetch pinned items and set it to the state
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID1}`);
         setPinnedItems(response.data);
   
         // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
@@ -832,12 +877,12 @@ const newid=localStorage.getItem("DepartmentTypeID")
           <Row>
             <Col xl={12}>
               <Card>
+              
               <div class="card-header align-items-center d-flex card-body">
                                     <h4 class="card-title mb-0 flex-grow-1">Assign Task Details</h4>  </div>
                                     <br />
                                     <br />
                                     <br />
-
                
                 <CardBody>
                   <div className="live-preview">
@@ -958,7 +1003,7 @@ const newid=localStorage.getItem("DepartmentTypeID")
                         </tbody>
                       </Table> */}
                     </div>
-                    <DataTable
+                    <DataTable className= "align-middle table-nowrap mb-0 table-with-border heading"
                       columns={columns}
                       data={BGForm}
                       progressPending={loading}

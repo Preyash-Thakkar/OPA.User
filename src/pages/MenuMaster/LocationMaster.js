@@ -111,7 +111,7 @@ const LocationMaster = () => {
           `${process.env.REACT_APP_BASE_URL}/pin/getPinnedItemsbyid/${cleanedUserID}`
         );
         setPinnedItems(response.data);
-
+console.log(response.data)
         // Set the initial value for isChecked based on the DepartmentGroup field in pinnedItems
         if (response.data.length > 0) {
           setIsChecked(response.data[0].CommunityUpdateMaster);

@@ -7,13 +7,13 @@ function Example({ selectedItem, handleClose }) {
 
   return (
     <React.Fragment>
-      <div className="flex-grow-1 mt-3 " style={{ marginLeft: "0px" }}>
+      <div className="flex-grow-1 mt-3 " >
         <button
           type="button"
           className="btn btn-primary btn-icon waves-effect waves-light"
           onClick={() => setEyeshow(true)}
         >
-          <i className="ri-eye-line"></i>
+          <i className="ri-eye-line" style={{ marginTop: "-11px" }}></i>
         </button>
       </div>
 

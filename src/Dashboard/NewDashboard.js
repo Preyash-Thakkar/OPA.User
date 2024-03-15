@@ -453,6 +453,7 @@ import FeatherIcon from "feather-icons-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "../Dashboard/dashboard.css";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -495,9 +496,11 @@ const NewDashboard = () => {
   const [commsg, setcommmsg] = useState(null);
   const [deptype, setdeptype] = useState([]);
   const [tasklength, settasklength] = useState(null);
+  // const [response, setresponse] = useState(null);
   const [response, setresponse] = useState(null);
+  const empid=localStorage.getItem("EmployeeNameID")
   const getreqcommdetails = async () => {
-    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebylocation/${id}`);
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/communitymaster/getrequiredcommunitymessagebynames/${empid}`);
 
 
     
@@ -536,7 +539,7 @@ const NewDashboard = () => {
   };
   const gettaskdetails = async () => {
     const res = await axios.get(
-     ` ${process.env.REACT_APP_BASE_URL}/addtask/getalltask`
+     `${process.env.REACT_APP_BASE_URL}/addtask/getalltask`
     );
     setaddtask(res.formTasksCount);
   };
@@ -889,9 +892,9 @@ const NewDashboard = () => {
                         <CardBody>
                           <div className="d-flex justify-content-between">
                             <div>
-                              <p className="fw-semibold new-class fs-16 mb-0">
+                              <h2 className="fw-semibold new-class fs-16 mb-0">
                                 {type.departmentType.name}
-                              </p>
+                              </h2>
                               <br />
                               <br />
                               <h2 className="mt-1 ff-secondary fs-14 myClass">
