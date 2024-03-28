@@ -818,50 +818,57 @@ const newid=localStorage.getItem("DepartmentTypeID")
       <div className="page-content">
         <Container fluid={true}>
         <div className="row">
-  <div className="col-12">
+  <div >
     <div className="page-title-box d-sm-flex align-items-center justify-content-between">
-    <h4 className="mb-0">Add Assign Task</h4>
-      <div className="d-flex align-items-center" style={{marginLeft:"850px"}}>
+    <div className="col-6">
+    <h4 className="mb-0 abc1111">Assign Master</h4>
+    </div>
+    <div className="col-6">
+    <div className="d-flex align-items-center justify-content-end" >
      
 
-        <div>
-                      <input
-                        style={{
-                          visibility: "visible",
-                          width: "40px",
-                          marginRight: "10px",
-                          cursor: "pointer",
-                          zIndex: "1111",
-                          position: "absolute",
-                         
-                          width: "40px",
-                          height: "40px",
-                          opacity: "0",
-                        }}
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={handleCheckboxChange}
-                      />
-                      <label>
-                      <img
-                        src={
-                          "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
-                        }
-                        style={{
-                          width: "40px",
-                          marginRight: "10px",
-                          opacity: isChecked ? "1" : "0.4",
-                        }}
-                      />
-                    </label>
-                    
-                    </div>
-        <Link to="/assign-task" >
-        <button className="custom_hover btn btn-primary btn-color" type="submit" style={{ display: 'flex' }}>
-          <i className="ri-add-line me-1 mb"></i>Add Assign Task
-          </button>
-        </Link>
+     <div>
+                   <input
+                     style={{
+                       visibility: "visible",
+                       width: "40px",
+                       marginRight: "10px",
+                       cursor: "pointer",
+                       zIndex: "1111",
+                       position: "absolute",
+                      
+                       width: "40px",
+                       height: "40px",
+                       opacity: "0",
+                     }}
+                     type="checkbox"
+                     checked={isChecked}
+                     onChange={handleCheckboxChange}
+                   />
+                   <label>
+                   <img
+                     src={
+                       "https://portfolio.barodaweb.com/Dev/OpaSystem.com/L1/assets/images/pin.png"
+                     }
+                     style={{
+                       width: "40px",
+                       marginRight: "10px",
+                       opacity: isChecked ? "1" : "0.4",
+                     }}
+                   />
+                 </label>
+                 
+                 </div>
+     <Link to="/add-task" >
+     <button className="custom_hover btn btn-primary btn-color" type="submit" style={{ display: 'flex' }}>
+       <i className="ri-add-line me-1 mb"></i>
+       <span className="abc1111">Add Assign Task</span>
+       </button>
+     </Link>
+   </div>
       </div>
+    
+     
       <div className="page-title-right">
         <div className="form-check d-inline-block mb-0">
           <input className="form-check-input" type="checkbox" id="formCheck1" style={{ visibility: 'hidden' }} />

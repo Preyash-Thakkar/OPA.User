@@ -691,7 +691,7 @@ const NewDashboard = () => {
             </h5>
             <br />
             <br />
-            <Col md={4}>
+            {/* <Col md={4}>
               <div class="col-lg-12 col-lg-4">
                 <Card
                   className="card-animate card-res"
@@ -776,7 +776,7 @@ const NewDashboard = () => {
                   </div>
                 </CardBody>
               </Card>
-            </Col>
+            </Col> */}
           </Row>
 
          <Row>
